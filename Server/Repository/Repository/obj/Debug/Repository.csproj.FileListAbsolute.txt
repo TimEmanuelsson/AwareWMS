@@ -1,0 +1,16 @@
+C:\Skolarbete\Aware\Repository\Repository\bin\Debug\Aware.mdf
+C:\Skolarbete\Aware\Repository\Repository\bin\Debug\Aware_log.ldf
+C:\Skolarbete\Aware\Repository\Repository\bin\Debug\Repository.exe.config
+C:\Skolarbete\Aware\Repository\Repository\bin\Debug\Repository.exe
+C:\Skolarbete\Aware\Repository\Repository\bin\Debug\Repository.pdb
+C:\Skolarbete\Aware\Repository\Repository\obj\Debug\Repository.csprojResolveAssemblyReference.cache
+C:\Skolarbete\Aware\Repository\Repository\obj\Debug\Repository.exe
+C:\Skolarbete\Aware\Repository\Repository\obj\Debug\Repository.pdb
+C:\Users\Alexandra\Documents\GitHub\Aware\Repository\Repository\bin\Debug\Repository.exe.config
+C:\Users\Alexandra\Documents\GitHub\Aware\Repository\Repository\obj\Debug\Repository.exe
+C:\Users\Alexandra\Documents\GitHub\Aware\Repository\Repository\obj\Debug\Repository.pdb
+C:\Users\Alexandra\Documents\GitHub\Aware\Repository\Repository\bin\Debug\Aware.mdf
+C:\Users\Alexandra\Documents\GitHub\Aware\Repository\Repository\bin\Debug\Aware_log.ldf
+C:\Users\Alexandra\Documents\GitHub\Aware\Repository\Repository\bin\Debug\Repository.exe
+C:\Users\Alexandra\Documents\GitHub\Aware\Repository\Repository\bin\Debug\Repository.pdb
+C:\Users\Alexandra\Documents\GitHub\Aware\Repository\Repository\obj\Debug\Repository.csprojResolveAssemblyReference.cache

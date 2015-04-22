@@ -1,0 +1,1 @@
+P:\Aware\Server\AwareServer\AwareServer\bin\Debug\AwareServer.exe.config

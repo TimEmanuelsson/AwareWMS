@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
+using AwareClassLibrary;
 
 namespace Repository.Model.DAL
 {

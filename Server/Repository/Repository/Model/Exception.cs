@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Model
 {
-    class Exception
+    public class Exception
     {
         #region Fields
 

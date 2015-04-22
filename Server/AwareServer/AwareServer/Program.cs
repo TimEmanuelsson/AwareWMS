@@ -14,14 +14,22 @@ namespace AwareServer
         /// </summary>
         static void Main()
         {
+
+            // Temporary test code:
+            DataFetch dataFetch = new DataFetch();
+            dataFetch.FetchAndInsert();
+            // End of temporary test code.
+
+
+            // Service related code below, uncomment when we can install this shit.
+            /*
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[] 
             { 
-                new Service1() 
+                new ServerService() 
             };
             ServiceBase.Run(ServicesToRun);
-
-            
+            */
         }
     }
 }

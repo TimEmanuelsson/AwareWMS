@@ -7,9 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwareServer", "AwareServer\
 		{61099BC7-2D78-4E22-B6EC-0BFBDEDC0038} = {61099BC7-2D78-4E22-B6EC-0BFBDEDC0038}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagentoConnection", "..\..\..\Projekt\Aware\Magento koppling\MagentoConnection\MagentoConnection\MagentoConnection.csproj", "{22CAB18A-4B44-4048-B608-3B72E140B24D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repository", "..\Repository\Repository\Repository.csproj", "{61099BC7-2D78-4E22-B6EC-0BFBDEDC0038}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagentoConnection", "..\MagentoConnection\MagentoConnection\MagentoConnection.csproj", "{22CAB18A-4B44-4048-B608-3B72E140B24D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AwareClassLibrary", "AwareClassLibrary\AwareClassLibrary.csproj", "{8DF3B647-3C5E-4576-80EB-D3F5CF18AB7F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,14 +23,18 @@ Global
 		{BEC25610-2216-4F61-B0E7-0D1034954750}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEC25610-2216-4F61-B0E7-0D1034954750}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEC25610-2216-4F61-B0E7-0D1034954750}.Release|Any CPU.Build.0 = Release|Any CPU
-		{22CAB18A-4B44-4048-B608-3B72E140B24D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{22CAB18A-4B44-4048-B608-3B72E140B24D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{22CAB18A-4B44-4048-B608-3B72E140B24D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{22CAB18A-4B44-4048-B608-3B72E140B24D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{61099BC7-2D78-4E22-B6EC-0BFBDEDC0038}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{61099BC7-2D78-4E22-B6EC-0BFBDEDC0038}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61099BC7-2D78-4E22-B6EC-0BFBDEDC0038}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61099BC7-2D78-4E22-B6EC-0BFBDEDC0038}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22CAB18A-4B44-4048-B608-3B72E140B24D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22CAB18A-4B44-4048-B608-3B72E140B24D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22CAB18A-4B44-4048-B608-3B72E140B24D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22CAB18A-4B44-4048-B608-3B72E140B24D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DF3B647-3C5E-4576-80EB-D3F5CF18AB7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DF3B647-3C5E-4576-80EB-D3F5CF18AB7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DF3B647-3C5E-4576-80EB-D3F5CF18AB7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DF3B647-3C5E-4576-80EB-D3F5CF18AB7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

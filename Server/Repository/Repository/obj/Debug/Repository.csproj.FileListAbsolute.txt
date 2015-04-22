@@ -14,3 +14,13 @@ C:\Users\Alexandra\Documents\GitHub\Aware\Repository\Repository\bin\Debug\Aware_
 C:\Users\Alexandra\Documents\GitHub\Aware\Repository\Repository\bin\Debug\Repository.exe
 C:\Users\Alexandra\Documents\GitHub\Aware\Repository\Repository\bin\Debug\Repository.pdb
 C:\Users\Alexandra\Documents\GitHub\Aware\Repository\Repository\obj\Debug\Repository.csprojResolveAssemblyReference.cache
+P:\Aware\AwareWMS\Server\Repository\Repository\obj\Debug\Repository.csprojResolveAssemblyReference.cache
+P:\Aware\AwareWMS\Server\Repository\Repository\obj\Debug\Repository.exe
+P:\Aware\AwareWMS\Server\Repository\Repository\obj\Debug\Repository.pdb
+P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Aware.mdf
+P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Aware_log.ldf
+P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Repository.exe.config
+P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Repository.exe
+P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Repository.pdb
+P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\AwareClassLibrary.dll
+P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\AwareClassLibrary.pdb

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.Model
+namespace AwareClassLibrary
 {
     public class Product
     {

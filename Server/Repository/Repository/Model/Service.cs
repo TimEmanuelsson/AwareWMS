@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Repository.Model.DAL;
+using AwareClassLibrary;
 
 namespace Repository.Model
 {
@@ -48,6 +49,14 @@ namespace Repository.Model
         {
             //Kanske någon validering här!
             ProductDAL.InsertAndUpdateProduct(product);
+        }
+
+        public void InsertAndUpdateProductList(List<Product> products)
+        {
+            foreach (Product product in products)
+            {
+                InsertAndUpdateProduct(product);
+            }
         }
 
         #endregion

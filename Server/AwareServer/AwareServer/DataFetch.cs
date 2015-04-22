@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MagentoConnection;
 using Repository.Model;
+using AwareClassLibrary;
 
 namespace AwareServer
 {
@@ -21,7 +22,8 @@ namespace AwareServer
 
         public void FetchAndInsert()
         {
-            
+            List<Product> products = ProductAdapter.AdaptToProducts(connection.GetAllDetailedProducts(connection.GetAllProducts()), connection.GetAllInventory(connection.GetAllProducts()));
+            service.InsertAndUpdateProductList(products);
         }
     }
 }

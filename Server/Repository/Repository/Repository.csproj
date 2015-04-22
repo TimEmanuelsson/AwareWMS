@@ -81,7 +81,6 @@
     <Compile Include="Model\Order.cs" />
     <Compile Include="Model\OrderRow.cs" />
     <Compile Include="Model\OrderStatus.cs" />
-    <Compile Include="Model\Product.cs" />
     <Compile Include="Model\Resize.cs" />
     <Compile Include="Model\Service.cs" />
     <Compile Include="Program.cs" />
@@ -129,6 +128,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Media\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\AwareServer\AwareClassLibrary\AwareClassLibrary.csproj">
+      <Project>{8df3b647-3c5e-4576-80eb-d3f5cf18ab7f}</Project>
+      <Name>AwareClassLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

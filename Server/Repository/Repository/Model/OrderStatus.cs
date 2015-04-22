@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Model
 {
-    class OrderStatus
+    public class OrderStatus
     {
         //Kanske någon input validering
         #region Fields

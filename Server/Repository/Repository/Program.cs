@@ -5,6 +5,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Web.Script.Serialization;
+using AwareClassLibrary;
 //using async_server;
 namespace Repository
 {
@@ -184,7 +185,7 @@ namespace Repository
                             {
                                 string id = content.Replace("GET/products/id=", "");
                                 string json = "";
-                                Repository.Model.Product product = service.GetProductById(int.Parse(id));
+                                Product product = service.GetProductById(int.Parse(id));
                                 //string ret = String.Format("ID: {0} Name: {1} SKU: {2} Quantity: {3} Weight: {4} Shelf: {5}  Barcode Number: {6} Image URL: {7}"
                                 //    , product.ProductId, product.Name, product.SKU, product.Quantity, product.Weight, product.StorageSpace, product.BarcodeNumber, product.ImageLocation);
                                 JavaScriptSerializer serializer = new JavaScriptSerializer();
@@ -195,7 +196,7 @@ namespace Repository
                             {
                                 string sku = content.Replace("GET/products/sku=", "");
                                 string json = "";
-                                Model.Product product = service.GetProductBySKU(int.Parse(sku));
+                                Product product = service.GetProductBySKU(int.Parse(sku));
                                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                                 json += serializer.Serialize(product);
                                 Send(handler, json);
@@ -205,19 +206,19 @@ namespace Repository
                             {
                                 string barcodenumber = content.Replace("GET/products/barcodenumber=", "");
                                 string json = "";
-                                Model.Product product = service.GetProductByBarcodeNumber(int.Parse(barcodenumber));
+                                Product product = service.GetProductByBarcodeNumber(int.Parse(barcodenumber));
                                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                                 json += serializer.Serialize(product);
                                 Send(handler, json);
                             }
                             else if (content.IndexOf("GET/products") > -1)
                             {
-                                IEnumerable<Model.Product> products = service.GetProducts();
+                                IEnumerable<Product> products = service.GetProducts();
 
                                 string json = "";
                                 int i = 0;
 
-                                foreach (Model.Product product in products)
+                                foreach (Product product in products)
                                 {
                                     if (i > 0)
                                     {
@@ -296,7 +297,7 @@ namespace Repository
                 //    {
                 //        JavaScriptSerializer serializer = new JavaScriptSerializer();
                 //        string json = content.Replace("PUT/products/json=", "");
-                //        Repository.Model.Product result = serializer.Deserialize<Repository.Model.Product>(json);
+                //        Product result = serializer.Deserialize<Product>(json);
                 //        Console.WriteLine("ID: {0} Name: {1} SKU: {2} Quantity: {3} Weight: {4} Shelf: {5} Barcode Number: {6} Image URL: {7}"
                 //            , result.ProductId, result.Name, result.SKU, result.Quantity, result.Weight, result.StorageSpace, result.BarcodeNumber, result.ImageLocation);
                 //        Send(handler, json);

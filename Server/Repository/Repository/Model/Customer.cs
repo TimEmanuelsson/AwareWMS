@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Model
 {
-    class Customer
+    public class Customer
     {
         //Kanske någon input validering
 

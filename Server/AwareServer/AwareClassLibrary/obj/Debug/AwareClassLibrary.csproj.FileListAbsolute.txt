@@ -1,0 +1,5 @@
+P:\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\bin\Debug\AwareClassLibrary.dll
+P:\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\bin\Debug\AwareClassLibrary.pdb
+P:\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\obj\Debug\AwareClassLibrary.csprojResolveAssemblyReference.cache
+P:\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\obj\Debug\AwareClassLibrary.dll
+P:\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\obj\Debug\AwareClassLibrary.pdb

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MagentoConnection.Magento;
 using AwareClassLibrary;
+using System.Globalization;
 
 namespace MagentoConnection
 {
@@ -20,8 +21,7 @@ namespace MagentoConnection
                 int quantity = new int();
                 int.TryParse(inventory.First(
                     catalogInventoryStockItemEntity => catalogInventoryStockItemEntity.product_id == magentoProduct.product_id).qty,
-                    out quantity);
-
+                    NumberStyles.Float, CultureInfo.InvariantCulture, out quantity);
                 Product product = AdaptToProduct(magentoProduct, quantity);
                 products.Add(product);
             }
@@ -35,7 +35,7 @@ namespace MagentoConnection
             int.TryParse(magentoProduct.product_id, out productId);
             
             decimal weight = new decimal();
-            decimal.TryParse(magentoProduct.weight, out weight);
+            decimal.TryParse(magentoProduct.weight, NumberStyles.Float, CultureInfo.InvariantCulture, out weight);
 
 
             Product product = new Product(productId, magentoProduct.name, magentoProduct.sku, quantity, weight, "", "", "");

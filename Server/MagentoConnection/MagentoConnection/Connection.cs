@@ -7,7 +7,7 @@ using MagentoConnection.Magento;
 
 namespace MagentoConnection
 {
-    public class Connection
+    class Connection
     {
         private Mage_Api_Model_Server_V2_HandlerPortTypeClient client;
         private string session;

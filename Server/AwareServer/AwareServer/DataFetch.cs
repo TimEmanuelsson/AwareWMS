@@ -11,18 +11,19 @@ namespace AwareServer
 {
     class DataFetch
     {
-        private Connection connection;
+        private MagentoHelper magentoHelper;
         private Service service;
 
         public DataFetch()
         {
-            connection = new Connection();
+            magentoHelper = new MagentoHelper();
             service = new Service();
         }
 
         public void FetchAndInsert()
         {
-            List<Product> products = ProductAdapter.AdaptToProducts(connection.GetAllDetailedProducts(connection.GetAllProducts()), connection.GetAllInventory(connection.GetAllProducts()));
+            List<Product> products = magentoHelper.GetAllProductsWithInventory();
+
             service.InsertAndUpdateProductList(products);
         }
     }

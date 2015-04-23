@@ -46,6 +46,7 @@
     <Compile Include="Connection.cs" />
     <Compile Include="MagentoProduct.cs" />
     <Compile Include="ProductAdapter.cs" />
+    <Compile Include="MagentoHelper.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\Magento\Reference.cs">

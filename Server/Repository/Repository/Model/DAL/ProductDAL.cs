@@ -287,7 +287,7 @@ namespace Repository.Model.DAL
                     SqlCommand cmd = new SqlCommand("dbo.usp_InsertAndUpdateProduct", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.Add("@Id", SqlDbType.Int, 4).Value = product.ProductId;
+                    //cmd.Parameters.Add("@Id", SqlDbType.Int, 4).Value = product.ProductId;
                     cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = product.Name;
                     cmd.Parameters.Add("@SKU", SqlDbType.VarChar, 50).Value = product.SKU;
                     cmd.Parameters.Add("@Quantity", SqlDbType.Int, 6).Value = product.Quantity;

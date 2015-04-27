@@ -2,16 +2,10 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
-
 import main.Main;
 import ServerConnections.GetProducts;
-
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -19,10 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.event.ActionEvent;
 import model.Product;
-
-
 
 public class ProductOverviewController {
     @FXML
@@ -56,9 +47,6 @@ public class ProductOverviewController {
     @FXML
     private Label birthdayLabel;
 
-    // Reference to the main application.
-    private Main mainApp;
-
     /**
      * The constructor.
      * The constructor is called before the initialize() method.
@@ -73,8 +61,6 @@ public class ProductOverviewController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
-      	
-  
     	productId.setCellValueFactory( new PropertyValueFactory<Product,Integer>("productId"));
     	nameColumn.setCellValueFactory( new PropertyValueFactory<Product,String>("name"));
     	skuColumn.setCellValueFactory( new PropertyValueFactory<Product,String>("sku"));
@@ -83,8 +69,6 @@ public class ProductOverviewController {
     	storageSpaceColumn.setCellValueFactory( new PropertyValueFactory<Product,String>("storageSpace"));
     	barcodeNumberColumn.setCellValueFactory( new PropertyValueFactory<Product,String>("barcodeNumber"));
     	imageLocationColumn.setCellValueFactory( new PropertyValueFactory<Product,String>("imageLocation"));
-    	
-    	
     }
 
     /**
@@ -93,34 +77,28 @@ public class ProductOverviewController {
      * @param main
      */
     public void setMainApp(Main main) {
-        this.mainApp = main;
-
         // Add observable list data to the table
         //personTable.setItems(mainApp.getPersonData());
          readAllProducts();
     }
 
-	
     private String stringToGetProducts = "GET/products";
 	private String jsonString = null;
 	private ObservableList<Product> productData = FXCollections.observableArrayList();
 	
-	
 	private void readAllProducts(){
-    
 		ArrayList<Product> jsonProducts = null;
 		GetProducts getProducts = new GetProducts();
 		getProducts.storeConnectionString(stringToGetProducts);
 		jsonString = getProducts.getAllProducts();
 		
-	      //Break down the json-string into separate objects in a temp list
-	        
-	        jsonProducts = new Gson().fromJson(jsonString, new TypeToken<List<Product>>(){}.getType());
-	        	 for (Product product : jsonProducts) {
-					 System.out.println(product);  
-					productData.add(product);
-				}
-	        	 personTable.setItems(productData);   
+	    //Break down the json-string into separate objects in a temp list
+        jsonProducts = new Gson().fromJson(jsonString, new TypeToken<List<Product>>(){}.getType());
+        	 for (Product product : jsonProducts) {
+        		 System.out.println(product);  
+        		 productData.add(product);
+        	 }
+        	 personTable.setItems(productData);   
 	}			
 }
     

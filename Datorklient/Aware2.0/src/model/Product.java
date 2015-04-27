@@ -14,7 +14,9 @@ import javafx.beans.property. StringProperty;
 import javafx.beans.property.StringProperty;
 
 /**
- * Model class for a Product.
+ * Model class for a Person.
+ *
+ * @author Marco Jakob
  */
 public  class Product {
 
@@ -22,6 +24,9 @@ public  class Product {
      * Default constructor.
      */
 
+    
+    
+    
     private int ProductId;
     private String Name;
     private String SKU;
@@ -30,6 +35,8 @@ public  class Product {
     private String StorageSpace;
     private String BarcodeNumber;
     private String ImageLocation;
+    
+    
     
     public void setProductId(int productId) {
         this.ProductId = productId;
@@ -41,6 +48,7 @@ public  class Product {
     public void setName(String name) {
         this.Name = name;
     }
+
 
     public String getName() {
         return Name;
@@ -58,6 +66,7 @@ public  class Product {
         this.Quantity = quantity;
     }
 
+
     public int getQuantity() {
         return Quantity;
     }
@@ -65,11 +74,9 @@ public  class Product {
     public double getWeight() {
         return Weight;
     }
-    
-    public void setWeight(double weight) {
+     public void setWeight(double weight) {
          this.Weight = weight;
-    }
-     
+     }
     public String getStorageSpace() {
         return StorageSpace;
     }
@@ -85,8 +92,18 @@ public  class Product {
     public void setImageLocation(String imageLocation) {
         this.ImageLocation = imageLocation;
     }
-    
     public String getImageLocation() {
          return ImageLocation;
-    }   
+     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

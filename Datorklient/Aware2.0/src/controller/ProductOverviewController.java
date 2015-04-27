@@ -73,6 +73,8 @@ public class ProductOverviewController {
     @FXML
     private void initialize() {
         // Initialize the person table with the two columns.
+      	
+  
     	productId.setCellValueFactory( new PropertyValueFactory<Product,Integer>("productId"));
     	nameColumn.setCellValueFactory( new PropertyValueFactory<Product,String>("name"));
     	skuColumn.setCellValueFactory( new PropertyValueFactory<Product,String>("sku"));
@@ -80,7 +82,9 @@ public class ProductOverviewController {
     	weightColumn.setCellValueFactory( new PropertyValueFactory<Product,Double>("weight"));
     	storageSpaceColumn.setCellValueFactory( new PropertyValueFactory<Product,String>("storageSpace"));
     	barcodeNumberColumn.setCellValueFactory( new PropertyValueFactory<Product,String>("barcodeNumber"));
-    	imageLocationColumn.setCellValueFactory( new PropertyValueFactory<Product,String>("imageLocation"));	
+    	imageLocationColumn.setCellValueFactory( new PropertyValueFactory<Product,String>("imageLocation"));
+    	
+    	
     }
 
     /**
@@ -113,7 +117,7 @@ public class ProductOverviewController {
 	        
 	        jsonProducts = new Gson().fromJson(jsonString, new TypeToken<List<Product>>(){}.getType());
 	        	 for (Product product : jsonProducts) {
-	        		System.out.println("SDASDSADADASDS");
+					 System.out.println(product);  
 					productData.add(product);
 				}
 	        	 personTable.setItems(productData);   

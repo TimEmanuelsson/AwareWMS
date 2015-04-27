@@ -70,17 +70,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AwareDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Model\Customer.cs" />
     <Compile Include="Model\DAL\CustomerDAL.cs" />
     <Compile Include="Model\DAL\OrderDAL.cs" />
     <Compile Include="Model\DAL\OrderRowDAL.cs" />
     <Compile Include="Model\OrderStatusDAL.cs" />
     <Compile Include="Model\DAL\ProductDAL.cs" />
-    <Compile Include="Model\Exception.cs" />
-    <Compile Include="Model\DAL\ExceptionDAL.cs" />
-    <Compile Include="Model\Order.cs" />
-    <Compile Include="Model\OrderRow.cs" />
-    <Compile Include="Model\OrderStatus.cs" />
+    <Compile Include="Model\DAL\ExceptionLogDAL.cs" />
     <Compile Include="Model\Resize.cs" />
     <Compile Include="Model\Service.cs" />
     <Compile Include="Program.cs" />

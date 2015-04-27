@@ -155,17 +155,17 @@ namespace Repository.Model
 
         #region Exception methods
 
-        private ExceptionDAL _exceptionDAL;
+        private ExceptionLogDAL _exceptionLogDAL;
 
-        private ExceptionDAL ExceptionDAL
+        private ExceptionLogDAL ExceptionLogDAL
         {
-            get { return _exceptionDAL ?? (_exceptionDAL = new ExceptionDAL()); }
+            get { return _exceptionLogDAL ?? (_exceptionLogDAL = new ExceptionLogDAL()); }
         }
 
-        public void InsertException(Exception exception)
+        public void InsertException(ExceptionLog exception)
         {
             //Kanske någon validering här!
-            ExceptionDAL.InsertException(exception);
+            ExceptionLogDAL.InsertException(exception);
         }
 
         #endregion

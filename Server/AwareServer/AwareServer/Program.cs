@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace AwareServer
 {
@@ -14,6 +15,13 @@ namespace AwareServer
         /// </summary>
         static void Main()
         {
+
+            HttpListener listener = new HttpListener();
+            listener.Start();
+            HttpListenerContext context = listener.GetContext();
+            HttpListenerRequest request = context.Request;
+
+            request.
 
             // Temporary test code:
             DataFetch dataFetch = new DataFetch();

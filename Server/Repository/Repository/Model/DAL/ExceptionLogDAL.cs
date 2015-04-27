@@ -4,10 +4,11 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using AwareClassLibrary;
 
 namespace Repository.Model
 {
-    class ExceptionDAL
+    class ExceptionLogDAL
     {
         #region Fields
 
@@ -17,7 +18,7 @@ namespace Repository.Model
 
         #region Constructor
 
-        static ExceptionDAL() 
+        static ExceptionLogDAL() 
         {
             //Get connectionstring
             _connectionString = Repository.Properties.Settings.Default.AwareConnectionString;
@@ -37,7 +38,7 @@ namespace Repository.Model
 
         #region CRUD Functions
 
-        public void InsertException(Exception exception)
+        public void InsertException(ExceptionLog exception)
         {
             using (SqlConnection conn = CreateConnection())
             {

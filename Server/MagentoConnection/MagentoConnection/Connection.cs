@@ -120,5 +120,11 @@ namespace MagentoConnection
         }
 
         #endregion
+
+        #region Customers
+
+
+
+        #endregion
     }
 }

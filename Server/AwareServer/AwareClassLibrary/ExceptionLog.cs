@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository.Model
+namespace AwareClassLibrary
 {
-    public class Exception
+    public class ExceptionLog
     {
         #region Fields
 
@@ -20,7 +20,7 @@ namespace Repository.Model
 
         #region Constructor
 
-        public Exception(int id, string exception_type, string message, string source, string stacktrace)
+        public ExceptionLog(int id, string exception_type, string message, string source, string stacktrace)
         {
             Id = id;
             Exception_Type = exception_type;

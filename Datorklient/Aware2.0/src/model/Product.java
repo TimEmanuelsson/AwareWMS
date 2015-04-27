@@ -1,80 +1,81 @@
 package model;
+
 /**
  * Model class for a Person.
  *
  * @author Marco Jakob
  */
-public  class Product {
+public class Product {
 
-    /**
-     * Default constructor.
-     */
-    private int ProductId;
-    private String Name;
-    private String SKU;
-    private int Quantity;
-    private double Weight;
-    private String StorageSpace;
-    private String BarcodeNumber;
-    private String ImageLocation;
-    
-    public void setProductId(int productId) {
-        this.ProductId = productId;
-    }
-    
-    public int getProductId() {
-        return ProductId;
-    }
+	/**
+	 * Default constructor.
+	 */
+	private int ProductId;
+	private String Name;
+	private String SKU;
+	private int Quantity;
+	private double Weight;
+	private String StorageSpace;
+	private String BarcodeNumber;
+	private String ImageLocation;
 
-    public void setName(String name) {
-        this.Name = name;
-    }
+	public void setProductId(int productId) {
+		this.ProductId = productId;
+	}
 
-    public String getName() {
-        return Name;
-    }
+	public int getProductId() {
+		return ProductId;
+	}
 
-    public void setSKU(String sku) {
-        this.SKU = sku;
-    }
+	public void setName(String name) {
+		this.Name = name;
+	}
 
-    public String getSKU() {
-        return SKU;
-    }
+	public String getName() {
+		return Name;
+	}
 
-    public void setQuantity(int quantity) {
-        this.Quantity = quantity;
-    }
+	public void setSKU(String sku) {
+		this.SKU = sku;
+	}
 
-    public int getQuantity() {
-        return Quantity;
-    }
+	public String getSKU() {
+		return SKU;
+	}
 
-    public double getWeight() {
-        return Weight;
-    }
-    
-    public void setWeight(double weight) {
-         this.Weight = weight;
-    }
-     
-    public String getStorageSpace() {
-        return StorageSpace;
-    }
+	public void setQuantity(int quantity) {
+		this.Quantity = quantity;
+	}
 
-    public void setStorageSpace(String storageSpace) {
-        this.StorageSpace = storageSpace;
-    }
+	public int getQuantity() {
+		return Quantity;
+	}
 
-    public String getBarcodeNumber() {
-        return BarcodeNumber;
-    }
+	public double getWeight() {
+		return Weight;
+	}
 
-    public void setImageLocation(String imageLocation) {
-        this.ImageLocation = imageLocation;
-    }
-    
-    public String getImageLocation() {
-         return ImageLocation;
-    }   
+	public void setWeight(double weight) {
+		this.Weight = weight;
+	}
+
+	public String getStorageSpace() {
+		return StorageSpace;
+	}
+
+	public void setStorageSpace(String storageSpace) {
+		this.StorageSpace = storageSpace;
+	}
+
+	public String getBarcodeNumber() {
+		return BarcodeNumber;
+	}
+
+	public void setImageLocation(String imageLocation) {
+		this.ImageLocation = imageLocation;
+	}
+
+	public String getImageLocation() {
+		return ImageLocation;
+	}
 }

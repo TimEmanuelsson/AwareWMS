@@ -1,21 +1,26 @@
 package controller;
 
+
 import java.util.ArrayList;
 import java.util.List;
-import main.Main;
-import ServerConnections.GetProducts;
+
+import application.Main;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Product;
+import model.product.Product;
+import model.product.ProductModel;
 
-public class ProductOverviewController {
+public class ProductController {
 	@FXML
 	private TableView<Product> personTable;
 	@FXML
@@ -35,24 +40,9 @@ public class ProductOverviewController {
 	@FXML
 	private TableColumn<Product, String> imageLocationColumn;
 	@FXML
-	private Label firstNameLabel;
-	@FXML
-	private Label lastNameLabel;
-	@FXML
-	private Label streetLabel;
-	@FXML
-	private Label postalCodeLabel;
-	@FXML
-	private Label cityLabel;
-	@FXML
-	private Label birthdayLabel;
+	private Button s;
 
-	/**
-	 * The constructor. The constructor is called before the initialize()
-	 * method.
-	 */
-	public ProductOverviewController() {
-	}
+	
 
 	/**
 	 * Initializes the controller class. This method is automatically called
@@ -88,7 +78,7 @@ public class ProductOverviewController {
 
 	private void readAllProducts() {
 		ArrayList<Product> jsonProducts = null;
-		GetProducts getProducts = new GetProducts();
+		ProductModel getProducts = new ProductModel();
 		getProducts.storeConnectionString(stringToGetProducts);
 		jsonString = getProducts.getAllProducts();
 
@@ -100,4 +90,7 @@ public class ProductOverviewController {
 		}
 		personTable.setItems(productData);
 	}
+
+
+	
 }

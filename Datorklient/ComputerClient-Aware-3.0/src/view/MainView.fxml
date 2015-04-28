@@ -5,21 +5,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml" fx:controller="controller.MainController">
+<AnchorPane prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.MainController">
    <children>
-      <SplitPane dividerPositions="0.29797979797979796" fx:id="MainSplit" layoutX="7.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <SplitPane fx:id="MainSplit" dividerPositions="0.3008595988538682" layoutX="7.0" prefHeight="160.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="50.0">
                <children>
-                  <Button layoutY="121.0" fx:id="1" onAction="#onMenuClick" mnemonicParsing="false" text="Produkter"  AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                  <Button layoutY="146.0" fx:id="2" onAction="#onMenuClick" mnemonicParsing="false" text="Ordrar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                  <Button layoutY="171.0" fx:id="3" onAction="#onMenuClick" mnemonicParsing="false" text="Returer" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                  <Button layoutY="196.0" fx:id="4" onAction="#onMenuClick" mnemonicParsing="false" text="Inventering" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                  <Button layoutY="221.0" fx:id="5" onAction="#onMenuClick" mnemonicParsing="false" text="Inleverans" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Button fx:id="1" layoutY="121.0" mnemonicParsing="false" onAction="#onMenuClick" text="Produkter" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Button fx:id="2" layoutY="146.0" mnemonicParsing="false" onAction="#onMenuClick" text="Ordrar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Button fx:id="3" layoutY="171.0" mnemonicParsing="false" onAction="#onMenuClick" text="Returer" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Button fx:id="4" layoutY="196.0" mnemonicParsing="false" onAction="#onMenuClick" text="Inventering" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Button fx:id="5" layoutY="221.0" mnemonicParsing="false" onAction="#onMenuClick" text="Inleverans" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+            <TabPane fx:id="Tab" />
         </items>
       </SplitPane>
    </children>

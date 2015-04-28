@@ -1,22 +1,17 @@
 package application;
-	
-
-
 import java.io.IOException;
-
 import controller.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-
 
 public class Main extends Application {
 	private BorderPane root;
 	private Scene scene;
+	
 	@Override
 	public void start(Stage primaryStage) {		
 		try {
@@ -31,7 +26,6 @@ public class Main extends Application {
 			// Exception gets thrown if the fxml file could not be loaded
 			e.printStackTrace();
 		}
-		
 	}
 	
 	private void LoadMenu() {
@@ -41,19 +35,15 @@ public class Main extends Application {
 			AnchorPane overviewPage = (AnchorPane) loader.load();
 			root.setCenter(overviewPage);
 			
-			//Behöver vi detta?
 			MainController controller = loader.getController();
-		//	controller.setMainApp(this);
 			controller.setScene(scene);
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded
 			e.printStackTrace();
 		}
 	}
-
 	
 	public static void main(String[] args) {
 		launch(args);
-		
 	}
 }

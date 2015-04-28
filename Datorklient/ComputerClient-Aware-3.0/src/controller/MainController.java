@@ -1,26 +1,25 @@
 package controller;
-
 import java.io.IOException;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import application.Main;
-
-
 
 public class MainController {
 	
-	private Main main;
+	//private Main main;
 	private AnchorPane root;
+	@FXML
 	private SplitPane splitpane;
-	public void setMainApp(Main mainApp) {
-		this.main = mainApp;
-	}
+	
+	//Behöver vi detta?
+	
+	//public void setMainApp(Main mainApp) {
+		//this.main = mainApp;
+	//}
 	
 	@FXML
 	public void onMenuClick(ActionEvent getButtonId) {
@@ -30,17 +29,13 @@ public class MainController {
 
 		 switch (clickedBtn.getId()) {
 		case "1":
-			AnchorPane pane;
 			try {
-			//	MainController controller = loader.getController();
-			//	controller.setMainApp(this);
-				pane = (AnchorPane) FXMLLoader.load(MainController.class.getResource("../view/ProductView.fxml"));
-				splitpane.getItems().set(1, pane);
+				root = FXMLLoader.load(MainController.class.getResource("../view/ProductView.fxml")); 
+				System.out.println(root);
+				splitpane.getItems().set(1, root);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
 
 			System.out.println("Product");
 			break;

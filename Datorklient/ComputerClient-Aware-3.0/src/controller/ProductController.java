@@ -1,17 +1,11 @@
 package controller;
-
-
 import java.util.ArrayList;
 import java.util.List;
-
 import application.Main;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;

@@ -16,14 +16,14 @@ import javafx.scene.layout.BorderPane;
 
 public class Main extends Application {
 	private BorderPane root;
-	
+	private Scene scene;
 	@Override
 	public void start(Stage primaryStage) {		
 		try {
 			// Load the root layout from the fxml file
 			FXMLLoader loader = new FXMLLoader(Main.class.getResource("../view/RootLayout.fxml"));
 			root = (BorderPane) loader.load();
-			Scene scene = new Scene(root);
+			scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			LoadMenu();
@@ -42,9 +42,9 @@ public class Main extends Application {
 			root.setCenter(overviewPage);
 			
 			//Behöver vi detta?
-			//MainController controller = loader.getController();
-			//controller.setMainApp(this);
-			
+			MainController controller = loader.getController();
+		//	controller.setMainApp(this);
+			controller.setScene(scene);
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded
 			e.printStackTrace();

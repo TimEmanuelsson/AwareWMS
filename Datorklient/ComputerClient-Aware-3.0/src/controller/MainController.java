@@ -1,8 +1,10 @@
 package controller;
 import java.io.IOException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.AnchorPane;
@@ -14,12 +16,13 @@ public class MainController {
 	private AnchorPane root;
 	@FXML
 	private SplitPane splitpane;
+	private Scene scene;
 	
 	//Behöver vi detta?
 	
-	//public void setMainApp(Main mainApp) {
-		//this.main = mainApp;
-	//}
+	public void setScene(Scene mainScene) {
+		this.scene = mainScene;
+	}
 	
 	@FXML
 	public void onMenuClick(ActionEvent getButtonId) {
@@ -29,10 +32,14 @@ public class MainController {
 
 		 switch (clickedBtn.getId()) {
 		case "1":
+			//TODO FIXA METODER TILL SWITCH
+			
 			try {
 				root = FXMLLoader.load(MainController.class.getResource("../view/ProductView.fxml")); 
-				System.out.println(root);
-				splitpane.getItems().set(1, root);
+				
+				splitpane = (SplitPane) scene.lookup("#MainSplit");
+
+				splitpane.getItems().set(1 , root);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -55,5 +62,6 @@ public class MainController {
 			break;
 		}
 	}
+
 		
 }

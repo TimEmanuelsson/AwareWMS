@@ -16,7 +16,8 @@ public class OpenConnection {
 		int dstPort = 0;
 
 		try {
-			serverAddr = InetAddress.getByName("78.73.137.154");
+			//78.73.137.154
+			serverAddr = InetAddress.getByName("192.168.1.64");
 			dstPort = 11000;
 
 		} catch (UnknownHostException e1) {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="productDetailsView" prefHeight="100.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="productIdLabel" layoutX="707.0" layoutY="741.0" text="Id" />
+      <Label fx:id="nameLabel" layoutX="698.0" layoutY="44.0" text="name" />
+      <Label fx:id="skuLabel" layoutX="159.0" layoutY="195.0" text="sku" />
+      <Label fx:id="quantityLabel" layoutX="51.0" layoutY="53.0" text="quantity" />
+      <Label fx:id="weightLabel" layoutX="155.0" layoutY="446.0" text="weight" />
+      <Label fx:id="storageSpaceLabel" layoutX="444.0" layoutY="195.0" text="storageSpace" />
+      <Label fx:id="barcodeNumberLabel" layoutX="416.0" layoutY="517.0" text="barcodeNumber" />
+      <Label fx:id="imageLocationLabel" layoutX="59.0" layoutY="724.0" text="imageLocation" />
+      
+   </children>
+</AnchorPane>

@@ -8,12 +8,15 @@ import application.Main;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -21,6 +24,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import model.Context;
 import model.product.Product;
 import model.product.ProductModel;
 
@@ -43,10 +48,35 @@ public class ProductController {
 	private TableColumn<Product, String> barcodeNumberColumn;
 	@FXML
 	private TableColumn<Product, String> imageLocationColumn;
-	final Tab tab = new Tab();
+	@FXML
+	private Label productIdLabel;
+	@FXML
+	private Label nameLabel;
+	@FXML
+	private Label skuLabel;
+	@FXML
+	private Label quantityLabel;
+	@FXML
+	private Label weightLabel;
+	@FXML
+	private Label storageSpaceLabel;
+	@FXML
+	private Label barcodeNumberLabel;
+	@FXML
+	private Label imageLocationLabel;
+
 	
-	public void doControll(AnchorPane root, SplitPane splitpane, Scene scene, TabPane tabpane) {
+	
+	private AnchorPane root;
+	private SplitPane splitpane;
+	private Scene scene;
+	private TabPane tabpane;
+	private Tab tab = new Tab();
+	public void doControll(Scene scene) {
 		try {
+
+			    this.scene = scene;
+			    
 				root = FXMLLoader.load(ProductController.class.getResource("../view/ProductView.fxml")); 
 				splitpane = (SplitPane) scene.lookup("#MainSplit");
 				tabpane = (TabPane) scene.lookup("#Tab");
@@ -60,13 +90,16 @@ public class ProductController {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Initializes the controller class. This method is automatically called
 	 * after the fxml file has been loaded.
+	 * @param scene 
 	 */
 	@FXML
-	private void initialize() {
+	public void initialize() {
+		//scene = Context.getInstance().currentMain().getScene();
+		//System.out.println(scene);
 		// Initialize the person table with the two columns.
 		productId.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productId"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("name"));
@@ -77,6 +110,18 @@ public class ProductController {
 		barcodeNumberColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("barcodeNumber"));
 		imageLocationColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("imageLocation"));
 		readAllProducts();
+		// clear person
+		//showProductDetails(null);
+		
+		// Listen for selection changes
+					productTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
+						@Override
+						public void changed(ObservableValue<? extends Product> observable,
+								Product oldValue, Product newValue) {
+							
+							showProductDetails(newValue);
+						}
+					});
 	}
 
 	/**
@@ -107,4 +152,56 @@ public class ProductController {
 		}
 		productTable.setItems(productData);
 	}	
+	
+	private void editProducts() {
+		Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
+		if (selectedProduct != null) {
+			/*boolean okClicked = main.showPersonEditDialog(selectedProduct);
+			if (okClicked) {
+				refreshProductTable();
+				showProductDetails(selectedProduct);
+			}*/
+			
+		}
+	}
+
+	// fx:controller="controller.ProductController" <- KALLA PÅ DEN I SAMMA CLASS SOM DEN PEKAR PÅ GÅR EJ.
+	private void showProductDetails(Product product) {
+		try {
+			System.out.println(this.scene);
+			//root =  FXMLLoader.load(ProductController.class.getResource("../view/ProductDetailsView.fxml"));
+			AnchorPane pane = (AnchorPane) FXMLLoader.load(ProductController.class.getResource("../view/ProductDetailsView.fxml"));
+			
+			splitpane = (SplitPane) scene.lookup("#MainSplit");
+			splitpane.getItems().set(1 , pane);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+		if (product != null) {
+			productIdLabel.setText(Integer.toString(product.getProductId()));
+			nameLabel.setText(product.getName());
+			skuLabel.setText(product.getSKU());
+			quantityLabel.setText(Integer.toString(product.getQuantity()));
+			weightLabel.setText(Double.toString(product.getWeight()));
+			storageSpaceLabel.setText(product.getStorageSpace());
+			barcodeNumberLabel.setText(product.getBarcodeNumber());
+			imageLocationLabel.setText(product.getImageLocation());
+		} 
+		/*	else {
+			firstNameLabel.setText("");
+			lastNameLabel.setText("");
+			streetLabel.setText("");
+			postalCodeLabel.setText("");
+			cityLabel.setText("");
+			birthdayLabel.setText("");
+			
+		}*/
+	}
+
+	private void refreshProductTable() {
+		// TODO Auto-generated method stub
+		
+	}
 }

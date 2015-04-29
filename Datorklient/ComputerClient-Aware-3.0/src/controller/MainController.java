@@ -33,7 +33,8 @@ public class MainController {
 		 switch (clickedBtn.getId()) {
 		case "1":
 			ProductController productControll = new ProductController();
-			productControll.doControll(root, splitpane, scene, tabpane);
+			productControll.doControll(scene);
+			
 			System.out.println("Product");
 			break;
 		case "2":
@@ -53,5 +54,7 @@ public class MainController {
 		}
 	}
 
-		
+		public Scene getScene(){
+			return this.scene;
+		}
 }

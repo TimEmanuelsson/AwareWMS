@@ -20,15 +20,16 @@ public class Main extends Application {
 			root = (BorderPane) loader.load();
 			scene = new Scene(root);
 			primaryStage.setScene(scene);
+			primaryStage.setTitle("Aware");
 			primaryStage.show();
-			LoadMenu();
+			loadMenu();
 		} catch (IOException e) {
 			// Exception gets thrown if the fxml file could not be loaded
 			e.printStackTrace();
 		}
 	}
 	
-	private void LoadMenu() {
+	private void loadMenu() {
 		try {
 			// Load the fxml file and set into the center of the main layout
 			FXMLLoader loader = new FXMLLoader(Main.class.getResource("../view/MainView.fxml"));
@@ -45,5 +46,10 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	public Scene getScene() {
+		return scene;
+		
 	}
 }

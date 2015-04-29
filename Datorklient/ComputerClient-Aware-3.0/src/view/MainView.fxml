@@ -14,11 +14,11 @@
               <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                      <children>
-                        <Button fx:id="1" layoutX="78.0" layoutY="27.0" mnemonicParsing="false" onAction="#onMenuClick" text="Produkter" />
-                        <Button fx:id="2" layoutX="78.0" layoutY="52.0" mnemonicParsing="false" onAction="#onMenuClick" text="Ordrar" />
-                        <Button fx:id="3" layoutX="69.0" layoutY="77.0" mnemonicParsing="false" onAction="#onMenuClick" text="Returer" />
-                        <Button fx:id="4" layoutX="58.0" layoutY="103.0" mnemonicParsing="false" onAction="#onMenuClick" text="Inventering" />
-                        <Button fx:id="5" layoutX="61.0" layoutY="128.0" mnemonicParsing="false" onAction="#onMenuClick" text="Inleverans" />
+                        <Button fx:id="1" layoutX="58.0" layoutY="27.0" mnemonicParsing="false" onAction="#onMenuClick" text="Produkter" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <Button fx:id="2" layoutX="58.0" layoutY="52.0" mnemonicParsing="false" onAction="#onMenuClick" text="Ordrar" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <Button fx:id="3" layoutX="59.0" layoutY="77.0" mnemonicParsing="false" onAction="#onMenuClick" text="Returer" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <Button fx:id="4" layoutX="58.0" layoutY="103.0" mnemonicParsing="false" onAction="#onMenuClick" text="Inventering" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                        <Button fx:id="5" layoutX="58.0" layoutY="128.0" mnemonicParsing="false" onAction="#onMenuClick" text="Inleverans" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
                      </children>
                   </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="207.0" />

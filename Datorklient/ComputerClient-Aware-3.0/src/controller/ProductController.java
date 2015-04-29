@@ -72,12 +72,19 @@ public class ProductController {
 	private Scene scene;
 	private TabPane tabpane;
 	private Tab tab = new Tab();
+	private ProductController controller;
 	public void doControll(Scene scene) {
 		try {
 
-			    this.scene = scene;
-			    
-				root = FXMLLoader.load(ProductController.class.getResource("../view/ProductView.fxml")); 
+			   
+			   
+				//root = FXMLLoader.load(ProductController.class.getResource("../view/ProductView.fxml")); 
+				 FXMLLoader loader = new FXMLLoader(Main.class.getResource("../view/ProductView.fxml"));
+				 root = (AnchorPane) loader.load();
+				 controller = loader.getController();
+				 controller.setScene(scene);
+				
+				
 				splitpane = (SplitPane) scene.lookup("#MainSplit");
 				tabpane = (TabPane) scene.lookup("#Tab");
 				splitpane.getItems().set(1 , tabpane);
@@ -168,12 +175,12 @@ public class ProductController {
 	// fx:controller="controller.ProductController" <- KALLA PÅ DEN I SAMMA CLASS SOM DEN PEKAR PÅ GÅR EJ.
 	private void showProductDetails(Product product) {
 		try {
-			System.out.println(this.scene);
+			
 			//root =  FXMLLoader.load(ProductController.class.getResource("../view/ProductDetailsView.fxml"));
 			AnchorPane pane = (AnchorPane) FXMLLoader.load(ProductController.class.getResource("../view/ProductDetailsView.fxml"));
 			
 			splitpane = (SplitPane) scene.lookup("#MainSplit");
-			splitpane.getItems().set(1 , pane);
+			splitpane.getItems().set(0 , pane);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -203,5 +210,8 @@ public class ProductController {
 	private void refreshProductTable() {
 		// TODO Auto-generated method stub
 		
+	}
+	public void setScene(Scene mainScene) {
+		this.scene = mainScene;
 	}
 }

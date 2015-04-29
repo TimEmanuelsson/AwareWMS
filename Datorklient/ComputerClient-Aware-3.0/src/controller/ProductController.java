@@ -48,22 +48,7 @@ public class ProductController {
 	private TableColumn<Product, String> barcodeNumberColumn;
 	@FXML
 	private TableColumn<Product, String> imageLocationColumn;
-	@FXML
-	private Label productIdLabel;
-	@FXML
-	private Label nameLabel;
-	@FXML
-	private Label skuLabel;
-	@FXML
-	private Label quantityLabel;
-	@FXML
-	private Label weightLabel;
-	@FXML
-	private Label storageSpaceLabel;
-	@FXML
-	private Label barcodeNumberLabel;
-	@FXML
-	private Label imageLocationLabel;
+
 
 	
 	
@@ -178,16 +163,27 @@ public class ProductController {
 			
 			//root =  FXMLLoader.load(ProductController.class.getResource("../view/ProductDetailsView.fxml"));
 			AnchorPane pane = (AnchorPane) FXMLLoader.load(ProductController.class.getResource("../view/ProductDetailsView.fxml"));
+			splitpane = (SplitPane) scene.lookup("#ShowProductsPane");
 			
-			splitpane = (SplitPane) scene.lookup("#MainSplit");
-			splitpane.getItems().set(0 , pane);
+			splitpane.getItems().set(1 , pane);
+			
+		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		
 		if (product != null) {
-			productIdLabel.setText(Integer.toString(product.getProductId()));
+			Label productIdLabel = (Label) scene.lookup("#productIdLabel");
+			Label nameLabel = (Label) scene.lookup("#nameLabel");
+			Label skuLabel = (Label) scene.lookup("#skuLabel");
+			Label quantityLabel = (Label) scene.lookup("#quantityLabel");
+			Label weightLabel = (Label) scene.lookup("#weightLabel");
+			Label storageSpaceLabel = (Label) scene.lookup("#storageSpaceLabel");
+			Label barcodeNumberLabel = (Label) scene.lookup("#barcodeNumberLabel");
+			Label imageLocationLabel = (Label) scene.lookup("#imageLocationLabel");
+			
+			productIdLabel.setText(Integer.toString(product.getProductId())); 
 			nameLabel.setText(product.getName());
 			skuLabel.setText(product.getSKU());
 			quantityLabel.setText(Integer.toString(product.getQuantity()));

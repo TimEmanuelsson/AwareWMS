@@ -158,13 +158,12 @@ namespace AwareServer
 
                 if (content.IndexOf("products") > -1)
                 {
-                    // TODO: Gör så denna  funkar :')
                     try
                     {
-                        JavaScriptSerializer serializer = new JavaScriptSerializer();
                         json = content.Replace("PUT/products/json=", "");
-                        Product result = serializer.Deserialize<Product>(json);
-                        service.InsertAndUpdateProduct(result);
+                        Product result = JsonConvert.DeserializeObject<Product>(json);
+                        service.UpdateProduct(result);
+                        ret = "";
                     }
                     catch (Exception e)
                     {
@@ -179,7 +178,7 @@ namespace AwareServer
                         JavaScriptSerializer serializer = new JavaScriptSerializer();
                         json = content.Replace("PUT/customers/json=", "");
                         Customer result = serializer.Deserialize<Customer>(json);
-                        service.InsertAndUpdateCustomer(result);
+                        //service.UpdateCustomer(result);
                     }
                     catch (Exception e)
                     {

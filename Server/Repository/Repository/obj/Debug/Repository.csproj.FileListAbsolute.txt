@@ -24,3 +24,13 @@ P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Repository.exe
 P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Repository.pdb
 P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\AwareClassLibrary.dll
 P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\AwareClassLibrary.pdb
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\Repository\Repository\obj\Debug\Repository.csprojResolveAssemblyReference.cache
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\Repository\Repository\bin\Debug\Aware.mdf
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\Repository\Repository\bin\Debug\Aware_log.ldf
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\Repository\Repository\bin\Debug\Repository.exe.config
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\Repository\Repository\bin\Debug\Repository.exe
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\Repository\Repository\bin\Debug\Repository.pdb
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\Repository\Repository\bin\Debug\AwareClassLibrary.dll
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\Repository\Repository\bin\Debug\AwareClassLibrary.pdb
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\Repository\Repository\obj\Debug\Repository.exe
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\Repository\Repository\obj\Debug\Repository.pdb

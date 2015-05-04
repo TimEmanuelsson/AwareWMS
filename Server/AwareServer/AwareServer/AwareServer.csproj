@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -46,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataFetch.cs" />
+    <Compile Include="InputHandler.cs" />
     <Compile Include="ServerService.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -67,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
     <None Include="Service References\Magento\AwareServer.Magento.apiEntity.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -246,10 +251,12 @@
     <ProjectReference Include="..\..\Repository\Repository\Repository.csproj">
       <Project>{61099bc7-2d78-4e22-b6ec-0bfbdedc0038}</Project>
       <Name>Repository</Name>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\AwareClassLibrary\AwareClassLibrary.csproj">
       <Project>{8df3b647-3c5e-4576-80eb-d3f5cf18ab7f}</Project>
       <Name>AwareClassLibrary</Name>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

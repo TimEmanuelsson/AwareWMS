@@ -22,8 +22,7 @@ namespace Repository.Model.DAL
         static OrderDAL() 
         {
             //Get connectionstring
-            _connectionString = Repository.Properties.Settings.Default.AwareConnectionString;
-            //_connectionString = Repository.Properties.Settings.Default.temp;
+            _connectionString = Repository.Properties.Settings.Default.temp;
         }
 
         #endregion

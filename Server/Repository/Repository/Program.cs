@@ -135,7 +135,7 @@ namespace Repository
                             if (content.IndexOf("GET/orders/id=") > -1)
                             {
                                 string id = content.Replace("GET/orders/id=", "");
-                                Model.Order order = service.GetOrderById(int.Parse(id));
+                                Order order = service.GetOrderById(int.Parse(id));
                                 string json = "";
                                 //string ret = String.Format("ID: {0} Customer ID: {1} Date: {2} Last update: {3} Payment status: {4} Payment method: LÄGG TILL DÅ"
                                 //    , order.OrderId, order.CustomerId, order.Date, order.LastUpdate, order.PaymentStatus);
@@ -153,12 +153,12 @@ namespace Repository
                             //}
                             else if (content.IndexOf("GET/orders") > -1)
                             {
-                                IEnumerable<Model.Order> orders = service.GetOrders();
+                                IEnumerable<Order> orders = service.GetOrders();
 
                                 string json = "";
                                 int i = 0;
 
-                                foreach (Model.Order order in orders)
+                                foreach (Order order in orders)
                                 {
                                     if (i > 0)
                                     {
@@ -246,7 +246,7 @@ namespace Repository
                             {
                                 string id = content.Replace("GET/customers/id=", "");
                                 string json = "";
-                                Repository.Model.Customer customer = service.GetCustomerById(int.Parse(id));
+                                Customer customer = service.GetCustomerById(int.Parse(id));
                                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                                 json += serializer.Serialize(customer);
                                 Send(handler, json);

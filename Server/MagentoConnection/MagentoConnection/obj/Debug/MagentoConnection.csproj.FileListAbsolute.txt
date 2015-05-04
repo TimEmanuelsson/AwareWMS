@@ -12,3 +12,11 @@ P:\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\AwareClas
 P:\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.csprojResolveAssemblyReference.cache
 P:\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.exe
 P:\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.pdb
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\MagentoConnection.exe.config
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\MagentoConnection.exe
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\MagentoConnection.pdb
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\AwareClassLibrary.dll
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\AwareClassLibrary.pdb
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.csprojResolveAssemblyReference.cache
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.exe
+C:\Users\Alexandra\Documents\Aware\Backup\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.pdb

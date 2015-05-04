@@ -17,7 +17,8 @@ namespace AwareServer
         public string GetReturnString(string content)
         {
             Repository.Model.Service service = new Repository.Model.Service();
-            string ret = "Return";
+            string ret = "";
+            string feedback = "";
             #region Get
             // GET
             if (content.IndexOf("GET") > -1)
@@ -163,7 +164,6 @@ namespace AwareServer
                         json = content.Replace("PUT/products/json=", "");
                         Product result = JsonConvert.DeserializeObject<Product>(json);
                         service.UpdateProduct(result);
-                        ret = "";
                     }
                     catch (Exception e)
                     {
@@ -171,20 +171,20 @@ namespace AwareServer
                     }
                 }
 
-                else if (content.IndexOf("customers") > -1)
+                else if (content.IndexOf("orders") > -1)
                 {
                     try
                     {
-                        JavaScriptSerializer serializer = new JavaScriptSerializer();
-                        json = content.Replace("PUT/customers/json=", "");
-                        Customer result = serializer.Deserialize<Customer>(json);
-                        //service.UpdateCustomer(result);
+                        json = content.Replace("PUT/orders/json=", "");
+                        Order result = JsonConvert.DeserializeObject<Order>(json);
+                        service.UpdateOrder(result);
                     }
                     catch (Exception e)
                     {
                         //Kasta något JSON-exception
                     }
                 }
+                return "";
             }
             #endregion
  

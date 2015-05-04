@@ -152,10 +152,10 @@ namespace Repository.Model.DAL
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@Id", SqlDbType.Int, 4).Value = order.Id;
-                    cmd.Parameters.Add("@OrderId", SqlDbType.Int, 4).Value = order.OrderId;
+             //       cmd.Parameters.Add("@OrderId", SqlDbType.Int, 4).Value = order.OrderId;
                     cmd.Parameters.Add("@CustomerId", SqlDbType.Int, 4).Value = order.CustomerId;
                     cmd.Parameters.Add("@OrderStatus", SqlDbType.Int, 4).Value = order.OrderStatus;
-                    cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = order.Date;
+                    cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = order.Date.ToString("yyyy-MM-dd HH:mm:ss");
                     cmd.Parameters.Add("@LastUpdate", SqlDbType.DateTime).Value = order.LastUpdate;
                     cmd.Parameters.Add("@PaymentStatus", SqlDbType.Int, 4).Value = order.PaymentStatus;
 

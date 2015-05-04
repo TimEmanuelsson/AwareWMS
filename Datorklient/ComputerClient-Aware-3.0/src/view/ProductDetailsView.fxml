@@ -15,10 +15,11 @@
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="45.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="23.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="61.0" minHeight="9.0" prefHeight="28.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <Label fx:id="productIdLabel1" text="Id" />
@@ -29,14 +30,14 @@
             <Label fx:id="skuLabel" text="sku" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <Label fx:id="nameLabel" text="name" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label fx:id="productIdLabel" text="Id" GridPane.rowIndex="1" />
-            <Label fx:id="weightLabel1" text="Weight" GridPane.rowIndex="2" />
-            <Label fx:id="weightLabel" text="weight" GridPane.rowIndex="3" />
-            <Label fx:id="storageSpaceLabel1" text="StorageSpace" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Label fx:id="storageSpaceLabel" text="storageSpace" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <Label fx:id="barcodeNumberLabel1" text="BarcodeNumber" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Label fx:id="imageLocationLabel1" text="ImageLocation" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Label fx:id="barcodeNumberLabel" text="barcodeNumber" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-            <Label fx:id="imageLocationLabel" text="imageLocation" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label fx:id="weightLabel1" text="Weight" GridPane.rowIndex="3" />
+            <Label fx:id="weightLabel" text="weight" GridPane.rowIndex="4" />
+            <Label fx:id="storageSpaceLabel1" text="StorageSpace" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label fx:id="storageSpaceLabel" text="storageSpace" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label fx:id="barcodeNumberLabel1" text="BarcodeNumber" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+            <Label fx:id="imageLocationLabel1" text="ImageLocation" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Label fx:id="barcodeNumberLabel" text="barcodeNumber" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+            <Label fx:id="imageLocationLabel" text="imageLocation" GridPane.columnIndex="3" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       

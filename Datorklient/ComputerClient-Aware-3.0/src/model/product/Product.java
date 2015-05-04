@@ -1,9 +1,9 @@
 package model.product;
 
 /**
- * Model class for a Person.
+ * Model class for a Product.
  *
- * @author Marco Jakob
+ * @author Joakim Nilsson
  */
 public class Product {
 
@@ -78,4 +78,6 @@ public class Product {
 	public String getImageLocation() {
 		return ImageLocation;
 	}
+	
+	
 }

@@ -1,13 +1,20 @@
 package controller;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+//import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.swing.*;
 
 import application.Main;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -22,6 +29,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -102,8 +110,6 @@ public class ProductController {
 		barcodeNumberColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("barcodeNumber"));
 		imageLocationColumn.setCellValueFactory(new PropertyValueFactory<Product, String>("imageLocation"));
 		readAllProducts();
-		// clear person
-		//showProductDetails(null);
 		
 		// Listen for selection changes
 					productTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Product>() {
@@ -130,21 +136,61 @@ public class ProductController {
 	private String stringToGetProducts = "GET/products";
 	private String jsonString = null;
 	private ObservableList<Product> productData = FXCollections.observableArrayList();
-
+	private ObservableList<Product> productRefreshData = FXCollections.observableArrayList();
+	private ArrayList<Product> jsonProducts = null;
+	
 	private void readAllProducts() {
-		ArrayList<Product> jsonProducts = null;
+		
 		ProductModel getProducts = new ProductModel();
 		getProducts.storeConnectionString(stringToGetProducts);
 		jsonString = getProducts.getAllProducts();
 
-		// Break down the json-string into separate objects in a temp list
-		jsonProducts = new Gson().fromJson(jsonString, new TypeToken<List<Product>>() {}.getType());
-		for (Product product : jsonProducts) {
-			productData.add(product);
-		}
-		productTable.setItems(productData);
+		
+	    jsonProducts = new Gson().fromJson(jsonString, new TypeToken<List<Product>>() {}.getType());
+	    
+	    //Searches for any updates in the database
+		 Timer timers = new Timer(500, new ActionListener()
+	     {
+	         public void actionPerformed(ActionEvent e)
+	         {
+	        	 //Save the index of the last selected item
+	        		int lastSelectedItem = productTable.getSelectionModel().getSelectedIndex();
+	        	//Staying on the javafx thread
+	     			Platform.runLater(new Runnable() {
+	     		        @Override
+	     		        public void run() {
+	     		        	
+	     		        	if(!productData.equals(productRefreshData)){
+	     		        		
+	     		        		jsonString = getProducts.getAllProducts();
+	     			            jsonProducts = new Gson().fromJson(jsonString, new TypeToken<List<Product>>() {}.getType());
+	    	        			//BUG have to use a copy of the list in order to remove the data from the list
+	        		        	productData.removeAll(productRefreshData);
+	        		        	// Break down the json-string into separate objects in a temp list
+	    	        			for (Product product : jsonProducts) {
+	    	        				productData.add(product);
+	    	        			}
+	    	        			productRefreshData.addAll(productData);
+	    	        		}else{	
+	    	        			productData.removeAll(productRefreshData);
+	    	        			for (Product product : jsonProducts) {
+	    	        				productData.add(product);
+	    	        			}
+	    	        			productRefreshData.addAll(productData);
+	    	        		}
+	     		        	productTable.getSelectionModel().select(lastSelectedItem);
+	    	        		productTable.setItems(productData);	
+	     		        }
+	     		   });		
+	         }
+	     });
+	     timers.setRepeats(true);
+	     timers.setDelay(1000);
+	     timers.start();
 	}	
 	
+
+
 	private void editProducts() {
 		Product selectedProduct = productTable.getSelectionModel().getSelectedItem();
 		if (selectedProduct != null) {
@@ -164,7 +210,7 @@ public class ProductController {
 			//root =  FXMLLoader.load(ProductController.class.getResource("../view/ProductDetailsView.fxml"));
 			AnchorPane pane = (AnchorPane) FXMLLoader.load(ProductController.class.getResource("../view/ProductDetailsView.fxml"));
 			splitpane = (SplitPane) scene.lookup("#ShowProductsPane");
-			
+
 			splitpane.getItems().set(1 , pane);
 			
 		

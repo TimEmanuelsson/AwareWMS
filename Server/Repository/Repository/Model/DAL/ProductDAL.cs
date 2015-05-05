@@ -263,6 +263,7 @@ namespace Repository.Model.DAL
                     cmd.Parameters.Add("@Space", SqlDbType.VarChar, 10).Value = product.StorageSpace;
                     cmd.Parameters.Add("@BarcodeNumber", SqlDbType.VarChar, 30).Value = product.BarcodeNumber;
                     cmd.Parameters.Add("@Image", SqlDbType.VarChar, 128).Value = product.ImageLocation;
+          //          cmd.Parameters.Add("@LastInventory", SqlDbType.DateTime).Value = product.LastInventory;
 
                     //Open database connection.
                     conn.Open();

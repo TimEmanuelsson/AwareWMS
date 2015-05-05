@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using AwareClassLibrary;
 using Newtonsoft.Json;
-//using Repository.Model;
+using Repository.Model;
 
 namespace AwareServer
 {
     class InputHandler
     {
+        public Service service = new Service();
+        ExceptionLog exceptionLog = null;
+        string ret = "";
+
         public string GetReturnString(string content)
-        {
-            Repository.Model.Service service = new Repository.Model.Service();
-            ExceptionLog exceptionLog = null;
-            string ret = "";
-            #region Get
-            // GET
+        {   
             try
             {
+                #region Get
                 if (content.IndexOf("GET") > -1)
                 {
                     if (content.IndexOf("GET/orders") > -1)
@@ -114,7 +114,7 @@ namespace AwareServer
                         throw new System.ArgumentException("Input string is not correctly formatted.");
                     }
                 }
-            #endregion
+                #endregion
                 #region Put
                 // PUT
                 else if (content.IndexOf("PUT") > -1)
@@ -140,13 +140,19 @@ namespace AwareServer
                         throw new System.ArgumentException("Input string is not correctly formatted.");
                     }
                 }
+                else
+                {
+                    ret = "Input string is not correctly formatted.";
+                    throw new System.ArgumentException("Input string is not correctly formatted.");
+                }
+                #endregion
             }
+
             catch (Exception e)
             {
                 exceptionLog = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
                 service.InsertException(exceptionLog);
             }
-            #endregion
  
             return ret;
         }

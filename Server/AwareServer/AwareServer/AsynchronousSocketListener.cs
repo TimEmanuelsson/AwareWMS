@@ -6,12 +6,16 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Repository.Model;
+using AwareClassLibrary;
 
 namespace AwareServer
 {
     public class AsynchronousSocketListener
     {
         public static ManualResetEvent allDone = new ManualResetEvent(false);
+
+        public static Service service = new Service();
 
         public static void StartListening()
         {
@@ -46,11 +50,11 @@ namespace AwareServer
                     // Wait for a connection.
                     allDone.WaitOne();
                 }
-
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
+                service.InsertException(log);
             }
         }
 
@@ -83,7 +87,8 @@ namespace AwareServer
             }
             catch (SocketException e)
             {
-                //
+                ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
+                service.InsertException(log);
             }
 
 
@@ -104,7 +109,8 @@ namespace AwareServer
             }
             catch (Exception e)
             {
-                //
+                ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
+                service.InsertException(log);
             }
         }
 
@@ -124,7 +130,8 @@ namespace AwareServer
             }
             catch (SocketException e)
             {
-                Console.WriteLine("[ERROR]: " + e);
+                ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
+                service.InsertException(log);
             }
         }
 
@@ -145,7 +152,8 @@ namespace AwareServer
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
+                service.InsertException(log);
             }
         }
 

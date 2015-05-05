@@ -22,7 +22,16 @@ namespace AwareServer
         
         public static int Main(String[] args)
         {
-            AsynchronousSocketListener.Start();
+            try
+            {
+                AsynchronousSocketListener.Start();
+            }
+            catch (Exception e)
+            {
+                Service service = new Service();
+                ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
+                service.InsertException(log);
+            }
             return 0;
 
             // Service related code below, uncomment when we can install this shit.

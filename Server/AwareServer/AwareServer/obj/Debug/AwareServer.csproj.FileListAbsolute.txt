@@ -45,3 +45,6 @@ C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\AwareServer\AwareServer\bin\
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\AwareClassLibrary.pdb
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\AwareServer\AwareServer\obj\Debug\AwareServer.csprojResolveAssemblyReference.cache
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\AwareServer.exe.config
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\obj\Debug\AwareServer.exe
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\obj\Debug\AwareServer.pdb

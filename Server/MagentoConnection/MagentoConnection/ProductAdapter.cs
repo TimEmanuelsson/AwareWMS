@@ -37,7 +37,6 @@ namespace MagentoConnection
             decimal weight = new decimal();
             decimal.TryParse(magentoProduct.weight, NumberStyles.Float, CultureInfo.InvariantCulture, out weight);
 
-
             Product product = new Product(productId, magentoProduct.name, magentoProduct.sku, quantity, weight, "", "", "");
             return product;
         }

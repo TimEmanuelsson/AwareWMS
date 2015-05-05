@@ -12,13 +12,10 @@ namespace AwareServer
 {
     class InputHandler
     {
-
-
         public string GetReturnString(string content)
         {
             Repository.Model.Service service = new Repository.Model.Service();
             string ret = "";
-            string feedback = "";
             #region Get
             // GET
             if (content.IndexOf("GET") > -1)

@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsynchronousSocketListener.cs" />
     <Compile Include="DataFetch.cs" />
     <Compile Include="InputHandler.cs" />
     <Compile Include="ServerService.cs">
@@ -68,6 +69,7 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="StateObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

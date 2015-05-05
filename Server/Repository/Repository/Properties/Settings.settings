@@ -2,6 +2,9 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Repository.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
+    <Setting Name="temp" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Data Source=(localdb)\Aware;Initial Catalog=Aware;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False</Value>
+    </Setting>
     <Setting Name="AwareConnectionString" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
@@ -21,8 +24,8 @@ Initial Catalog=Aware;User ID=sa;Password=HejHej123;&lt;/ConnectionString&gt;
       <Value Profile="(Default)">Data Source=78.73.137.154,1433;Network Library=DBMSSOCN;
 Initial Catalog=Aware;User ID=sa;Password=HejHej123;</Value>
     </Setting>
-    <Setting Name="temp" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Data Source=(localdb)\Aware;Initial Catalog=Aware;Integrated Security=True;Connect Timeout=15;Encrypt=False;TrustServerCertificate=False</Value>
+    <Setting Name="IpAddress" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">192.168.1.4</Value>
     </Setting>
   </Settings>
 </SettingsFile>

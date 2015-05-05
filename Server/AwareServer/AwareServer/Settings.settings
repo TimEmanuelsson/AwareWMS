@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="MagentoConnection" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AwareServer" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="Username" Type="System.String" Scope="Application">
@@ -7,6 +7,12 @@
     </Setting>
     <Setting Name="Password" Type="System.String" Scope="Application">
       <Value Profile="(Default)">adminSteve123</Value>
+    </Setting>
+    <Setting Name="IpAddress" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">192.168.1.4</Value>
+    </Setting>
+    <Setting Name="Port" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">11000</Value>
     </Setting>
   </Settings>
 </SettingsFile>

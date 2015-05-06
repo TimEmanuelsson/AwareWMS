@@ -34,7 +34,7 @@ namespace AwareComputerClient.Model
         // The response from the remote device.
         private static string response = String.Empty;
 
-        private static void StartClient(String word)
+        public static void StartClient(String word)
         {
             // Connect to a remote device.
             try
@@ -185,12 +185,10 @@ namespace AwareComputerClient.Model
                 Console.WriteLine(e.ToString());
             }
         }
+
         public AsynchronousClient()
         {
-            String Word = "GET/products";
-            StartClient(Word);
         }
-
 
         public string Response
         {

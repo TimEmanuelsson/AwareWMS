@@ -5,13 +5,13 @@ using System.Threading;
 using System.Text;
 namespace AwareComputerClient.Model
 {
-    // State object for receiving data from remote device.
+    // State object for receiving data from server.
     public class StateObject
     {
         // Client socket.
         public Socket workSocket = null;
         // Size of receive buffer.
-        public const int BufferSize = 256;
+        public const int BufferSize = 10024;
         // Receive buffer.
         public byte[] buffer = new byte[BufferSize];
         // Received data string.
@@ -20,9 +20,6 @@ namespace AwareComputerClient.Model
 
     public class AsynchronousClient
     {
-        // The port number for the remote device.
-        private const int port = 11000;
-
         // ManualResetEvent instances signal completion.
         private static ManualResetEvent connectDone =
             new ManualResetEvent(false);
@@ -31,19 +28,20 @@ namespace AwareComputerClient.Model
         private static ManualResetEvent receiveDone =
             new ManualResetEvent(false);
 
-        // The response from the remote device.
+        // The response from the server.
         private static string response = String.Empty;
 
         public static void StartClient(String word)
         {
-            // Connect to a remote device.
+            // The port and IP for the server.
+            int port = AwareComputerClient.Properties.Settings.Default.Port;
+            String IP = AwareComputerClient.Properties.Settings.Default.IP;
+
+            // Connect to a sever.
             try
             {
-
                 // Establish the remote endpoint for the socket.
-                // The name of the 
-                // remote device is "host.contoso.com".
-                IPHostEntry ipHostInfo = Dns.Resolve("78.73.137.154");
+                IPHostEntry ipHostInfo = Dns.Resolve(IP);
                 IPAddress ipAddress = ipHostInfo.AddressList[0];
                 IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
 
@@ -56,16 +54,13 @@ namespace AwareComputerClient.Model
                     new AsyncCallback(ConnectCallback), client);
                 connectDone.WaitOne();
 
-                // Send test data to the remote device.
+                // Send data to the server.
                 Send(client, word + "<EOF>");
                 sendDone.WaitOne();
 
-                // Receive the response from the remote device.
+                // Receive the response from the server.
                 Receive(client);
                 receiveDone.WaitOne();
-
-                // Write the response to the console.
-                Console.WriteLine("Response received : {0}", response);
 
                 // Release the socket.
                 client.Shutdown(SocketShutdown.Both);
@@ -88,9 +83,6 @@ namespace AwareComputerClient.Model
                 // Complete the connection.
                 client.EndConnect(ar);
 
-                Console.WriteLine("Socket connected to {0}",
-                    client.RemoteEndPoint.ToString());
-
                 // Signal that the connection has been made.
                 connectDone.Set();
             }
@@ -108,7 +100,7 @@ namespace AwareComputerClient.Model
                 StateObject state = new StateObject();
                 state.workSocket = client;
 
-                // Begin receiving the data from the remote device.
+                // Begin receiving the data from the sever.
                 client.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                     new AsyncCallback(ReceiveCallback), state);
             }
@@ -127,7 +119,7 @@ namespace AwareComputerClient.Model
                 StateObject state = (StateObject)ar.AsyncState;
                 Socket client = state.workSocket;
 
-                // Read data from the remote device.
+                // Read data from the sever.
                 int bytesRead = client.EndReceive(ar);
 
                 if (bytesRead > 0)
@@ -141,7 +133,7 @@ namespace AwareComputerClient.Model
                 }
                 else
                 {
-                    // All the data has arrived; put it in response.
+                    // All the data has arrived, put it in response.
                     if (state.sb.Length > 1)
                     {
                         response = state.sb.ToString();
@@ -158,12 +150,19 @@ namespace AwareComputerClient.Model
 
         private static void Send(Socket client, String data)
         {
-            // Convert the string data to byte data using ASCII encoding.
-            byte[] byteData = Encoding.ASCII.GetBytes(data);
+            try
+            {
+                // Convert the string data to byte data using ASCII encoding.
+                byte[] byteData = Encoding.ASCII.GetBytes(data);
 
-            // Begin sending the data to the remote device.
-            client.BeginSend(byteData, 0, byteData.Length, 0,
-                new AsyncCallback(SendCallback), client);
+                // Begin sending the data to the server.
+                client.BeginSend(byteData, 0, byteData.Length, 0,
+                    new AsyncCallback(SendCallback), client);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
         }
 
         private static void SendCallback(IAsyncResult ar)
@@ -173,9 +172,8 @@ namespace AwareComputerClient.Model
                 // Retrieve the socket from the state object.
                 Socket client = (Socket)ar.AsyncState;
 
-                // Complete sending the data to the remote device.
+                // Complete sending the data to the server.
                 int bytesSent = client.EndSend(ar);
-                Console.WriteLine("Sent {0} bytes to server.", bytesSent);
 
                 // Signal that all bytes have been sent.
                 sendDone.Set();
@@ -184,10 +182,6 @@ namespace AwareComputerClient.Model
             {
                 Console.WriteLine(e.ToString());
             }
-        }
-
-        public AsynchronousClient()
-        {
         }
 
         public string Response

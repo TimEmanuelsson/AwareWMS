@@ -70,6 +70,10 @@ public class Product {
 	public String getBarcodeNumber() {
 		return BarcodeNumber;
 	}
+    public void setBarcodeNumber(String barcodeNumber)
+    {
+        this.BarcodeNumber = barcodeNumber;
+    }
 
 	public void setImageLocation(String imageLocation) {
 		this.ImageLocation = imageLocation;

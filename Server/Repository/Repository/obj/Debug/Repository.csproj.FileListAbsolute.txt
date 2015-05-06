@@ -46,3 +46,5 @@ C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\Repository\Repository\obj\De
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\Repository\Repository\obj\Debug\Repository.csprojResolveAssemblyReference.cache
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\Repository\Repository\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\Repository\Repository\bin\Debug\Newtonsoft.Json.xml
+P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Newtonsoft.Json.dll
+P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Newtonsoft.Json.xml

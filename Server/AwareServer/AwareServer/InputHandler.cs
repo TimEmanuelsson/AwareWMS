@@ -123,9 +123,18 @@ namespace AwareServer
 
                     if (content.IndexOf("products") > -1)
                     {
-                        json = content.Replace("PUT/products/json=", "");
-                        Product result = JsonConvert.DeserializeObject<Product>(json);
-                        service.UpdateProduct(result);
+                        if (content.IndexOf("inventory") > -1)
+                        {
+                            json = content.Replace("PUT/products/inventory/json=", "");
+                            Product result = JsonConvert.DeserializeObject<Product>(json);
+                            service.ProductInventory(result);
+                        }
+                        else
+                        {
+                            json = content.Replace("PUT/products/json=", "");
+                            Product result = JsonConvert.DeserializeObject<Product>(json);
+                            service.UpdateProduct(result);
+                        }
                     }
 
                     else if (content.IndexOf("orders") > -1)
@@ -134,6 +143,7 @@ namespace AwareServer
                         Order result = JsonConvert.DeserializeObject<Order>(json);
                         service.UpdateOrder(result);
                     }
+
                     else
                     {
                         ret = "Input string is not correctly formatted.";

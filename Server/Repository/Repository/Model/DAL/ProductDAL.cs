@@ -22,7 +22,7 @@ namespace Repository.Model.DAL
         static ProductDAL() 
         {
             //Get connectionstring
-            _connectionString = Repository.Properties.Settings.Default.AwareConnectionString;
+            _connectionString = Repository.Properties.Settings.Default.temp;
         }
 
         #endregion
@@ -215,20 +215,41 @@ namespace Repository.Model.DAL
                         var SpaceIndex = reader.GetOrdinal("StorageSpace");
                         var BarcodeNumberIndex = reader.GetOrdinal("BarcodeNumber");
                         var ImageIndex = reader.GetOrdinal("ImageLocation");
+                        var LastInventoryIndex = reader.GetOrdinal("LastInventory");
 
                         while (reader.Read())
                         {
-                            Products.Add(new Product
-                            (
-                                reader.GetInt32(ProductIdIndex),
-                                reader.GetString(NameIndex),
-                                reader.GetString(SKUIndex),
-                                reader.GetInt32(QuantityIndex),
-                                reader.GetDecimal(WeightIndex),
-                                reader.GetString(SpaceIndex),
-                                reader.GetString(BarcodeNumberIndex),
-                                reader.GetString(ImageIndex)
-                            ));
+                            if (reader.GetDateTime(LastInventoryIndex) != DateTime.ParseExact("1900-01-01 00:00:00,000", "yyyy-MM-dd HH:mm:ss,fff",
+                                       System.Globalization.CultureInfo.InvariantCulture))
+                            {
+
+                                Products.Add(new Product
+                                (
+                                    reader.GetInt32(ProductIdIndex),
+                                    reader.GetString(NameIndex),
+                                    reader.GetString(SKUIndex),
+                                    reader.GetInt32(QuantityIndex),
+                                    reader.GetDecimal(WeightIndex),
+                                    reader.GetString(SpaceIndex),
+                                    reader.GetString(BarcodeNumberIndex),
+                                    reader.GetString(ImageIndex),
+                                    reader.GetDateTime(LastInventoryIndex)
+                                ));
+                            }
+                            else
+                            {
+                                Products.Add(new Product
+                                (
+                                    reader.GetInt32(ProductIdIndex),
+                                    reader.GetString(NameIndex),
+                                    reader.GetString(SKUIndex),
+                                    reader.GetInt32(QuantityIndex),
+                                    reader.GetDecimal(WeightIndex),
+                                    reader.GetString(SpaceIndex),
+                                    reader.GetString(BarcodeNumberIndex),
+                                    reader.GetString(ImageIndex)
+                                ));
+                            }
                         }
                     }
 
@@ -241,6 +262,33 @@ namespace Repository.Model.DAL
                 {
                     //Throw Exception.
                     throw new ApplicationException("An error occurred while trying to retrieve the products.");
+                }
+            }
+        }
+
+        public void ProductInventory(Product product)
+        {
+            using (SqlConnection conn = CreateConnection())
+            {
+                try
+                {
+                    // Create SqlCommand-objekt that execute stored procedure.
+                    SqlCommand cmd = new SqlCommand("dbo.usp_ProductInventory", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@Id", SqlDbType.Int, 4).Value = product.ProductId;
+                    cmd.Parameters.Add("@Quantity", SqlDbType.Int, 6).Value = product.Quantity;
+                    cmd.Parameters.Add("@LastInventory", SqlDbType.DateTime).Value = product.LastInventory;
+
+                    //Open database connection.
+                    conn.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    //Throw Exception
+                    throw new ApplicationException("An error occurred while trying to update the product.");
                 }
             }
         }

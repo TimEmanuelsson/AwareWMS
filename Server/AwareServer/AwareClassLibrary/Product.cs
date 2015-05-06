@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace AwareClassLibrary
@@ -20,13 +21,14 @@ namespace AwareClassLibrary
         public string StorageSpace { get; set; }
         public string BarcodeNumber { get; set; }
         public string ImageLocation { get; set; }
+        public DateTime LastInventory { get; set; }
 
         #endregion
 
         #region Constructor
 
         public Product(int productId, string name, string sku, int quantity,
-            decimal weight, string storageSpace, string barcodeNumber, string imageLocation)
+    decimal weight, string storageSpace, string barcodeNumber, string imageLocation)
         {
             ProductId = productId;
             Name = name;
@@ -36,6 +38,21 @@ namespace AwareClassLibrary
             StorageSpace = storageSpace;
             BarcodeNumber = barcodeNumber;
             ImageLocation = imageLocation;
+        }
+
+        [JsonConstructor]
+        public Product(int productId, string name, string sku, int quantity,
+            decimal weight, string storageSpace, string barcodeNumber, string imageLocation, DateTime lastInventory)
+        {
+            ProductId = productId;
+            Name = name;
+            SKU = sku;
+            Quantity = quantity;
+            Weight = weight;
+            StorageSpace = storageSpace;
+            BarcodeNumber = barcodeNumber;
+            ImageLocation = imageLocation;
+            LastInventory = lastInventory;
         }
 
         #endregion

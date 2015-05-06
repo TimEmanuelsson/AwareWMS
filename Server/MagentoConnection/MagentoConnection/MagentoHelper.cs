@@ -59,24 +59,27 @@ namespace MagentoConnection
             {
                 foreach (catalogProductImageEntity image in imageArray)
                 {
-                    string[] pathParts = image.file.Split('/');
+                    string[] pathParts = image.file.Split('/'); // Make the filepath into an array and remove forward slashes.
 
                     string filename = pathParts.Last();
                     pathParts = pathParts.Take(pathParts.Count() - 1).ToArray();  // Removes the last element (filename) in the array
 
-                    string path = String.Join("\\", pathParts);
-                    string imageFolderPath = String.Format("{0}{1}{2}", rootPath, "\\Product Images\\", path);
+                    string path = String.Join("\\", pathParts); // Add backslashes to filepath (windows environment).
+                    string imageFolderPath = String.Format("{0}{1}{2}", rootPath, "\\Product Images\\", path); // Make a complete filepath.
 
-                    Directory.CreateDirectory(imageFolderPath);
+                    Directory.CreateDirectory(imageFolderPath); // Create all directories in the path if they don't already exist.
 
                     string filePath = String.Format("{0}{1}", imageFolderPath, filename);
-                    try
+                    if (!File.Exists(filePath))
                     {
-                        webClient.DownloadFile(image.url, filePath);
-                    }
-                    catch (WebException)
-                    {
-                        continue;
+                        try
+                        {
+                            webClient.DownloadFile(image.url, filePath);
+                        }
+                        catch (WebException)
+                        {
+                            continue;
+                        }
                     }
                     /*
                     foreach (PropertyDescriptor desc in TypeDescriptor.GetProperties(image))

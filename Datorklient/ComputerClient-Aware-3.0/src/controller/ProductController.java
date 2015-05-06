@@ -80,6 +80,7 @@ public class ProductController {
 				
 				splitpane = (SplitPane) scene.lookup("#MainSplit");
 				tabpane = (TabPane) scene.lookup("#Tab");
+				System.out.println(tabpane);
 				splitpane.getItems().set(1 , tabpane);
 				tab.setText("Product");
 				tabpane.getTabs().add(tab);
@@ -144,8 +145,8 @@ public class ProductController {
 		ProductModel getProducts = new ProductModel();
 		getProducts.storeConnectionString(stringToGetProducts);
 		jsonString = getProducts.getAllProducts();
-
-		
+System.out.println(jsonString);
+		//TODO: SPARA SORTERINGEN
 	    jsonProducts = new Gson().fromJson(jsonString, new TypeToken<List<Product>>() {}.getType());
 	    
 	    //Searches for any updates in the database

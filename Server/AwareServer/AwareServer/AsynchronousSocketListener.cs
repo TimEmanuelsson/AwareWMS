@@ -98,7 +98,6 @@ namespace AwareServer
                     state.buffer, 0, bytesRead));
 
                 content = state.sb.ToString();
-                Console.WriteLine("Recieved string: {0}", content);
             }
 
             try
@@ -119,7 +118,6 @@ namespace AwareServer
         private static void Send(Socket handler, String data)
         {
             // Convert the string data to byte data using ASCII encoding.
-            Console.WriteLine("Sent data: {0}", data);
             byte[] byteData = Encoding.ASCII.GetBytes(data);
 
             // Begin sending the data to the remote device.
@@ -144,7 +142,6 @@ namespace AwareServer
 
                 // Complete sending the data to the remote device.
                 int bytesSent = handler.EndSend(ar);
-                Console.WriteLine("Sent {0} bytes to client.", bytesSent);
 
                 handler.Shutdown(SocketShutdown.Both);
                 handler.Close();

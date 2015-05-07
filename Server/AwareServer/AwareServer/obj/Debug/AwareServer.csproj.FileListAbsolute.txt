@@ -48,3 +48,5 @@ C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\AwareServer\AwareServer\obj\
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\AwareServer.exe.config
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\obj\Debug\AwareServer.exe
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\obj\Debug\AwareServer.pdb
+P:\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\Newtonsoft.Json.dll
+P:\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\Newtonsoft.Json.xml

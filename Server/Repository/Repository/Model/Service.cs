@@ -45,6 +45,11 @@ namespace Repository.Model
             ProductDAL.UpdateProduct(product);
         }
 
+        public void ProductInventory(Product product)
+        {
+            ProductDAL.ProductInventory(product);
+        }
+
         public void InsertAndUpdateProduct(Product product)
         {
             //Kanske någon validering här!

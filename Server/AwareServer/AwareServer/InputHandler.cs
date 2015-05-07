@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 using System.Web.Script.Serialization;
 using AwareClassLibrary;
 using Newtonsoft.Json;
-//using Repository.Model;
+using Repository.Model;
 
 namespace AwareServer
 {
     class InputHandler
     {
+        public Service service = new Service();
+        ExceptionLog exceptionLog = null;
+        string ret = "";
+
         public string GetReturnString(string content)
-        {
-            Repository.Model.Service service = new Repository.Model.Service();
-            ExceptionLog exceptionLog = null;
-            string ret = "";
-            #region Get
-            // GET
+        {   
             try
             {
+                #region Get
                 if (content.IndexOf("GET") > -1)
                 {
                     if (content.IndexOf("GET/orders") > -1)
@@ -35,10 +35,7 @@ namespace AwareServer
                         else if (content.Equals("GET/orders"))
                         {
                             IEnumerable<Order> orders = service.GetOrders();
-                            foreach (Order order in orders)
-                            {
-                                ret = JsonConvert.SerializeObject(orders);
-                            }
+                            ret = JsonConvert.SerializeObject(orders);    
                         }
                         else
                         {
@@ -70,12 +67,7 @@ namespace AwareServer
                         else if (content.IndexOf("GET/products") > -1)
                         {
                             IEnumerable<Product> products = service.GetProducts();
-
-                            foreach (Product product in products)
-                            {
-                                ret = JsonConvert.SerializeObject(products);
-                            }
-
+                            ret = JsonConvert.SerializeObject(products);
                         }
                         else
                         {
@@ -114,7 +106,7 @@ namespace AwareServer
                         throw new System.ArgumentException("Input string is not correctly formatted.");
                     }
                 }
-            #endregion
+                #endregion
                 #region Put
                 // PUT
                 else if (content.IndexOf("PUT") > -1)
@@ -123,9 +115,18 @@ namespace AwareServer
 
                     if (content.IndexOf("products") > -1)
                     {
-                        json = content.Replace("PUT/products/json=", "");
-                        Product result = JsonConvert.DeserializeObject<Product>(json);
-                        service.UpdateProduct(result);
+                        if (content.IndexOf("inventory") > -1)
+                        {
+                            json = content.Replace("PUT/products/inventory/json=", "");
+                            Product result = JsonConvert.DeserializeObject<Product>(json);
+                            service.ProductInventory(result);
+                        }
+                        else
+                        {
+                            json = content.Replace("PUT/products/json=", "");
+                            Product result = JsonConvert.DeserializeObject<Product>(json);
+                            service.UpdateProduct(result);
+                        }
                     }
 
                     else if (content.IndexOf("orders") > -1)
@@ -134,19 +135,26 @@ namespace AwareServer
                         Order result = JsonConvert.DeserializeObject<Order>(json);
                         service.UpdateOrder(result);
                     }
+
                     else
                     {
                         ret = "Input string is not correctly formatted.";
                         throw new System.ArgumentException("Input string is not correctly formatted.");
                     }
                 }
+                else
+                {
+                    ret = "Input string is not correctly formatted.";
+                    throw new System.ArgumentException("Input string is not correctly formatted.");
+                }
+                #endregion
             }
+
             catch (Exception e)
             {
                 exceptionLog = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
                 service.InsertException(exceptionLog);
             }
-            #endregion
  
             return ret;
         }

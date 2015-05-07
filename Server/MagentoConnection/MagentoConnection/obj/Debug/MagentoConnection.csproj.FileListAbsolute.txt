@@ -28,3 +28,7 @@ C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\MagentoConnection\MagentoCon
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.csprojResolveAssemblyReference.cache
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.exe
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.pdb
+C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\Newtonsoft.Json.xml
+P:\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\Newtonsoft.Json.dll
+P:\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\Newtonsoft.Json.xml

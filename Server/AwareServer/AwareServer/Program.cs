@@ -19,16 +19,19 @@ namespace AwareServer
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        
+
+        static Service service = new Service();
+
         public static int Main(String[] args)
         {
             try
             {
+                MagentoConnection.MagentoHelper mgHelper = new MagentoConnection.MagentoHelper();
+                mgHelper.DownloadAllProductImages();
                 AsynchronousSocketListener.Start();
             }
             catch (Exception e)
             {
-                Service service = new Service();
                 ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
                 service.InsertException(log);
             }

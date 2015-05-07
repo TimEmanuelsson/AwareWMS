@@ -278,7 +278,7 @@ namespace Repository.Model.DAL
 
                     cmd.Parameters.Add("@Id", SqlDbType.Int, 4).Value = product.ProductId;
                     cmd.Parameters.Add("@Quantity", SqlDbType.Int, 6).Value = product.Quantity;
-                    cmd.Parameters.Add("@LastInventory", SqlDbType.DateTime).Value = product.LastInventory;
+                    cmd.Parameters.Add("@LastInventory", SqlDbType.DateTime).Value = DateTime.Now;
 
                     //Open database connection.
                     conn.Open();

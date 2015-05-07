@@ -31,7 +31,7 @@ namespace AwareComputerClient.Model
         // The response from the server.
         private static string response = String.Empty;
 
-        public static void StartClient(String word)
+        public  void StartClient(String word)
         {
             // The port and IP for the server.
             int port = AwareComputerClient.Properties.Settings.Default.Port;

@@ -35,10 +35,7 @@ namespace AwareServer
                         else if (content.Equals("GET/orders"))
                         {
                             IEnumerable<Order> orders = service.GetOrders();
-                            foreach (Order order in orders)
-                            {
-                                ret = JsonConvert.SerializeObject(orders);
-                            }
+                            ret = JsonConvert.SerializeObject(orders);    
                         }
                         else
                         {
@@ -70,12 +67,7 @@ namespace AwareServer
                         else if (content.IndexOf("GET/products") > -1)
                         {
                             IEnumerable<Product> products = service.GetProducts();
-
-                            foreach (Product product in products)
-                            {
-                                ret = JsonConvert.SerializeObject(products);
-                            }
-
+                            ret = JsonConvert.SerializeObject(products);
                         }
                         else
                         {

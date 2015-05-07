@@ -65,6 +65,7 @@ namespace Repository.Model.DAL
                             var SpaceIndex = reader.GetOrdinal("StorageSpace");
                             var BarcodeNumberIndex = reader.GetOrdinal("BarcodeNumber");
                             var ImageIndex = reader.GetOrdinal("ImageLocation");
+                            var LastInventoryIndex = reader.GetOrdinal("LastInventory");
 
                             return new Product
                             (
@@ -75,7 +76,8 @@ namespace Repository.Model.DAL
                                 reader.GetDecimal(WeightIndex),
                                 reader.GetString(SpaceIndex),
                                 reader.GetString(BarcodeNumberIndex),
-                                reader.GetString(ImageIndex)
+                                reader.GetString(ImageIndex),
+                                reader.GetDateTime(LastInventoryIndex)
                             );
                         }
                     }
@@ -116,6 +118,7 @@ namespace Repository.Model.DAL
                             var SpaceIndex = reader.GetOrdinal("StorageSpace");
                             var BarcodeNumberIndex = reader.GetOrdinal("BarcodeNumber");
                             var ImageIndex = reader.GetOrdinal("ImageLocation");
+                            var LastInventoryIndex = reader.GetOrdinal("LastInventory");
 
                             return new Product(
                                 reader.GetInt32(ProductIdIndex),
@@ -125,7 +128,8 @@ namespace Repository.Model.DAL
                                 reader.GetDecimal(WeightIndex),
                                 reader.GetString(SpaceIndex),
                                 reader.GetString(BarcodeNumberIndex),
-                                reader.GetString(ImageIndex)
+                                reader.GetString(ImageIndex),
+                                reader.GetDateTime(LastInventoryIndex)
                             );
                             }
                         }
@@ -166,6 +170,7 @@ namespace Repository.Model.DAL
                             var SpaceIndex = reader.GetOrdinal("StorageSpace");
                             var BarcodeNumberIndex = reader.GetOrdinal("BarcodeNumber");
                             var ImageIndex = reader.GetOrdinal("ImageLocation");
+                            var LastInventoryIndex = reader.GetOrdinal("LastInventory");
 
                             return new Product(
                                 reader.GetInt32(ProductIdIndex),
@@ -175,7 +180,9 @@ namespace Repository.Model.DAL
                                 reader.GetDecimal(WeightIndex),
                                 reader.GetString(SpaceIndex),
                                 reader.GetString(BarcodeNumberIndex),
-                                reader.GetString(ImageIndex)
+                                reader.GetString(ImageIndex),
+                                reader.GetDateTime(LastInventoryIndex)
+
                             );
                         }
                     }

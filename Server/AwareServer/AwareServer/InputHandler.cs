@@ -64,11 +64,16 @@ namespace AwareServer
                             Product product = service.GetProductByBarcodeNumber(int.Parse(barcodenumber));
                             ret = JsonConvert.SerializeObject(product);
                         }
+                        else if (content.IndexOf("GET/products/count") > -1)
+                        {
+                            ret = String.Format("{0}", service.GetProductCount().ToString());
+                        }
                         else if (content.IndexOf("GET/products") > -1)
                         {
                             IEnumerable<Product> products = service.GetProducts();
                             ret = JsonConvert.SerializeObject(products);
                         }
+
                         else
                         {
                             ret = "Input string is not correctly formatted.";

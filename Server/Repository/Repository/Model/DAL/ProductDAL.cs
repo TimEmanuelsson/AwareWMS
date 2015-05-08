@@ -196,6 +196,12 @@ namespace Repository.Model.DAL
             }
         }
 
+        public int GetProductCount()
+        {
+            IEnumerable<Product> products = GetProducts();
+            return products.Count();
+        }
+
         public IEnumerable<Product> GetProducts()
         {
             using (var conn = CreateConnection())

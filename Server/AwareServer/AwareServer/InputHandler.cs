@@ -68,7 +68,7 @@ namespace AwareServer
                         {
                             ret = String.Format("{0}", service.GetProductCount().ToString());
                         }
-                        else if (content.IndexOf("GET/products") > -1)
+                        else if (content.Equals("GET/products"))
                         {
                             IEnumerable<Product> products = service.GetProducts();
                             ret = JsonConvert.SerializeObject(products);

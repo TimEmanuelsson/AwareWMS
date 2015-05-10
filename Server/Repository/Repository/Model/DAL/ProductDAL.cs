@@ -80,9 +80,20 @@ namespace Repository.Model.DAL
                                 reader.GetDateTime(LastInventoryIndex)
                             );
                         }
+                        else
+                        {
+                            throw new NullReferenceException("There is no product with this ID.");
+                        }
                     }
+                }
+                catch (NullReferenceException e)
+                {
+                    Service service = new Service();
+                    ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
+                    service.InsertException(log);
                     return null;
                 }
+
                 catch
                 {
                     //Throw Exception.

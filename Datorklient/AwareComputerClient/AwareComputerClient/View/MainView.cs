@@ -19,11 +19,12 @@ namespace AwareComputerClient.View
         {
             InitializeComponent();
         }
-        private AsynchronousClient async = new AsynchronousClient();
+        private AsynchronousClient async;
         private List<Product> products;
+        private BindingList<Product> bindinglist;
         private void ShowProducts_Click()
         {
-            
+            async = new AsynchronousClient();
            // ShowProductsButton.Enabled = false;
            // TableView.ColumnHeaderMouseClick
             TableViewPanel.Visible = true;
@@ -36,8 +37,7 @@ namespace AwareComputerClient.View
             TableView.AutoSize = true;
 
         
-                var bindinglist = new BindingList<Product>(products);
-
+                bindinglist = new BindingList<Product>(products);
                 var source = new BindingSource(bindinglist, null);
                 TableView.DataSource = source;
             
@@ -90,6 +90,7 @@ namespace AwareComputerClient.View
             ImageLocationLabel.Text = TableView.Rows[cellRowIndex].Cells[7].Value.ToString();
             LastInventoryLabel.Text = TableView.Rows[cellRowIndex].Cells[8].Value.ToString();
             
+            
         }
         //TODO:: All Edit Stora Bokstäver
         private void SearchField_TextChanged(object sender, EventArgs e)
@@ -128,28 +129,34 @@ namespace AwareComputerClient.View
             //editProduct.Weight = double.Parse(WeightLabel.Text);
             //editProduct.StorageSpace = StorageSpaceLabel.Text;
             //editProduct.BarcodeNumber = BarcodeNumberLabel.Text;
-            int cellRowIndex = TableView.SelectedCells[0].RowIndex;
+            //int cellRowIndex = TableView.SelectedCells[0].RowIndex;
             //products.Add(editProduct);
-            TableView.Rows[cellRowIndex].Cells[0].Value = ProductIdLabel.Text;
-            TableView.Rows[cellRowIndex].Cells[1].Value = NameLabel.Text;
-            TableView.Rows[cellRowIndex].Cells[2].Value = SKULabel.Text;
-            TableView.Rows[cellRowIndex].Cells[3].Value = QuantityLabel.Text;
-            TableView.Rows[cellRowIndex].Cells[4].Value = WeightLabel.Text;
-            TableView.Rows[cellRowIndex].Cells[5].Value = StorageSpaceLabel.Text;
-            TableView.Rows[cellRowIndex].Cells[6].Value = BarcodeNumberLabel.Text;
-            TableView.Rows[cellRowIndex].Cells[7].Value = ImageLocationLabel.Text;
-            TableView.Rows[cellRowIndex].Cells[8].Value = LastInventoryLabel.Text;
+            //TableView.Rows[cellRowIndex].Cells[0].Value = ProductIdLabel.Text;
+            //TableView.Rows[cellRowIndex].Cells[1].Value = NameLabel.Text;
+            //TableView.Rows[cellRowIndex].Cells[2].Value = SKULabel.Text;
+            //TableView.Rows[cellRowIndex].Cells[3].Value = QuantityLabel.Text;
+            //TableView.Rows[cellRowIndex].Cells[4].Value = WeightLabel.Text;
+            //TableView.Rows[cellRowIndex].Cells[5].Value = StorageSpaceLabel.Text;
+            //TableView.Rows[cellRowIndex].Cells[6].Value = BarcodeNumberLabel.Text;
+            //TableView.Rows[cellRowIndex].Cells[7].Value = ImageLocationLabel.Text;
+            //TableView.Rows[cellRowIndex].Cells[8].Value = LastInventoryLabel.Text;
 
-            
+            async = new AsynchronousClient();
             //MessageBox.Show(jsonString);
 
-                var bindinglist = new BindingList<Product>(products);
-                var source = new BindingSource(bindinglist, null);
-                TableView.DataSource = source;
+            var bindinglist = new BindingList<Product>(products);
+            var source = new BindingSource(bindinglist, null);
+            TableView.DataSource = source;
+           
+            Product currentobject = (Product)TableView.CurrentRow.DataBoundItem;
+            currentobject.Quantity = Convert.ToInt32(QuantityLabel.Text);
 
-                string serializedObject = JsonConvert.SerializeObject(products);
-                MessageBox.Show(serializedObject);
-            async.StartClient("PUT/product/json=" + serializedObject);
+             
+
+                //bindinglist.SingleOrDefault();
+                //MessageBox.Show(bindinglist.ToString());
+                string serializedObject = JsonConvert.SerializeObject(currentobject);
+                async.StartClient("PUT/products/inventory/json=" + serializedObject);
         }
     }
 }

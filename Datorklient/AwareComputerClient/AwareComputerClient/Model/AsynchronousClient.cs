@@ -3,10 +3,11 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Text;
+using System.Diagnostics;
 namespace AwareComputerClient.Model
 {
     // State object for receiving data from server.
-    public class StateObject
+    public class StateObject 
     {
         // Client socket.
         public Socket workSocket = null;
@@ -153,8 +154,7 @@ namespace AwareComputerClient.Model
             try
             {
                 // Convert the string data to byte data using ASCII encoding.
-                byte[] byteData = Encoding.ASCII.GetBytes(data);
-
+                byte[] byteData = Encoding.UTF8.GetBytes(data);
                 // Begin sending the data to the server.
                 client.BeginSend(byteData, 0, byteData.Length, 0,
                     new AsyncCallback(SendCallback), client);

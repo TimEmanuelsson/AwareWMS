@@ -94,7 +94,7 @@ namespace AwareServer
 
             if (bytesRead > 0)
             {
-                state.sb.Append(Encoding.ASCII.GetString(
+                state.sb.Append(Encoding.UTF8.GetString(
                     state.buffer, 0, bytesRead));
 
                 content = state.sb.ToString();
@@ -103,7 +103,7 @@ namespace AwareServer
             try
             {
                 InputHandler inputHandler = new InputHandler();
-                string returnStr = inputHandler.GetReturnString(content);
+                byte[] returnStr = inputHandler.GetReturnString(content);
                 Send(handler, returnStr);
             }
             catch (Exception e)
@@ -115,15 +115,15 @@ namespace AwareServer
 
 
         // Returns to client.
-        private static void Send(Socket handler, String data)
+        private static void Send(Socket handler, byte[] data)
         {
             // Convert the string data to byte data using ASCII encoding.
-            byte[] byteData = Encoding.ASCII.GetBytes(data);
+            //byte[] byteData = Encoding.UTF8.GetBytes(data);
 
             // Begin sending the data to the remote device.
             try
             {
-                handler.BeginSend(byteData, 0, byteData.Length, 0,
+                handler.BeginSend(data, 0, data.Length, 0,
                     new AsyncCallback(SendCallback), handler);
             }
             catch (SocketException e)

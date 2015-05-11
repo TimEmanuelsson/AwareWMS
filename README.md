@@ -6,7 +6,7 @@ Fabian Gillholm - fg222cj - Projektledare<br />
 Tim Emanuelsson - te222ds - Produktansvarig<br />
 Joakim Nilsson - jn222na - Testansvarig<br />
 Andreas Lengqvist - al223bn - Teknikansvarig<br />
-Alexandra Seppänen - as223jx<br />
+Alexandra Seppänen - as223jx - Husmor<br />
 <p><a href="https://drive.google.com/folderview?id=0B7IlriSNRO_zfkFsSDVSU0FLQ0JwSmlBaTlXLVBtZHJnbzl1dWNldE1TazlGRUJldUNDNzA&usp=sharing" target="_blank">Dokumentation</a></p>
 
 ##Introduktion

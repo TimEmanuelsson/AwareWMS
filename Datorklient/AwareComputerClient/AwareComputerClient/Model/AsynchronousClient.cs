@@ -55,7 +55,7 @@ namespace AwareComputerClient.Model
                 connectDone.WaitOne();
 
                 // Send data to the server.
-                Send(client, word + "<EOF>");
+                Send(client, word);
                 sendDone.WaitOne();
 
                 // Receive the response from the server.

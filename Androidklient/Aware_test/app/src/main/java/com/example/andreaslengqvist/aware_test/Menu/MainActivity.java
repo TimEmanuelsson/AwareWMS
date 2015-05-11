@@ -34,6 +34,8 @@ public class MainActivity extends FragmentActivity implements MenuListener {
     private static final String ACTIVITY_INVENTORY_FULL = "Inventory_Full_Actvity";
     private static final String ACTIVITY_PRODUCTS = "Products_Actvity";
 
+    private static final String EAN_TAG = "EAN_TAG";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +60,7 @@ public class MainActivity extends FragmentActivity implements MenuListener {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult.getContents() != null) {
             Intent fastInventory = new Intent(this, InventoryFastActivity.class);
-            fastInventory.putExtra("EAN", scanResult.getContents());
+            fastInventory.putExtra(EAN_TAG, scanResult.getContents());
             startActivity(fastInventory);
         }
     }

@@ -50,3 +50,16 @@ H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\obj\Debug\AwareS
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\obj\Debug\AwareServer.pdb
 P:\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\Newtonsoft.Json.dll
 P:\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\Newtonsoft.Json.xml
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\Aware.mdf
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\Aware_log.ldf
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\AwareServer.exe
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\AwareServer.pdb
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\AwareClassLibrary.dll
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\MagentoConnection.exe
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\Newtonsoft.Json.dll
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\Repository.exe
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\MagentoConnection.pdb
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\Repository.pdb
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\AwareClassLibrary.pdb
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\Newtonsoft.Json.xml
+H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\obj\Debug\AwareServer.csprojResolveAssemblyReference.cache

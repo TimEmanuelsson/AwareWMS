@@ -32,3 +32,13 @@ C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\MagentoConnection\MagentoCon
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\Newtonsoft.Json.xml
 P:\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\Newtonsoft.Json.dll
 P:\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\Newtonsoft.Json.xml
+H:\Fabian\Studier\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\MagentoConnection.exe.config
+H:\Fabian\Studier\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\MagentoConnection.exe
+H:\Fabian\Studier\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\MagentoConnection.pdb
+H:\Fabian\Studier\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\AwareClassLibrary.dll
+H:\Fabian\Studier\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\Newtonsoft.Json.dll
+H:\Fabian\Studier\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\AwareClassLibrary.pdb
+H:\Fabian\Studier\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\Debug\Newtonsoft.Json.xml
+H:\Fabian\Studier\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.csprojResolveAssemblyReference.cache
+H:\Fabian\Studier\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.exe
+H:\Fabian\Studier\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.pdb

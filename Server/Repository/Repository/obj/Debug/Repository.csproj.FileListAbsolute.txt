@@ -48,3 +48,15 @@ C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\Repository\Repository\bin\De
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\Repository\Repository\bin\Debug\Newtonsoft.Json.xml
 P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Newtonsoft.Json.dll
 P:\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Newtonsoft.Json.xml
+H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Aware.mdf
+H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Aware_log.ldf
+H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Repository.exe.config
+H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Repository.exe
+H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Repository.pdb
+H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\AwareClassLibrary.dll
+H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Newtonsoft.Json.dll
+H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\AwareClassLibrary.pdb
+H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Newtonsoft.Json.xml
+H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\obj\Debug\Repository.csprojResolveAssemblyReference.cache
+H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\obj\Debug\Repository.exe
+H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\obj\Debug\Repository.pdb

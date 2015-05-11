@@ -21,7 +21,7 @@ namespace AwareClassLibrary
         public string StorageSpace { get; set; }
         public string BarcodeNumber { get; set; }
         public string ImageLocation { get; set; }
-        public DateTime LastInventory { get; set; }
+        public int LastInventory { get; set; }
 
         #endregion
 
@@ -40,9 +40,23 @@ namespace AwareClassLibrary
             ImageLocation = imageLocation;
         }
 
-        [JsonConstructor]
         public Product(int productId, string name, string sku, int quantity,
             decimal weight, string storageSpace, string barcodeNumber, string imageLocation, DateTime lastInventory)
+        {
+            ProductId = productId;
+            Name = name;
+            SKU = sku;
+            Quantity = quantity;
+            Weight = weight;
+            StorageSpace = storageSpace;
+            BarcodeNumber = barcodeNumber;
+            ImageLocation = imageLocation;
+            LastInventory = (int)Math.Ceiling((DateTime.Now.Date - lastInventory.Date).TotalDays);
+        }
+
+                [JsonConstructor]
+        public Product(int productId, string name, string sku, int quantity,
+            decimal weight, string storageSpace, string barcodeNumber, string imageLocation, int lastInventory)
         {
             ProductId = productId;
             Name = name;

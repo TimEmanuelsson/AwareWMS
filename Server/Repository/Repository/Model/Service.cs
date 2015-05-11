@@ -39,6 +39,11 @@ namespace Repository.Model
             return ProductDAL.GetProducts();
         }
 
+        public int GetProductCount()
+        {
+            return ProductDAL.GetProductCount();
+        }
+
         public void UpdateProduct(Product product) 
         {
             //Kanske någon validering här!

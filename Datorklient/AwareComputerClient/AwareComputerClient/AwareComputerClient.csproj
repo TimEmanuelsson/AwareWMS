@@ -52,6 +52,24 @@
     <Compile Include="Model\Product.cs" />
     <Compile Include="MainClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\MenuView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\MenuView.Designer.cs">
+      <DependentUpon>MenuView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\OrderView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\OrderView.Designer.cs">
+      <DependentUpon>OrderView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\StocktakingView.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\StocktakingView.Designer.cs">
+      <DependentUpon>StocktakingView.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\MainView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +85,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\MenuView.resx">
+      <DependentUpon>MenuView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\OrderView.resx">
+      <DependentUpon>OrderView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\StocktakingView.resx">
+      <DependentUpon>StocktakingView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\MainView.resx">
       <DependentUpon>MainView.cs</DependentUpon>
     </EmbeddedResource>

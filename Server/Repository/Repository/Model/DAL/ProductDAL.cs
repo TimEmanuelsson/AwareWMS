@@ -22,7 +22,7 @@ namespace Repository.Model.DAL
         static ProductDAL() 
         {
             //Get connectionstring
-            _connectionString = Repository.Properties.Settings.Default.temp;
+            _connectionString = Repository.Properties.Settings.Default.AwareConnectionString;
         }
 
         #endregion
@@ -65,6 +65,7 @@ namespace Repository.Model.DAL
                             var SpaceIndex = reader.GetOrdinal("StorageSpace");
                             var BarcodeNumberIndex = reader.GetOrdinal("BarcodeNumber");
                             var ImageIndex = reader.GetOrdinal("ImageLocation");
+                            var LastInventoryIndex = reader.GetOrdinal("LastInventory");
 
                             return new Product
                             (
@@ -75,12 +76,24 @@ namespace Repository.Model.DAL
                                 reader.GetDecimal(WeightIndex),
                                 reader.GetString(SpaceIndex),
                                 reader.GetString(BarcodeNumberIndex),
-                                reader.GetString(ImageIndex)
+                                reader.GetString(ImageIndex),
+                                reader.GetDateTime(LastInventoryIndex)
                             );
                         }
+                        else
+                        {
+                            throw new NullReferenceException("There is no product with this ID.");
+                        }
                     }
+                }
+                catch (NullReferenceException e)
+                {
+                    Service service = new Service();
+                    ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
+                    service.InsertException(log);
                     return null;
                 }
+
                 catch
                 {
                     //Throw Exception.
@@ -116,6 +129,7 @@ namespace Repository.Model.DAL
                             var SpaceIndex = reader.GetOrdinal("StorageSpace");
                             var BarcodeNumberIndex = reader.GetOrdinal("BarcodeNumber");
                             var ImageIndex = reader.GetOrdinal("ImageLocation");
+                            var LastInventoryIndex = reader.GetOrdinal("LastInventory");
 
                             return new Product(
                                 reader.GetInt32(ProductIdIndex),
@@ -125,7 +139,8 @@ namespace Repository.Model.DAL
                                 reader.GetDecimal(WeightIndex),
                                 reader.GetString(SpaceIndex),
                                 reader.GetString(BarcodeNumberIndex),
-                                reader.GetString(ImageIndex)
+                                reader.GetString(ImageIndex),
+                                reader.GetDateTime(LastInventoryIndex)
                             );
                             }
                         }
@@ -166,6 +181,7 @@ namespace Repository.Model.DAL
                             var SpaceIndex = reader.GetOrdinal("StorageSpace");
                             var BarcodeNumberIndex = reader.GetOrdinal("BarcodeNumber");
                             var ImageIndex = reader.GetOrdinal("ImageLocation");
+                            var LastInventoryIndex = reader.GetOrdinal("LastInventory");
 
                             return new Product(
                                 reader.GetInt32(ProductIdIndex),
@@ -175,7 +191,9 @@ namespace Repository.Model.DAL
                                 reader.GetDecimal(WeightIndex),
                                 reader.GetString(SpaceIndex),
                                 reader.GetString(BarcodeNumberIndex),
-                                reader.GetString(ImageIndex)
+                                reader.GetString(ImageIndex),
+                                reader.GetDateTime(LastInventoryIndex)
+
                             );
                         }
                     }
@@ -187,6 +205,12 @@ namespace Repository.Model.DAL
                     throw new ApplicationException("An error occurred while trying to retrieve the product.");
                 }
             }
+        }
+
+        public int GetProductCount()
+        {
+            IEnumerable<Product> products = GetProducts();
+            return products.Count();
         }
 
         public IEnumerable<Product> GetProducts()

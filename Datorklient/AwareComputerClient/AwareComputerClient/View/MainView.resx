@@ -120,4 +120,84 @@
   <metadata name="MenuBar.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
+  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>25</value>
+  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAICAAAAEAIACoEAAAFgAAACgAAAAgAAAAQAAAAAEAIAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAXVbOEF1WzoRdVs7fXVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7+XVbO3V1W
+        zn9dVs4OAAAAAF1WzhFdVs7IXVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzr9dVs4OXVbOi11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzn9dVs7oXVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO3V1Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7+iIPb/4iD2/+Ig9v/iIPb/4iD
+        2/+Ig9v/iIPb/4iD2/+Ig9v/iIPb/4iD2/+Ig9v/iIPb/4iD2/+GgNr/YFnP/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv//////////////
+        //////////////////////////////////////////////////////////////f2/f9pYtH/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO////
+        ////////////////////////////////////////////////////////////////////////9/b9/2li
+        0f9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/9fX8//X1/P/19fz/9fX8//X1/P/19fz/9fX8//X1/P/19fz/9fX8//X1/P/19fz/9fX8//X1
+        /P/t7Pr/aGHR/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9kXdD/ZF3Q/2Rd0P9kXdD/ZF3Q/2Rd0P9kXdD/ZF3Q/2Rd0P9kXdD/ZF3Q/2Rd
+        0P9kXdD/ZF3Q/2Rd0P9dV87/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/sKzn/7Cs
+        5/+wrOf/sKzn/7Cs5/+wrOf/sKzn/7Cs5/+wrOf/sKzn/7Cs5/+wrOf/sKzn/7Cs5/+rqOb/Y1zQ/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv////////////////////////////////////////////////////////////////////////////f2
+        /f9pYtH/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO////////////////////////////////////////////////////////////////////
+        ////////9/b9/2li0f9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/4N/2/+Df9v/g3/b/4N/2/+Df9v/g3/b/4N/2/+Df9v/g3/b/4N/2/+Df
+        9v/g3/b/4N/2/+Df9v/a2PT/ZmDR/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/19Y
+        z/9fWM//X1jP/19Yz/9fWM//X1jP/19Yz/9fWM//X1jP/19Yz/9fWM//X1jP/19Yz/9fWM//X1jP/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/4eD2/+Hg9v/h4Pb/4eD2/+Hg9v/h4Pb/4eD2/+Hg9v/h4Pb/4eD2/+Hg9v/h4Pb/4eD2/+Hg
+        9v/a2fT/ZmDR/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv//////////////////////////////////////////////////////////////
+        //////////////f2/f9pYtH/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO////////////////////////////////////////////////////
+        ////////////////////////9/b9/2li0f9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/oJzi/6Cc4v+gnOL/oJzi/6Cc4v+gnOL/oJzi/6Cc
+        4v+gnOL/oJzi/6Cc4v+gnOL/oJzi/6Cc4v+dmeH/YlvP/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11WzutdVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7fXVbOkV1W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zoNdVs4UXVbOzF1Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7IXVbOEAAAAABdVs4UXVbOkV1WzutdVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11Wzv9dVs7/XVbO/11W
+        zv9dVs7oXVbOi11WzhEAAAAAgAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAE=
+</value>
+  </data>
 </root>

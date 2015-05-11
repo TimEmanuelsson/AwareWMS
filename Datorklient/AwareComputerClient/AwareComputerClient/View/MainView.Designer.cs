@@ -68,6 +68,10 @@
             this.ColumnHeaderName = new System.Windows.Forms.Label();
             this.ColumnHeaderSKU = new System.Windows.Forms.Label();
             this.ColumnHeaderQuantity = new System.Windows.Forms.Label();
+            this.LastInventoryText = new System.Windows.Forms.Label();
+            this.LastInventoryLabel = new System.Windows.Forms.TextBox();
+            this.ProductId = new System.Windows.Forms.Label();
+            this.ProductIdLabel = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.TableView)).BeginInit();
             this.MenuBar.SuspendLayout();
             this.ShowProductsPanel.SuspendLayout();
@@ -232,13 +236,14 @@
             this.TableViewPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 25.60669F));
             this.TableViewPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 27.11297F));
             this.TableViewPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 22.42678F));
+            this.TableViewPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.TableViewPanel.Size = new System.Drawing.Size(406, 144);
             this.TableViewPanel.TabIndex = 25;
             this.TableViewPanel.Visible = false;
             // 
             // WeightLabel
             // 
-            this.WeightLabel.Location = new System.Drawing.Point(309, 38);
+            this.WeightLabel.Location = new System.Drawing.Point(312, 38);
             this.WeightLabel.Name = "WeightLabel";
             this.WeightLabel.Size = new System.Drawing.Size(61, 20);
             this.WeightLabel.TabIndex = 29;
@@ -247,7 +252,7 @@
             // 
             this.StorageSpaceText.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.StorageSpaceText.AutoSize = true;
-            this.StorageSpaceText.Location = new System.Drawing.Point(21, 84);
+            this.StorageSpaceText.Location = new System.Drawing.Point(22, 84);
             this.StorageSpaceText.Name = "StorageSpaceText";
             this.StorageSpaceText.Size = new System.Drawing.Size(78, 13);
             this.StorageSpaceText.TabIndex = 14;
@@ -255,7 +260,7 @@
             // 
             // QuantityLabel
             // 
-            this.QuantityLabel.Location = new System.Drawing.Point(105, 38);
+            this.QuantityLabel.Location = new System.Drawing.Point(106, 38);
             this.QuantityLabel.Name = "QuantityLabel";
             this.QuantityLabel.Size = new System.Drawing.Size(61, 20);
             this.QuantityLabel.TabIndex = 28;
@@ -264,7 +269,7 @@
             // 
             this.NameText.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.NameText.AutoSize = true;
-            this.NameText.Location = new System.Drawing.Point(61, 11);
+            this.NameText.Location = new System.Drawing.Point(62, 11);
             this.NameText.Name = "NameText";
             this.NameText.Size = new System.Drawing.Size(38, 13);
             this.NameText.TabIndex = 6;
@@ -274,7 +279,7 @@
             // 
             this.WeightText.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.WeightText.AutoSize = true;
-            this.WeightText.Location = new System.Drawing.Point(259, 46);
+            this.WeightText.Location = new System.Drawing.Point(262, 46);
             this.WeightText.Name = "WeightText";
             this.WeightText.Size = new System.Drawing.Size(44, 13);
             this.WeightText.TabIndex = 12;
@@ -282,7 +287,7 @@
             // 
             // NameLabel
             // 
-            this.NameLabel.Location = new System.Drawing.Point(105, 3);
+            this.NameLabel.Location = new System.Drawing.Point(106, 3);
             this.NameLabel.Name = "NameLabel";
             this.NameLabel.Size = new System.Drawing.Size(61, 20);
             this.NameLabel.TabIndex = 26;
@@ -291,7 +296,7 @@
             // 
             this.ImageLocationText.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.ImageLocationText.AutoSize = true;
-            this.ImageLocationText.Location = new System.Drawing.Point(19, 120);
+            this.ImageLocationText.Location = new System.Drawing.Point(20, 120);
             this.ImageLocationText.Name = "ImageLocationText";
             this.ImageLocationText.Size = new System.Drawing.Size(80, 13);
             this.ImageLocationText.TabIndex = 18;
@@ -301,7 +306,7 @@
             // 
             this.SKUText.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.SKUText.AutoSize = true;
-            this.SKUText.Location = new System.Drawing.Point(271, 11);
+            this.SKUText.Location = new System.Drawing.Point(274, 11);
             this.SKUText.Name = "SKUText";
             this.SKUText.Size = new System.Drawing.Size(32, 13);
             this.SKUText.TabIndex = 8;
@@ -309,14 +314,14 @@
             // 
             // SKULabel
             // 
-            this.SKULabel.Location = new System.Drawing.Point(309, 3);
+            this.SKULabel.Location = new System.Drawing.Point(312, 3);
             this.SKULabel.Name = "SKULabel";
             this.SKULabel.Size = new System.Drawing.Size(61, 20);
             this.SKULabel.TabIndex = 27;
             // 
             // ImageLocationLabel
             // 
-            this.ImageLocationLabel.Location = new System.Drawing.Point(105, 113);
+            this.ImageLocationLabel.Location = new System.Drawing.Point(106, 113);
             this.ImageLocationLabel.Name = "ImageLocationLabel";
             this.ImageLocationLabel.Size = new System.Drawing.Size(61, 20);
             this.ImageLocationLabel.TabIndex = 31;
@@ -325,7 +330,7 @@
             // 
             this.QuantityText.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.QuantityText.AutoSize = true;
-            this.QuantityText.Location = new System.Drawing.Point(50, 46);
+            this.QuantityText.Location = new System.Drawing.Point(51, 46);
             this.QuantityText.Name = "QuantityText";
             this.QuantityText.Size = new System.Drawing.Size(49, 13);
             this.QuantityText.TabIndex = 10;
@@ -335,7 +340,7 @@
             // 
             this.BarcodeNumberText.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.BarcodeNumberText.AutoSize = true;
-            this.BarcodeNumberText.Location = new System.Drawing.Point(216, 84);
+            this.BarcodeNumberText.Location = new System.Drawing.Point(219, 84);
             this.BarcodeNumberText.Name = "BarcodeNumberText";
             this.BarcodeNumberText.Size = new System.Drawing.Size(87, 13);
             this.BarcodeNumberText.TabIndex = 16;
@@ -343,26 +348,27 @@
             // 
             // BarcodeNumberLabel
             // 
-            this.BarcodeNumberLabel.Location = new System.Drawing.Point(309, 74);
+            this.BarcodeNumberLabel.Location = new System.Drawing.Point(312, 74);
             this.BarcodeNumberLabel.Name = "BarcodeNumberLabel";
             this.BarcodeNumberLabel.Size = new System.Drawing.Size(61, 20);
             this.BarcodeNumberLabel.TabIndex = 32;
             // 
             // StorageSpaceLabel
             // 
-            this.StorageSpaceLabel.Location = new System.Drawing.Point(105, 74);
+            this.StorageSpaceLabel.Location = new System.Drawing.Point(106, 74);
             this.StorageSpaceLabel.Name = "StorageSpaceLabel";
             this.StorageSpaceLabel.Size = new System.Drawing.Size(61, 20);
             this.StorageSpaceLabel.TabIndex = 30;
             // 
             // SaveEditButton
             // 
-            this.SaveEditButton.Location = new System.Drawing.Point(309, 113);
+            this.SaveEditButton.Location = new System.Drawing.Point(312, 113);
             this.SaveEditButton.Name = "SaveEditButton";
             this.SaveEditButton.Size = new System.Drawing.Size(91, 28);
             this.SaveEditButton.TabIndex = 33;
             this.SaveEditButton.Text = "Save";
             this.SaveEditButton.UseVisualStyleBackColor = true;
+            this.SaveEditButton.Click += new System.EventHandler(this.SaveEditButton_Click);
             // 
             // SearchBarPanel
             // 
@@ -460,11 +466,49 @@
             this.ColumnHeaderQuantity.TabIndex = 33;
             this.ColumnHeaderQuantity.Text = "Quantity";
             // 
+            // LastInventoryText
+            // 
+            this.LastInventoryText.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.LastInventoryText.AutoSize = true;
+            this.LastInventoryText.Location = new System.Drawing.Point(34, 560);
+            this.LastInventoryText.Name = "LastInventoryText";
+            this.LastInventoryText.Size = new System.Drawing.Size(74, 13);
+            this.LastInventoryText.TabIndex = 34;
+            this.LastInventoryText.Text = "LastInventory:";
+            // 
+            // LastInventoryLabel
+            // 
+            this.LastInventoryLabel.Location = new System.Drawing.Point(138, 557);
+            this.LastInventoryLabel.Name = "LastInventoryLabel";
+            this.LastInventoryLabel.Size = new System.Drawing.Size(61, 20);
+            this.LastInventoryLabel.TabIndex = 34;
+            // 
+            // ProductId
+            // 
+            this.ProductId.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.ProductId.AutoSize = true;
+            this.ProductId.Location = new System.Drawing.Point(50, 371);
+            this.ProductId.Name = "ProductId";
+            this.ProductId.Size = new System.Drawing.Size(58, 13);
+            this.ProductId.TabIndex = 35;
+            this.ProductId.Text = "ProductID:";
+            // 
+            // ProductIdLabel
+            // 
+            this.ProductIdLabel.Location = new System.Drawing.Point(119, 371);
+            this.ProductIdLabel.Name = "ProductIdLabel";
+            this.ProductIdLabel.Size = new System.Drawing.Size(61, 20);
+            this.ProductIdLabel.TabIndex = 36;
+            // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 782);
+            this.Controls.Add(this.ProductId);
+            this.Controls.Add(this.ProductIdLabel);
+            this.Controls.Add(this.LastInventoryLabel);
+            this.Controls.Add(this.LastInventoryText);
             this.Controls.Add(this.ShowProductsMainContainer);
             this.Controls.Add(this.NameLabel2);
             this.Controls.Add(this.WeightLabel2);
@@ -488,6 +532,10 @@
             this.Controls.SetChildIndex(this.WeightLabel2, 0);
             this.Controls.SetChildIndex(this.NameLabel2, 0);
             this.Controls.SetChildIndex(this.ShowProductsMainContainer, 0);
+            this.Controls.SetChildIndex(this.LastInventoryText, 0);
+            this.Controls.SetChildIndex(this.LastInventoryLabel, 0);
+            this.Controls.SetChildIndex(this.ProductIdLabel, 0);
+            this.Controls.SetChildIndex(this.ProductId, 0);
             ((System.ComponentModel.ISupportInitialize)(this.TableView)).EndInit();
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
@@ -544,5 +592,9 @@
         private System.Windows.Forms.Label ColumnHeaderQuantity;
         private System.Windows.Forms.Label ColumnHeaderBarcodeNumber;
         private System.Windows.Forms.Button SaveEditButton;
+        private System.Windows.Forms.Label LastInventoryText;
+        private System.Windows.Forms.TextBox LastInventoryLabel;
+        private System.Windows.Forms.Label ProductId;
+        private System.Windows.Forms.TextBox ProductIdLabel;
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using AwareComputerClient.Model;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 
 namespace AwareComputerClient.View
 {
@@ -33,13 +34,16 @@ namespace AwareComputerClient.View
             products = JsonConvert.DeserializeObject<List<Product>>(response);
 
             TableView.AutoSize = true;
-            //TableView.ColumnHeadersVisible = false;
-            foreach (Product item in products)
-            {
+
+        
                 var bindinglist = new BindingList<Product>(products);
+
                 var source = new BindingSource(bindinglist, null);
                 TableView.DataSource = source;
-            }
+            
+
+                
+            //TableView.ColumnHeadersVisible = false;
 
             //TableView.Columns[0].Name = "column0";
             //TableView.Columns[1].Name = "column1";
@@ -52,8 +56,8 @@ namespace AwareComputerClient.View
             //TableView.Rows.Add(row1);
             //TableView.Visible = true;
         }
-        private string[] row1;
-        private string g;
+            //private string[] row1;
+        
         
 
         private void FileMenuContainer_Click(object sender, EventArgs e)
@@ -73,17 +77,19 @@ namespace AwareComputerClient.View
            
         private void TableView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            var cellRowIndex = TableView.SelectedCells[0].RowIndex;
+            int cellRowIndex = TableView.SelectedCells[0].RowIndex;
             int cellColumnIndex = TableView.ColumnCount -1;
            // var cellcollection = TableView.Rows[cellRowIndex].Cells[0];  
+            ProductIdLabel.Text = TableView.Rows[cellRowIndex].Cells[0].Value.ToString();
+            NameLabel.Text = TableView.Rows[cellRowIndex].Cells[1].Value.ToString();
+            SKULabel.Text = TableView.Rows[cellRowIndex].Cells[2].Value.ToString();
+            QuantityLabel.Text = TableView.Rows[cellRowIndex].Cells[3].Value.ToString();
+            WeightLabel.Text = TableView.Rows[cellRowIndex].Cells[4].Value.ToString();
+            StorageSpaceLabel.Text = TableView.Rows[cellRowIndex].Cells[5].Value.ToString();
+            BarcodeNumberLabel.Text = TableView.Rows[cellRowIndex].Cells[6].Value.ToString();
+            ImageLocationLabel.Text = TableView.Rows[cellRowIndex].Cells[7].Value.ToString();
+            LastInventoryLabel.Text = TableView.Rows[cellRowIndex].Cells[8].Value.ToString();
             
-            NameLabel.Text = TableView.Rows[cellRowIndex].Cells[0].Value.ToString();
-            SKULabel.Text = TableView.Rows[cellRowIndex].Cells[1].Value.ToString();
-            QuantityLabel.Text = TableView.Rows[cellRowIndex].Cells[2].Value.ToString();
-            WeightLabel.Text = TableView.Rows[cellRowIndex].Cells[3].Value.ToString();
-            StorageSpaceLabel.Text = TableView.Rows[cellRowIndex].Cells[4].Value.ToString();
-            BarcodeNumberLabel.Text = TableView.Rows[cellRowIndex].Cells[5].Value.ToString();
-            ImageLocationLabel.Text = TableView.Rows[cellRowIndex].Cells[6].Value.ToString();
         }
         //TODO:: All Edit Stora Bokstäver
         private void SearchField_TextChanged(object sender, EventArgs e)
@@ -92,10 +98,12 @@ namespace AwareComputerClient.View
             BindingList<Product> filtered = new BindingList<Product>(products.Where(p => p.Name.Contains(SearchField.Text)).ToList());
             TableView.DataSource = filtered;
         }
+        
         protected override void ShowProductsButton_Click(object sender, EventArgs e)
         {
             ShowProducts_Click();
         }
+        
         protected override void ViewOrders_Click(object sender, EventArgs e)
         {
             //OrderView s = new OrderView();
@@ -108,8 +116,40 @@ namespace AwareComputerClient.View
         {
            // ShowProductsButton.Enabled = true;
         }
+        Product editProduct = new Product();
 
         
+  
+        private void SaveEditButton_Click(object sender, EventArgs e)
+        {                       
+            //editProduct.Name = NameLabel.Text;
+            //editProduct.SKU = SKULabel.Text;
+            //editProduct.Quantity = int.Parse(QuantityLabel.Text);
+            //editProduct.Weight = double.Parse(WeightLabel.Text);
+            //editProduct.StorageSpace = StorageSpaceLabel.Text;
+            //editProduct.BarcodeNumber = BarcodeNumberLabel.Text;
+            int cellRowIndex = TableView.SelectedCells[0].RowIndex;
+            //products.Add(editProduct);
+            TableView.Rows[cellRowIndex].Cells[0].Value = ProductIdLabel.Text;
+            TableView.Rows[cellRowIndex].Cells[1].Value = NameLabel.Text;
+            TableView.Rows[cellRowIndex].Cells[2].Value = SKULabel.Text;
+            TableView.Rows[cellRowIndex].Cells[3].Value = QuantityLabel.Text;
+            TableView.Rows[cellRowIndex].Cells[4].Value = WeightLabel.Text;
+            TableView.Rows[cellRowIndex].Cells[5].Value = StorageSpaceLabel.Text;
+            TableView.Rows[cellRowIndex].Cells[6].Value = BarcodeNumberLabel.Text;
+            TableView.Rows[cellRowIndex].Cells[7].Value = ImageLocationLabel.Text;
+            TableView.Rows[cellRowIndex].Cells[8].Value = LastInventoryLabel.Text;
 
+            
+            //MessageBox.Show(jsonString);
+
+                var bindinglist = new BindingList<Product>(products);
+                var source = new BindingSource(bindinglist, null);
+                TableView.DataSource = source;
+
+                string serializedObject = JsonConvert.SerializeObject(products);
+                MessageBox.Show(serializedObject);
+            async.StartClient("PUT/product/json=" + serializedObject);
+        }
     }
 }

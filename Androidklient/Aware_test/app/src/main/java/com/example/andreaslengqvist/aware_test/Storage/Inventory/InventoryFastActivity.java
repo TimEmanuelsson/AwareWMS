@@ -5,8 +5,9 @@ import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.example.andreaslengqvist.aware_test.Connection.Connection;
@@ -19,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.lang.ref.WeakReference;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
@@ -26,14 +28,20 @@ import java.net.UnknownHostException;
 
 /**
  * Created by andreaslengqvist on 15-04-07.
+ *
+ * InventoryFastActivity handles the scanned EAN (barcode) and searches the database for the represented Product linked
+ * to that EAN. Also handles the Inventory for that Product.
+ *
  */
-public class InventoryFastActivity extends FragmentActivity implements InventoryListener {
+public class InventoryFastActivity extends ActionBarActivity implements InventoryListener {
 
     private static final String EAN_TAG = "EAN_TAG";
 
     private static final String INVENTORY_VIEW_FRAGMENT_TAG = "Product_List_Fragment";
-    private static final String PARCELABLE_PRODUCT_TAG = "Product";
+    private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
+    private static final String INVENTORY_LAYOUT_TAG = "INVENTORY_LAYOUT_TAG";
 
+    private static WeakReference<InventoryFastActivity> wrActivity = null;
 
     private InventoryViewFragment mInventoryViewFragment;
     private Handler mHandler;
@@ -47,6 +55,7 @@ public class InventoryFastActivity extends FragmentActivity implements Inventory
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_fast);
 
+        wrActivity = new WeakReference<>(this);
 
         // Get which type (Products / Inventory).
         Intent i = getIntent();
@@ -54,12 +63,11 @@ public class InventoryFastActivity extends FragmentActivity implements Inventory
             mScannedEAN = i.getStringExtra(EAN_TAG);
         }
 
-
-        // If coming from new state. (e.g NOT screen rotation)
-        if (savedInstanceState == null) {
+        if (!getResources().getBoolean(R.bool.isTablet)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            startPeriodically();
         }
+        mHandler = new Handler();
+        startPeriodically();
     }
 
     @Override
@@ -67,6 +75,25 @@ public class InventoryFastActivity extends FragmentActivity implements Inventory
         super.onBackPressed();
         stopPeriodically();
         overridePendingTransition(R.anim.pull_in_bottom, R.anim.push_out_top);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopPeriodically();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopPeriodically();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mHandler.removeCallbacks(runPeriodically);
+        startPeriodically();
     }
 
     @Override
@@ -80,7 +107,6 @@ public class InventoryFastActivity extends FragmentActivity implements Inventory
     }
 
     public void startPeriodically() {
-        mHandler = new Handler();
         mHandler.post(runPeriodically);
     }
 
@@ -161,8 +187,7 @@ public class InventoryFastActivity extends FragmentActivity implements Inventory
             // Else, this is the first GET.
             else {
                 mOldJSON = newJSON;
-                return new Gson().fromJson(newJSON, new TypeToken<Product>() {
-                }.getType());
+                return new Gson().fromJson(newJSON, new TypeToken<Product>() {}.getType());
             }
         }
 
@@ -170,28 +195,32 @@ public class InventoryFastActivity extends FragmentActivity implements Inventory
         protected void onPostExecute(Product result) {
             super.onPostExecute(result);
 
+            if ((wrActivity.get() != null) && (wrActivity.get().isFinishing() != true)) {
 
-            if (result != null) {
+                if (result != null) {
 
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(PARCELABLE_PRODUCT_TAG, result);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelable(PARCELABLE_PRODUCT_TAG, result);
+                    bundle.putBoolean(INVENTORY_LAYOUT_TAG, true);
 
-                // Create an instance of ProductListFragment and add the bundle.
-                mInventoryViewFragment = new InventoryViewFragment();
-                mInventoryViewFragment.setArguments(bundle);
+                    // Create an instance of ProductListFragment and add the bundle.
+                    mInventoryViewFragment = new InventoryViewFragment();
+                    mInventoryViewFragment.setArguments(bundle);
 
-                // Get FragmentManager,replace whatever is in the container with a ProductListFragment.
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_inventory_view_container, mInventoryViewFragment, INVENTORY_VIEW_FRAGMENT_TAG)
-                        .commit();
+                    // Get FragmentManager,replace whatever is in the container with a ProductListFragment.
+                    wrActivity.get().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_inventory_view_container, mInventoryViewFragment, INVENTORY_VIEW_FRAGMENT_TAG)
+                            .commit();
+                }
 
-                if(mWaitingOnUpdate) {
+                if (mWaitingOnUpdate) {
                     mWaitingOnUpdate = false;
-                    Toast.makeText(getApplicationContext(), R.string.inventory_finished, Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), R.string.inventory_finished, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
+                    toast.show();
                 }
             }
         }
-
     }
 }

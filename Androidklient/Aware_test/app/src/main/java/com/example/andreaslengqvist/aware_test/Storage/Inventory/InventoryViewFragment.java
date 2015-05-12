@@ -34,8 +34,10 @@ import java.net.UnknownHostException;
  */
 public class InventoryViewFragment extends Fragment {
 
-    private static final String PARCELABLE_PRODUCT_TAG = "Product";
-    private static final int MAX_BALANCE = 10000;
+    private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
+    private static final String INVENTORY_LAYOUT_TAG = "INVENTORY_LAYOUT_TAG";
+
+    private static final int MAX_BALANCE = 1000;
     private static final int MIN_BALANCE = 0;
 
     private InventoryListener mCallback;
@@ -78,13 +80,20 @@ public class InventoryViewFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.fragment_inventory_view, container, false);
 
-        initializeVariables();
 
         // Get the bundled Product.
         Bundle bundle = getArguments();
         product = bundle.getParcelable(PARCELABLE_PRODUCT_TAG);
+        boolean inventoryLayout = bundle.getBoolean(INVENTORY_LAYOUT_TAG);
+
+        if(inventoryLayout) {
+            mView = inflater.inflate(R.layout.fragment_inventory_fast_view, container, false);
+        } else {
+            mView = inflater.inflate(R.layout.fragment_inventory_view, container, false);
+        }
+
+        initializeVariables();
         setProduct(product);
 
         current_product_balance = product.getQuantity();
@@ -186,7 +195,7 @@ public class InventoryViewFragment extends Fragment {
             public void onClick(View v) {
                 current_product_balance = product.getQuantity();
                 output_product_balance.setText(Integer.toString(product.getQuantity()));
-                mView.findViewById(R.id.layout_inventory_bar).setVisibility(View.GONE);
+                mView.findViewById(R.id.layout_inventory_bar).setVisibility(View.INVISIBLE);
                 btn_inventory_view_inventory_cancel.setVisibility(View.GONE);
                 btn_inventory_view_inventory_do_inventory.setVisibility(View.GONE);
                 btn_inventory_view_inventory_show.setVisibility(View.VISIBLE);
@@ -200,7 +209,7 @@ public class InventoryViewFragment extends Fragment {
                 product.setQuantity(current_product_balance);
                 jsonProduct = new Gson().toJson(product);
                 new PutInventory().execute();
-                mView.findViewById(R.id.layout_inventory_bar).setVisibility(View.GONE);
+                mView.findViewById(R.id.layout_inventory_bar).setVisibility(View.INVISIBLE);
                 btn_inventory_view_inventory_cancel.setVisibility(View.GONE);
                 btn_inventory_view_inventory_do_inventory.setVisibility(View.GONE);
                 btn_inventory_view_inventory_show.setVisibility(View.VISIBLE);

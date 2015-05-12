@@ -27,7 +27,7 @@ import java.io.InputStream;
  */
 public class ProductViewFragment extends Fragment {
 
-    private static final String PARCELABLE_PRODUCT_TAG = "Product";
+    private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
 
     private ProductListListener mCallback;
     private View mView;

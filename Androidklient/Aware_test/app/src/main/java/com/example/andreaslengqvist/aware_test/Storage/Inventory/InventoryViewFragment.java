@@ -21,19 +21,12 @@ import com.example.andreaslengqvist.aware_test.Connection.Connection;
 import com.example.andreaslengqvist.aware_test.R;
 import com.example.andreaslengqvist.aware_test.Storage.Product;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
 
 
 /**

@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
+
 import com.example.andreaslengqvist.aware_test.Helpers.ProductPager;
 import com.example.andreaslengqvist.aware_test.Helpers.ZoomOutPageTransformer;
 import com.example.andreaslengqvist.aware_test.R;
@@ -153,13 +155,6 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     }
 
     private void openSearchBar(String queryText) {
-
-//        if(insideProduct) {
-//            insideProduct = false;
-//            mPager.setVisibility(View.GONE);
-//            mListContainer.setVisibility(View.VISIBLE);
-//            mProductListFragment.deselectList();
-//        }
 
         if(mUnFilteredProducts == null) {
             mUnFilteredProducts = mProducts;
@@ -358,6 +353,8 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     public void onUpdatedFinished() {
         mProductListFragment.selectList(mPagerPosition+1);
         mPager.setCurrentItem(mPagerPosition+1);
+
+        Toast.makeText(getApplicationContext(), R.string.inventory_finished, Toast.LENGTH_LONG).show();
     }
 
     @Override

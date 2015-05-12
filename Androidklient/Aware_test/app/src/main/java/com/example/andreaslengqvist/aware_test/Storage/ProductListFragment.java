@@ -416,6 +416,7 @@ public class ProductListFragment extends Fragment {
                     e.printStackTrace();
                 }
             }
+            Log.d("asdasd", newJSON);
 
             // If and old JSON-object exists. (e.g not the first GET)
             if(oldJSON != null) {

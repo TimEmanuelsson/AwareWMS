@@ -7,11 +7,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.andreaslengqvist.aware_test.Connection.Connection;
 import com.example.andreaslengqvist.aware_test.R;
 import com.example.andreaslengqvist.aware_test.Storage.Product;
-import com.example.andreaslengqvist.aware_test.Storage.Products.ProductViewFragment;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -21,44 +21,43 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+
 
 
 /**
  * Created by andreaslengqvist on 15-04-07.
  */
-public class InventoryFastActivity extends FragmentActivity {
+public class InventoryFastActivity extends FragmentActivity implements InventoryListener {
 
     private static final String EAN_TAG = "EAN_TAG";
 
+    private static final String INVENTORY_VIEW_FRAGMENT_TAG = "Product_List_Fragment";
+    private static final String PARCELABLE_PRODUCT_TAG = "Product";
+
+
+    private InventoryViewFragment mInventoryViewFragment;
     private Handler mHandler;
     private String mScannedEAN;
     private String mOldJSON;
 
+    private boolean mWaitingOnUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_inventory_view);
+        setContentView(R.layout.activity_inventory_fast);
+
 
         // Get which type (Products / Inventory).
         Intent i = getIntent();
         if (i.hasExtra(EAN_TAG)) {
             mScannedEAN = i.getStringExtra(EAN_TAG);
         }
-        Log.d("asdasd", mScannedEAN);
 
 
         // If coming from new state. (e.g NOT screen rotation)
         if (savedInstanceState == null) {
-
-            // If user is using a tablet or a handheld.
-            if (!getResources().getBoolean(R.bool.isTablet)) {
-                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-            }
-
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             startPeriodically();
         }
     }
@@ -67,6 +66,17 @@ public class InventoryFastActivity extends FragmentActivity {
     public void onBackPressed() {
         super.onBackPressed();
         stopPeriodically();
+        overridePendingTransition(R.anim.pull_in_bottom, R.anim.push_out_top);
+    }
+
+    @Override
+    public void onInsideInventory(boolean inside) {
+        // TODO: NOTHING.
+    }
+
+    @Override
+    public void onDoInventory() {
+        mWaitingOnUpdate = true;
     }
 
     public void startPeriodically() {
@@ -89,10 +99,8 @@ public class InventoryFastActivity extends FragmentActivity {
 
 
     /**
-     *
-     * AsyncTask which will run in the background and fetch a ArrayList of Products.
-     * If the new ArrayList is the same as the old one no changes have been made and NO need to replace the old one.
-     *
+     * AsyncTask which will run in the background and fetch a new version of the Scanned Product.
+     * If the new Product is the same as the old one no changes have been made and NO need to replace the old one.
      */
     private class GetProductByEAN extends AsyncTask<Void, Void, Product> {
 
@@ -113,7 +121,7 @@ public class InventoryFastActivity extends FragmentActivity {
                 PrintWriter out = new PrintWriter(socket.getOutputStream());
 
                 // Write a GET-method to the Server.
-                out.println("GET/products/barcodenumber=" + mScannedEAN);
+                out.println("GET/products/ean=" + mScannedEAN);
                 out.flush();
 
                 // Get Products by using a InputStreamReader wrapped in a BufferedReader to read JSON as a String.
@@ -136,30 +144,54 @@ public class InventoryFastActivity extends FragmentActivity {
             }
 
             // If and old JSON-object exists. (e.g not the first GET)
-            if(mOldJSON != null) {
+            if (mOldJSON != null) {
 
                 // And the new JSON-object NOT equals to the old, return the new one.
                 if (!newJSON.equals(mOldJSON)) {
                     mOldJSON = newJSON;
-                    return new Gson().fromJson(newJSON, new TypeToken<Product>() {}.getType());
+                    return new Gson().fromJson(newJSON, new TypeToken<Product>() {
+                    }.getType());
                 }
                 // Else, there has not been any changes in the database. Retain the old one.
-                else { return null; }
+                else {
+                    return null;
+                }
             }
 
             // Else, this is the first GET.
             else {
                 mOldJSON = newJSON;
-                Log.d("asdasd", newJSON);
-
-                return new Gson().fromJson(newJSON, new TypeToken<Product>() {}.getType());
+                return new Gson().fromJson(newJSON, new TypeToken<Product>() {
+                }.getType());
             }
         }
 
         @Override
         protected void onPostExecute(Product result) {
             super.onPostExecute(result);
-            Log.d("asdasd", result.getName());
+
+
+            if (result != null) {
+
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(PARCELABLE_PRODUCT_TAG, result);
+
+                // Create an instance of ProductListFragment and add the bundle.
+                mInventoryViewFragment = new InventoryViewFragment();
+                mInventoryViewFragment.setArguments(bundle);
+
+                // Get FragmentManager,replace whatever is in the container with a ProductListFragment.
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_inventory_view_container, mInventoryViewFragment, INVENTORY_VIEW_FRAGMENT_TAG)
+                        .commit();
+
+                if(mWaitingOnUpdate) {
+                    mWaitingOnUpdate = false;
+                    Toast.makeText(getApplicationContext(), R.string.inventory_finished, Toast.LENGTH_LONG).show();
+                }
+            }
         }
+
     }
 }

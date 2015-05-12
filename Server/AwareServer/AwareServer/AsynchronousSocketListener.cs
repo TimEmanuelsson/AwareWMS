@@ -79,22 +79,22 @@ namespace AwareServer
             StateObject state = (StateObject)ar.AsyncState;
             Socket handler = state.workSocket;
             String content = String.Empty;
-            int bytesRead = 0;
-            try
-            {
+            int bytesRead = handler.EndReceive(ar);
+            //try
+            //{
                 // Read data from the client socket. 
-                bytesRead = handler.EndReceive(ar);
-            }
-            catch (SocketException e)
-            {
-                ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
-                service.InsertException(log);
-            }
+                
+            //}
+            //catch (SocketException e)
+            //{
+            //    ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
+            //    service.InsertException(log);
+            //}
 
 
             if (bytesRead > 0)
             {
-                state.sb.Append(Encoding.ASCII.GetString(
+                state.sb.Append(Encoding.UTF8.GetString(
                     state.buffer, 0, bytesRead));
 
                 content = state.sb.ToString();
@@ -103,7 +103,7 @@ namespace AwareServer
             try
             {
                 InputHandler inputHandler = new InputHandler();
-                string returnStr = inputHandler.GetReturnString(content);
+                byte[] returnStr = inputHandler.GetReturnString(content);
                 Send(handler, returnStr);
             }
             catch (Exception e)
@@ -115,15 +115,15 @@ namespace AwareServer
 
 
         // Returns to client.
-        private static void Send(Socket handler, String data)
+        private static void Send(Socket handler, byte[] data)
         {
             // Convert the string data to byte data using ASCII encoding.
-            byte[] byteData = Encoding.ASCII.GetBytes(data);
+            //byte[] byteData = Encoding.UTF8.GetBytes(data);
 
             // Begin sending the data to the remote device.
             try
             {
-                handler.BeginSend(byteData, 0, byteData.Length, 0,
+                handler.BeginSend(data, 0, data.Length, 0,
                     new AsyncCallback(SendCallback), handler);
             }
             catch (SocketException e)

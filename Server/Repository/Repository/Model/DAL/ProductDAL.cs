@@ -22,7 +22,7 @@ namespace Repository.Model.DAL
         static ProductDAL() 
         {
             //Get connectionstring
-            _connectionString = Repository.Properties.Settings.Default.AwareConnectionString;
+            _connectionString = Repository.Properties.Settings.Default.temp;
         }
 
         #endregion
@@ -109,7 +109,7 @@ namespace Repository.Model.DAL
                 try
                 {
                     // Create SqlCommand-objekt that execute stored procedure.
-                    SqlCommand cmd = new SqlCommand("dbo.usp_GetProductByBarcodeNumber", conn);
+                    SqlCommand cmd = new SqlCommand("dbo.usp_GetProductByBarCodeNumber", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@BarcodeNumber", BarcodeNumber);

@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using System.Drawing;
 using AwareClassLibrary;
 using Newtonsoft.Json;
 using Repository.Model;
+using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace AwareServer
 {
@@ -15,8 +18,9 @@ namespace AwareServer
         public Service service = new Service();
         ExceptionLog exceptionLog = null;
         string ret = "";
+        byte[] retByte = new Byte[10024];
 
-        public string GetReturnString(string content)
+        public byte[] GetReturnString(string content)
         {   
             try
             {
@@ -29,17 +33,21 @@ namespace AwareServer
                         {
                             string id = content.Replace("GET/orders/id=", "");
                             Order order = service.GetOrderById(int.Parse(id));
+
                             ret = JsonConvert.SerializeObject(order);
+                            retByte = Encoding.UTF8.GetBytes(ret);
                         }
 
                         else if (content.Equals("GET/orders"))
                         {
                             IEnumerable<Order> orders = service.GetOrders();
-                            ret = JsonConvert.SerializeObject(orders);    
+                            ret = JsonConvert.SerializeObject(orders);
+                            retByte = Encoding.UTF8.GetBytes(ret);
                         }
                         else
                         {
                             ret = "Input string is not correctly formatted.";
+                            retByte = Encoding.UTF8.GetBytes(ret);
                             throw new System.ArgumentException("Input string is not correctly formatted.");
                         }
                     }
@@ -51,32 +59,48 @@ namespace AwareServer
                             string id = content.Replace("GET/products/id=", "");
                             Product product = service.GetProductById(int.Parse(id));
                             ret = JsonConvert.SerializeObject(product);
+                            retByte = Encoding.UTF8.GetBytes(ret);
                         }
                         else if (content.IndexOf("GET/products/sku=") > -1)
                         {
                             string sku = content.Replace("GET/products/sku=", "");
                             Product product = service.GetProductBySKU(int.Parse(sku));
                             ret = JsonConvert.SerializeObject(product);
+                            retByte = Encoding.UTF8.GetBytes(ret);
                         }
                         else if (content.IndexOf("GET/products/barcodenumber=") > -1)
                         {
                             string barcodenumber = content.Replace("GET/products/barcodenumber=", "");
                             Product product = service.GetProductByBarcodeNumber(int.Parse(barcodenumber));
                             ret = JsonConvert.SerializeObject(product);
+                            retByte = Encoding.UTF8.GetBytes(ret);
                         }
                         else if (content.IndexOf("GET/products/count") > -1)
                         {
                             ret = String.Format("{0}", service.GetProductCount().ToString());
+                            retByte = Encoding.UTF8.GetBytes(ret);
+                        }
+                        else if (content.IndexOf("GET/products/image/id=") > -1)
+                        {
+                            string id = content.Replace("GET/products/image/id=", "");
+                            Product product = service.GetProductById(int.Parse(id));
+                            string imgUrl = product.ImageLocation;
+                            Bitmap tImage = new Bitmap(imgUrl);
+                            //imageToByte(tImage, tImage.RawFormat);
+                            retByte = imageToByte(tImage, tImage.RawFormat);
+                            //byte[] bStream = ImageToByte(tImage);    
                         }
                         else if (content.Equals("GET/products"))
                         {
                             IEnumerable<Product> products = service.GetProducts();
                             ret = JsonConvert.SerializeObject(products);
+                            retByte = Encoding.UTF8.GetBytes(ret);
                         }
 
                         else
                         {
                             ret = "Input string is not correctly formatted.";
+                            retByte = Encoding.UTF8.GetBytes(ret);
                             throw new System.ArgumentException("Input string is not correctly formatted.");
                         }
                     }
@@ -89,6 +113,7 @@ namespace AwareServer
                             string id = content.Replace("GET/customers/id=", "");
                             Customer customer = service.GetCustomerById(int.Parse(id));
                             ret += JsonConvert.SerializeObject(customer);
+                            retByte = Encoding.UTF8.GetBytes(ret);
                         }
                         //else if (content.IndexOf("name") > -1)
                         //{
@@ -102,12 +127,14 @@ namespace AwareServer
                         else
                         {
                             ret = "Input string is not correctly formatted.";
+                            retByte = Encoding.UTF8.GetBytes(ret);
                             throw new System.ArgumentException("Input string is not correctly formatted.");
                         }
                     }
                     else
                     {
                         ret = "Input string is not correctly formatted.";
+                        retByte = Encoding.UTF8.GetBytes(ret);
                         throw new System.ArgumentException("Input string is not correctly formatted.");
                     }
                 }
@@ -144,12 +171,14 @@ namespace AwareServer
                     else
                     {
                         ret = "Input string is not correctly formatted.";
+                        retByte = Encoding.UTF8.GetBytes(ret);
                         throw new System.ArgumentException("Input string is not correctly formatted.");
                     }
                 }
                 else
                 {
                     ret = "Input string is not correctly formatted.";
+                    retByte = Encoding.UTF8.GetBytes(ret);
                     throw new System.ArgumentException("Input string is not correctly formatted.");
                 }
                 #endregion
@@ -161,7 +190,14 @@ namespace AwareServer
                 service.InsertException(exceptionLog);
             }
  
-            return ret;
+            return retByte;
+        }
+
+        public byte[] imageToByte(System.Drawing.Image imageIn, System.Drawing.Imaging.ImageFormat format)
+        {
+            MemoryStream ms = new MemoryStream();
+            imageIn.Save(ms, format);
+            return ms.ToArray();
         }
     }
 }

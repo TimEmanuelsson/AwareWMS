@@ -33,13 +33,6 @@
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.FileMenuContainer = new System.Windows.Forms.ToolStripMenuItem();
             this.FileMenuExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.NameLabel2 = new System.Windows.Forms.Label();
-            this.SKULabel2 = new System.Windows.Forms.Label();
-            this.QuantityLabel2 = new System.Windows.Forms.Label();
-            this.WeightLabel2 = new System.Windows.Forms.Label();
-            this.StorageSpaceLabel2 = new System.Windows.Forms.Label();
-            this.BarcodeNumberLabel2 = new System.Windows.Forms.Label();
-            this.ImageLocationLabel2 = new System.Windows.Forms.Label();
             this.SearchField = new System.Windows.Forms.TextBox();
             this.SearchLabel = new System.Windows.Forms.Label();
             this.ShowProductsPanel = new System.Windows.Forms.Panel();
@@ -68,10 +61,6 @@
             this.ColumnHeaderName = new System.Windows.Forms.Label();
             this.ColumnHeaderSKU = new System.Windows.Forms.Label();
             this.ColumnHeaderQuantity = new System.Windows.Forms.Label();
-            this.LastInventoryText = new System.Windows.Forms.Label();
-            this.LastInventoryLabel = new System.Windows.Forms.TextBox();
-            this.ProductId = new System.Windows.Forms.Label();
-            this.ProductIdLabel = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.TableView)).BeginInit();
             this.MenuBar.SuspendLayout();
             this.ShowProductsPanel.SuspendLayout();
@@ -83,13 +72,16 @@
             // TableView
             // 
             this.TableView.AllowUserToAddRows = false;
+            this.TableView.AllowUserToDeleteRows = false;
             this.TableView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.TableView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TableView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.TableView.Location = new System.Drawing.Point(3, 0);
+            this.TableView.MultiSelect = false;
             this.TableView.Name = "TableView";
             this.TableView.Size = new System.Drawing.Size(744, 318);
             this.TableView.TabIndex = 1;
-            this.TableView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TableView_CellContentClick);
+            this.TableView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TableView_CellClick);
             // 
             // MenuBar
             // 
@@ -117,69 +109,6 @@
             this.FileMenuExit.Size = new System.Drawing.Size(92, 22);
             this.FileMenuExit.Text = "Exit";
             this.FileMenuExit.Click += new System.EventHandler(this.FileMenuExit_Click);
-            // 
-            // NameLabel2
-            // 
-            this.NameLabel2.AutoSize = true;
-            this.NameLabel2.Location = new System.Drawing.Point(693, 704);
-            this.NameLabel2.Name = "NameLabel2";
-            this.NameLabel2.Size = new System.Drawing.Size(33, 13);
-            this.NameLabel2.TabIndex = 7;
-            this.NameLabel2.Text = "name";
-            // 
-            // SKULabel2
-            // 
-            this.SKULabel2.AutoSize = true;
-            this.SKULabel2.Location = new System.Drawing.Point(746, 704);
-            this.SKULabel2.Name = "SKULabel2";
-            this.SKULabel2.Size = new System.Drawing.Size(24, 13);
-            this.SKULabel2.TabIndex = 9;
-            this.SKULabel2.Text = "sku";
-            // 
-            // QuantityLabel2
-            // 
-            this.QuantityLabel2.AutoSize = true;
-            this.QuantityLabel2.Location = new System.Drawing.Point(813, 704);
-            this.QuantityLabel2.Name = "QuantityLabel2";
-            this.QuantityLabel2.Size = new System.Drawing.Size(44, 13);
-            this.QuantityLabel2.TabIndex = 11;
-            this.QuantityLabel2.Text = "quantity";
-            // 
-            // WeightLabel2
-            // 
-            this.WeightLabel2.AutoSize = true;
-            this.WeightLabel2.Location = new System.Drawing.Point(899, 704);
-            this.WeightLabel2.Name = "WeightLabel2";
-            this.WeightLabel2.Size = new System.Drawing.Size(38, 13);
-            this.WeightLabel2.TabIndex = 13;
-            this.WeightLabel2.Text = "weight";
-            // 
-            // StorageSpaceLabel2
-            // 
-            this.StorageSpaceLabel2.AutoSize = true;
-            this.StorageSpaceLabel2.Location = new System.Drawing.Point(973, 704);
-            this.StorageSpaceLabel2.Name = "StorageSpaceLabel2";
-            this.StorageSpaceLabel2.Size = new System.Drawing.Size(71, 13);
-            this.StorageSpaceLabel2.TabIndex = 15;
-            this.StorageSpaceLabel2.Text = "storagespace";
-            // 
-            // BarcodeNumberLabel2
-            // 
-            this.BarcodeNumberLabel2.AutoSize = true;
-            this.BarcodeNumberLabel2.Location = new System.Drawing.Point(1170, 704);
-            this.BarcodeNumberLabel2.Name = "BarcodeNumberLabel2";
-            this.BarcodeNumberLabel2.Size = new System.Drawing.Size(81, 13);
-            this.BarcodeNumberLabel2.TabIndex = 17;
-            this.BarcodeNumberLabel2.Text = "barcodenumber";
-            // 
-            // ImageLocationLabel2
-            // 
-            this.ImageLocationLabel2.AutoSize = true;
-            this.ImageLocationLabel2.Location = new System.Drawing.Point(1073, 704);
-            this.ImageLocationLabel2.Name = "ImageLocationLabel2";
-            this.ImageLocationLabel2.Size = new System.Drawing.Size(72, 13);
-            this.ImageLocationLabel2.TabIndex = 19;
-            this.ImageLocationLabel2.Text = "imagelocation";
             // 
             // SearchField
             // 
@@ -452,9 +381,9 @@
             this.ColumnHeaderSKU.AutoSize = true;
             this.ColumnHeaderSKU.Location = new System.Drawing.Point(270, 59);
             this.ColumnHeaderSKU.Name = "ColumnHeaderSKU";
-            this.ColumnHeaderSKU.Size = new System.Drawing.Size(29, 13);
+            this.ColumnHeaderSKU.Size = new System.Drawing.Size(46, 13);
             this.ColumnHeaderSKU.TabIndex = 32;
-            this.ColumnHeaderSKU.Text = "SKU";
+            this.ColumnHeaderSKU.Text = "Quantity";
             // 
             // ColumnHeaderQuantity
             // 
@@ -462,80 +391,24 @@
             this.ColumnHeaderQuantity.AutoSize = true;
             this.ColumnHeaderQuantity.Location = new System.Drawing.Point(169, 59);
             this.ColumnHeaderQuantity.Name = "ColumnHeaderQuantity";
-            this.ColumnHeaderQuantity.Size = new System.Drawing.Size(46, 13);
+            this.ColumnHeaderQuantity.Size = new System.Drawing.Size(29, 13);
             this.ColumnHeaderQuantity.TabIndex = 33;
-            this.ColumnHeaderQuantity.Text = "Quantity";
-            // 
-            // LastInventoryText
-            // 
-            this.LastInventoryText.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.LastInventoryText.AutoSize = true;
-            this.LastInventoryText.Location = new System.Drawing.Point(34, 560);
-            this.LastInventoryText.Name = "LastInventoryText";
-            this.LastInventoryText.Size = new System.Drawing.Size(74, 13);
-            this.LastInventoryText.TabIndex = 34;
-            this.LastInventoryText.Text = "LastInventory:";
-            // 
-            // LastInventoryLabel
-            // 
-            this.LastInventoryLabel.Location = new System.Drawing.Point(138, 557);
-            this.LastInventoryLabel.Name = "LastInventoryLabel";
-            this.LastInventoryLabel.Size = new System.Drawing.Size(61, 20);
-            this.LastInventoryLabel.TabIndex = 34;
-            // 
-            // ProductId
-            // 
-            this.ProductId.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.ProductId.AutoSize = true;
-            this.ProductId.Location = new System.Drawing.Point(50, 371);
-            this.ProductId.Name = "ProductId";
-            this.ProductId.Size = new System.Drawing.Size(58, 13);
-            this.ProductId.TabIndex = 35;
-            this.ProductId.Text = "ProductID:";
-            // 
-            // ProductIdLabel
-            // 
-            this.ProductIdLabel.Location = new System.Drawing.Point(119, 371);
-            this.ProductIdLabel.Name = "ProductIdLabel";
-            this.ProductIdLabel.Size = new System.Drawing.Size(61, 20);
-            this.ProductIdLabel.TabIndex = 36;
+            this.ColumnHeaderQuantity.Text = "SKU";
             // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 782);
-            this.Controls.Add(this.ProductId);
-            this.Controls.Add(this.ProductIdLabel);
-            this.Controls.Add(this.LastInventoryLabel);
-            this.Controls.Add(this.LastInventoryText);
             this.Controls.Add(this.ShowProductsMainContainer);
-            this.Controls.Add(this.NameLabel2);
-            this.Controls.Add(this.WeightLabel2);
             this.Controls.Add(this.TableViewPanel);
             this.Controls.Add(this.MenuBar);
-            this.Controls.Add(this.ImageLocationLabel2);
-            this.Controls.Add(this.SKULabel2);
-            this.Controls.Add(this.BarcodeNumberLabel2);
-            this.Controls.Add(this.QuantityLabel2);
-            this.Controls.Add(this.StorageSpaceLabel2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainView";
             this.Text = "Aware";
-            this.Controls.SetChildIndex(this.StorageSpaceLabel2, 0);
-            this.Controls.SetChildIndex(this.QuantityLabel2, 0);
-            this.Controls.SetChildIndex(this.BarcodeNumberLabel2, 0);
-            this.Controls.SetChildIndex(this.SKULabel2, 0);
-            this.Controls.SetChildIndex(this.ImageLocationLabel2, 0);
             this.Controls.SetChildIndex(this.MenuBar, 0);
             this.Controls.SetChildIndex(this.TableViewPanel, 0);
-            this.Controls.SetChildIndex(this.WeightLabel2, 0);
-            this.Controls.SetChildIndex(this.NameLabel2, 0);
             this.Controls.SetChildIndex(this.ShowProductsMainContainer, 0);
-            this.Controls.SetChildIndex(this.LastInventoryText, 0);
-            this.Controls.SetChildIndex(this.LastInventoryLabel, 0);
-            this.Controls.SetChildIndex(this.ProductIdLabel, 0);
-            this.Controls.SetChildIndex(this.ProductId, 0);
             ((System.ComponentModel.ISupportInitialize)(this.TableView)).EndInit();
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
@@ -557,13 +430,6 @@
         private System.Windows.Forms.MenuStrip MenuBar;
         private System.Windows.Forms.ToolStripMenuItem FileMenuContainer;
         private System.Windows.Forms.ToolStripMenuItem FileMenuExit;
-        private System.Windows.Forms.Label NameLabel2;
-        private System.Windows.Forms.Label SKULabel2;
-        private System.Windows.Forms.Label QuantityLabel2;
-        private System.Windows.Forms.Label WeightLabel2;
-        private System.Windows.Forms.Label StorageSpaceLabel2;
-        private System.Windows.Forms.Label BarcodeNumberLabel2;
-        private System.Windows.Forms.Label ImageLocationLabel2;
         private System.Windows.Forms.TextBox SearchField;
         private System.Windows.Forms.Label SearchLabel;
         private System.Windows.Forms.Panel ShowProductsPanel;
@@ -592,9 +458,5 @@
         private System.Windows.Forms.Label ColumnHeaderQuantity;
         private System.Windows.Forms.Label ColumnHeaderBarcodeNumber;
         private System.Windows.Forms.Button SaveEditButton;
-        private System.Windows.Forms.Label LastInventoryText;
-        private System.Windows.Forms.TextBox LastInventoryLabel;
-        private System.Windows.Forms.Label ProductId;
-        private System.Windows.Forms.TextBox ProductIdLabel;
     }
 }

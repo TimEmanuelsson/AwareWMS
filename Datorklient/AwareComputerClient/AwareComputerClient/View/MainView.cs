@@ -147,16 +147,14 @@ namespace AwareComputerClient.View
             var bindinglist = new BindingList<Product>(products);
             var source = new BindingSource(bindinglist, null);
             TableView.DataSource = source;
-           
+
             Product currentobject = (Product)TableView.CurrentRow.DataBoundItem;
             currentobject.Quantity = Convert.ToInt32(QuantityLabel.Text);
-
-             
 
                 //bindinglist.SingleOrDefault();
                 //MessageBox.Show(bindinglist.ToString());
                 string serializedObject = JsonConvert.SerializeObject(currentobject);
-                async.StartClient("PUT/products/inventory/json=" + serializedObject);
+                async.StartClient("PUT/products/json=" + serializedObject);
         }
     }
 }

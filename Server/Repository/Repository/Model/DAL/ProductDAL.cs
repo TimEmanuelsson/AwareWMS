@@ -102,17 +102,17 @@ namespace Repository.Model.DAL
             }
         }
 
-        public Product GetProductByBarcodeNumber(int BarcodeNumber)
+        public Product GetProductByEAN(int ean)
         {
             using (SqlConnection conn = CreateConnection())
             {
                 try
                 {
                     // Create SqlCommand-objekt that execute stored procedure.
-                    SqlCommand cmd = new SqlCommand("dbo.usp_GetProductByBarCodeNumber", conn);
+                    SqlCommand cmd = new SqlCommand("dbo.usp_GetProductByEAN", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@BarcodeNumber", BarcodeNumber);
+                    cmd.Parameters.AddWithValue("@Ean", ean);
 
                     //Open database connection.
                     conn.Open();
@@ -127,7 +127,7 @@ namespace Repository.Model.DAL
                             var QuantityIndex = reader.GetOrdinal("Quantity");
                             var WeightIndex = reader.GetOrdinal("Weight");
                             var SpaceIndex = reader.GetOrdinal("StorageSpace");
-                            var BarcodeNumberIndex = reader.GetOrdinal("BarcodeNumber");
+                            var EANIndex = reader.GetOrdinal("EAN");
                             var ImageIndex = reader.GetOrdinal("ImageLocation");
                             var LastInventoryIndex = reader.GetOrdinal("LastInventory");
 
@@ -138,7 +138,7 @@ namespace Repository.Model.DAL
                                 reader.GetInt32(QuantityIndex),
                                 reader.GetDecimal(WeightIndex),
                                 reader.GetString(SpaceIndex),
-                                reader.GetString(BarcodeNumberIndex),
+                                reader.GetString(EANIndex),
                                 reader.GetString(ImageIndex),
                                 reader.GetDateTime(LastInventoryIndex)
                             );

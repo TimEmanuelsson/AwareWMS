@@ -34,25 +34,78 @@ namespace MagentoConnection
             return products;
         }
 
-        public void DownloadAllProductImages()
+        public Product DownloadProductImage(Product product)
         {
-            List<catalogProductEntity> magentoProducts = connection.GetAllProducts();
+            WebClient webClient = new WebClient();
+            string rootPath = Environment.CurrentDirectory;
+            string imageFolderPath = String.Format("{0}{1}", rootPath, "\\Product Images\\"); // Make a complete filepath.
 
-            List<catalogProductImageEntity[]> productImages = connection.GetAllImages(magentoProducts);
+            catalogProductImageEntity[] productImages = connection.GetProductImages(product.ProductId.ToString());
+
+            foreach (catalogProductImageEntity image in productImages)
+            {
+                // Check if the current image is the base image for the product, otherwise we skip it.
+                bool isBaseImage = false;
+                foreach (string type in image.types)
+                {
+                    if (type == "image")    // Having the type "image" means this is the base image for the product.
+                    {
+                        isBaseImage = true;
+                    }
+                }
+
+                if (isBaseImage)
+                {
+                    string[] pathParts = image.file.Split('.'); // Make the filepath into an array and remove forward slashes.
+
+                    string fileType = pathParts.Last(); // Get the filetype (.jpg, .gif, .png, etc.)
+
+                    Directory.CreateDirectory(imageFolderPath); // Create the product image directory if it doesn't already exist.
+
+                    int increment = 0;
+
+                    string filePath = String.Format("{0}{1}_{2}{3}", imageFolderPath, product.ProductId.ToString(), increment.ToString(), fileType);
+                    if (!File.Exists(filePath))
+                    {
+                        try
+                        {
+                            webClient.DownloadFile(image.url, filePath);
+                            product.ImageLocation = filePath;
+                        }
+                        catch (WebException)
+                        {
+                            continue;
+                        }
+                    }
+                }
+            }
+            return product;
+        }
+
+        public List<Product> DownloadAllProductImages()
+        {
+            List<Product> productsAndImagePaths = new List<Product>();
+
+            List<catalogProductEntity> magentoProducts = connection.GetAllProducts();
 
             WebClient webClient = new WebClient();
             string rootPath = Environment.CurrentDirectory;
-            // Denna loop är bara för testning och kan tas bort.
-            foreach (catalogProductImageEntity[] imageArray in productImages)
+            string imageFolderPath = String.Format("{0}{1}", rootPath, "\\Product Images\\"); // Make a complete filepath.
+
+
+            foreach (catalogProductEntity product in magentoProducts)
             {
-                foreach (catalogProductImageEntity image in imageArray)
+                catalogProductImageEntity[] productImages = connection.GetProductImages(product.product_id);
+                int productId = 0;
+                int.TryParse(product.product_id, out productId);
+
+                foreach (catalogProductImageEntity image in productImages)
                 {
-                    
                     // Check if the current image is the base image for the product, otherwise we skip it.
                     bool isBaseImage = false;
                     foreach (string type in image.types)
                     {
-                        if (type == "image")
+                        if (type == "image")    // Having the type "image" means this is the base image for the product.
                         {
                             isBaseImage = true;
                         }
@@ -60,40 +113,31 @@ namespace MagentoConnection
 
                     if (isBaseImage)
                     {
-                        string[] pathParts = image.file.Split('/'); // Make the filepath into an array and remove forward slashes.
+                        string[] pathParts = image.file.Split('.'); // Make the filepath into an array and remove forward slashes.
 
-                        string filename = pathParts.Last();
-                        pathParts = pathParts.Take(pathParts.Count() - 1).ToArray();  // Removes the last element (filename) in the array
+                        string fileType = pathParts.Last(); // Get the filetype (.jpg, .gif, .png, etc.)
 
-                        string path = String.Join("\\", pathParts); // Add backslashes to filepath (windows environment).
-                        string imageFolderPath = String.Format("{0}{1}{2}", rootPath, "\\Product Images\\", path); // Make a complete filepath.
+                        Directory.CreateDirectory(imageFolderPath); // Create the product image directory if it doesn't already exist.
 
-                        Directory.CreateDirectory(imageFolderPath); // Create all directories in the path if they don't already exist.
+                        int increment = 0;
 
-                        string filePath = String.Format("{0}{1}", imageFolderPath, filename);
+                        string filePath = String.Format("{0}{1}_{2}{3}", imageFolderPath, product.product_id, increment.ToString(), fileType);
                         if (!File.Exists(filePath))
                         {
                             try
                             {
                                 webClient.DownloadFile(image.url, filePath);
+                                productsAndImagePaths.Add(new Product(productId, null, null, 0, 0.0m, null, null, filePath));
                             }
                             catch (WebException)
                             {
                                 continue;
                             }
                         }
-                        /*
-                        foreach (PropertyDescriptor desc in TypeDescriptor.GetProperties(image))
-                        {
-                            string name = desc.Name;
-                            object value = desc.GetValue(image);
-                            Console.WriteLine("{0}={1}", name, value);
-                        }
-                        */
                     }
                 }
-
             }
+            return productsAndImagePaths;
         }
 
         public void LeftoverCode()

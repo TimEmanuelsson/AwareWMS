@@ -24,6 +24,11 @@ namespace AwareServer
         {
             List<Product> products = magentoHelper.GetAllProductsWithInventory();
 
+            foreach (Product product in products)
+            {
+                products.First(p => p.ProductId == product.ProductId).ImageLocation = magentoHelper.DownloadProductImage(product).ImageLocation;
+            }
+
             service.InsertAndUpdateProductList(products);
         }
     }

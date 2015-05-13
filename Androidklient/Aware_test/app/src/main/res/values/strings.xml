@@ -17,11 +17,15 @@
 
         <!-- Order menu -->
         <string name="logo">logo</string>
+        <string name="label_order_to_pick">Att plocka:</string>
+        <string name="label_order_to_pack">Att packa:</string>
         <string name="btn_order_menu_pick">Plocka</string>
         <string name="btn_order_menu_pack">Packa</string>
         <string name="btn_order_menu_returns">Returer</string>
 
         <!-- Storage menu -->
+        <string name="label_total_products">Artiklar i lager:</string>
+        <string name="label_total_value">Till ett värde av:</string>
         <string name="btn_storage_menu_products">Artiklar</string>
         <string name="btn_storage_menu_inventory">Inventering</string>
         <string name="btn_inventory_menu_fast">Snabb</string>
@@ -44,6 +48,8 @@
                 <string name="btn_product_view_show_edit_menu">Visa redigeringsmeny</string>
                 <string name="btn_product_view_create_EAN">Lägg till streckkod</string>
                 <string name="btn_product_view_change_EAN">Ändra streckkod</string>
+                <string name="toast_ean_already_exists">Streckkoden finns redan!</string>
+                <string name="toast_product_updated">Artikel uppdaterad!</string>
                 <string name="btn_product_view_create_picture">Lägg till bild</string>
                 <string name="btn_product_view_change_picture">Ändra bild</string>
                 <string name="product_picture">Bild för artikel</string>

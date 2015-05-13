@@ -1,6 +1,7 @@
 package com.example.andreaslengqvist.aware_test.Storage.Products;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -15,8 +16,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.example.andreaslengqvist.aware_test.R;
+import com.example.andreaslengqvist.aware_test.Storage.Inventory.InventoryFastActivity;
 import com.example.andreaslengqvist.aware_test.Storage.ProductListListener;
 import com.example.andreaslengqvist.aware_test.Storage.Product;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 import java.io.InputStream;
 
 
@@ -28,6 +33,7 @@ import java.io.InputStream;
 public class ProductViewFragment extends Fragment {
 
     private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
+    private static final String EAN_TAG = "EAN_TAG";
 
     private ProductListListener mCallback;
     private View mView;
@@ -35,7 +41,6 @@ public class ProductViewFragment extends Fragment {
 
     private RelativeLayout btn_product_view_show_edit_menu;
     private Button btn_product_view_create_EAN;
-    private Button btn_product_view_create_picture;
     private TextView output_product_position;
     private TextView output_product_name;
     private TextView output_product_number;
@@ -82,14 +87,20 @@ public class ProductViewFragment extends Fragment {
                 if (!mInsideEditMenu) {
                     mInsideEditMenu = true;
                     btn_product_view_create_EAN.setVisibility(View.VISIBLE);
-                    btn_product_view_create_picture.setVisibility(View.VISIBLE);
                     icon_product_view_show_edit_menu.setBackgroundResource(R.drawable.ic_action_edit_inside);
                 } else {
                     mInsideEditMenu = false;
                     btn_product_view_create_EAN.setVisibility(View.GONE);
-                    btn_product_view_create_picture.setVisibility(View.GONE);
                     icon_product_view_show_edit_menu.setBackgroundResource(R.drawable.ic_action_edit);
                 }
+            }
+        });
+
+        btn_product_view_create_EAN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mCallback.onScanEAN();
             }
         });
     }
@@ -105,7 +116,6 @@ public class ProductViewFragment extends Fragment {
         btn_product_view_show_edit_menu = (RelativeLayout) mView.findViewById(R.id.btn_product_view_show_edit_menu);
         icon_product_view_show_edit_menu = (ImageView) mView.findViewById(R.id.icon_product_view_show_edit_menu);
         btn_product_view_create_EAN = (Button) mView.findViewById(R.id.btn_product_view_create_EAN);
-        btn_product_view_create_picture = (Button) mView.findViewById(R.id.btn_product_view_create_picture);
     }
 
     private void setProduct(Product product) {
@@ -114,6 +124,10 @@ public class ProductViewFragment extends Fragment {
         output_product_number.setText(product.getSKU());
         output_product_balance.setText(Integer.toString(product.getQuantity()));
         new ImageDownloader(img_product_picture).execute("https://psmedia.playstation.com/is/image/psmedia/the-last-of-us-remastered-two-column-01-ps4-us-28jul14?$TwoColumn_Image$");
+
+        if(!product.getEAN().equals("0")) {
+            btn_product_view_create_EAN.setText(R.string.btn_product_view_change_EAN);
+        }
     }
 
 

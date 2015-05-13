@@ -37,7 +37,7 @@ public class InventoryFastActivity extends ActionBarActivity implements Inventor
 
     private static final String EAN_TAG = "EAN_TAG";
 
-    private static final String INVENTORY_VIEW_FRAGMENT_TAG = "Product_List_Fragment";
+    private static final String INVENTORY_VIEW_FRAGMENT_TAG = "INVENTORY_VIEW_FRAGMENT_TAG";
     private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
     private static final String INVENTORY_LAYOUT_TAG = "INVENTORY_LAYOUT_TAG";
 

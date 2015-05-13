@@ -16,7 +16,7 @@ import com.example.andreaslengqvist.aware_test.R;
  */
 public class ProductListAdapter extends ArrayAdapter<Product> {
 
-    private static final String ACTIVITY_INVENTORY_FULL = "Inventory_Full_Actvity";
+    private static final String ACTIVITY_INVENTORY_FULL = "ACTIVITY_INVENTORY_FULL";
 
     private int mSelectedPosition = -1;
     private String mTypeOfActivity;

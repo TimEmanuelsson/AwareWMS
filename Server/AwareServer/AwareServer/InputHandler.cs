@@ -20,7 +20,7 @@ namespace AwareServer
         string ret = "";
         byte[] retByte = new Byte[10024];
 
-        public byte[] GetReturnString(string content)
+        public byte[] GetReturnBytes(string content)
         {   
             try
             {

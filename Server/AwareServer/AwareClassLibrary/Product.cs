@@ -19,7 +19,7 @@ namespace AwareClassLibrary
         public int Quantity { get; set; }
         public decimal Weight { get; set; }
         public string StorageSpace { get; set; }
-        public string BarcodeNumber { get; set; }
+        public string EAN { get; set; }
         public string ImageLocation { get; set; }
         public int LastInventory { get; set; }
 
@@ -28,7 +28,7 @@ namespace AwareClassLibrary
         #region Constructor
 
         public Product(int productId, string name, string sku, int quantity,
-    decimal weight, string storageSpace, string barcodeNumber, string imageLocation)
+    decimal weight, string storageSpace, string ean, string imageLocation)
         {
             ProductId = productId;
             Name = name;
@@ -36,12 +36,12 @@ namespace AwareClassLibrary
             Quantity = quantity;
             Weight = weight;
             StorageSpace = storageSpace;
-            BarcodeNumber = barcodeNumber;
+            EAN = ean;
             ImageLocation = imageLocation;
         }
 
         public Product(int productId, string name, string sku, int quantity,
-            decimal weight, string storageSpace, string barcodeNumber, string imageLocation, DateTime lastInventory)
+            decimal weight, string storageSpace, string ean, string imageLocation, DateTime lastInventory)
         {
             ProductId = productId;
             Name = name;
@@ -49,14 +49,14 @@ namespace AwareClassLibrary
             Quantity = quantity;
             Weight = weight;
             StorageSpace = storageSpace;
-            BarcodeNumber = barcodeNumber;
+            EAN = ean;
             ImageLocation = imageLocation;
             LastInventory = (int)Math.Ceiling((DateTime.Now.Date - lastInventory.Date).TotalDays);
         }
 
                 [JsonConstructor]
         public Product(int productId, string name, string sku, int quantity,
-            decimal weight, string storageSpace, string barcodeNumber, string imageLocation, int lastInventory)
+            decimal weight, string storageSpace, string ean, string imageLocation, int lastInventory)
         {
             ProductId = productId;
             Name = name;
@@ -64,7 +64,7 @@ namespace AwareClassLibrary
             Quantity = quantity;
             Weight = weight;
             StorageSpace = storageSpace;
-            BarcodeNumber = barcodeNumber;
+            EAN = ean;
             ImageLocation = imageLocation;
             LastInventory = lastInventory;
         }

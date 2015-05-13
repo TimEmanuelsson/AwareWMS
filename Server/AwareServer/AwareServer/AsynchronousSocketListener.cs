@@ -103,7 +103,7 @@ namespace AwareServer
             try
             {
                 InputHandler inputHandler = new InputHandler();
-                byte[] returnStr = inputHandler.GetReturnString(content);
+                byte[] returnStr = inputHandler.GetReturnBytes(content);
                 Send(handler, returnStr);
             }
             catch (Exception e)

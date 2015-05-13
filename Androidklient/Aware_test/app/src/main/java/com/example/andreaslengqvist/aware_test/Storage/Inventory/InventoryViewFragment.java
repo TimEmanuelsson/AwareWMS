@@ -16,10 +16,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
-
 import com.example.andreaslengqvist.aware_test.Connection.Connection;
 import com.example.andreaslengqvist.aware_test.R;
 import com.example.andreaslengqvist.aware_test.Storage.Product;
+import com.example.andreaslengqvist.aware_test.Storage.ProductListener;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,7 +40,7 @@ public class InventoryViewFragment extends Fragment {
     private static final int MAX_BALANCE = 1000;
     private static final int MIN_BALANCE = 0;
 
-    private InventoryListener mCallback;
+    private ProductListener mCallback;
     private View mView;
 
     private Button btn_inventory_view_inventory_show;
@@ -71,7 +71,7 @@ public class InventoryViewFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            mCallback = (InventoryListener) activity;
+            mCallback = (ProductListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnProductSelectedListener");
@@ -324,7 +324,7 @@ public class InventoryViewFragment extends Fragment {
 
     /**
      *
-     * AsyncTask which will run in the background and PUT a updated Product to the Server.
+     * AsyncTask which will run in the background and PUT inventory on a Product to the Server.
      *
      */
     private class PutInventory extends AsyncTask<Void, String, Boolean> {
@@ -370,7 +370,7 @@ public class InventoryViewFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean finished) {
             super.onPostExecute(finished);
-            mCallback.onDoInventory();
+            mCallback.onPutInventory();
         }
     }
 }

@@ -61,7 +61,8 @@
             <string name="btn_inventory_view_inventory_cancel">Avbryt</string>
             <string name="btn_inventory_view_inventory_show">Gör inventering</string>
             <string name="btn_inventory_view_inventory_do_inventory">Inventera</string>
-            <string name="inventory_finished">Inventerad!</string>
+            <string name="toast_inventory_finished">Inventerad!</string>
+            <string name="toast_ean_doesnt_exists">Streckkod ej funnen!</string>
 
     <!-- Activity names -->
     <string name="title_activity_inventory_fast">InventoryFastActivity</string>

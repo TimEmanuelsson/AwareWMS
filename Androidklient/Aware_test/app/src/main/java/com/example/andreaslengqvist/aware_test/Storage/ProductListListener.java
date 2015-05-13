@@ -14,7 +14,7 @@ public interface ProductListListener {
     void onProductSelected(int position);
     void onProductDeSelected();
     void onCloseSearch();
-    void onInventoryFinished();
+    void onInventoryUpdateFinished();
+    void onProductUpdateFinished();
     void onListUpdatedInsideSearch(ArrayList<Product> products);
-    void onScanEAN();
 }

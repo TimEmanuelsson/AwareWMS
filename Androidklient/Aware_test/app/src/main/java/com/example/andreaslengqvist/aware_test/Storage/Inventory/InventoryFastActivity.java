@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.example.andreaslengqvist.aware_test.Connection.Connection;
 import com.example.andreaslengqvist.aware_test.R;
 import com.example.andreaslengqvist.aware_test.Storage.Product;
+import com.example.andreaslengqvist.aware_test.Storage.ProductListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -33,7 +35,7 @@ import java.net.UnknownHostException;
  * to that EAN. Also handles the Inventory for that Product.
  *
  */
-public class InventoryFastActivity extends ActionBarActivity implements InventoryListener {
+public class InventoryFastActivity extends ActionBarActivity implements ProductListener {
 
     private static final String EAN_TAG = "EAN_TAG";
 
@@ -48,7 +50,9 @@ public class InventoryFastActivity extends ActionBarActivity implements Inventor
     private String mScannedEAN;
     private String mOldJSON;
 
-    private boolean mWaitingOnUpdate;
+    private boolean mEANNotFound;
+
+    private boolean mWaitingForInventoryUpdate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,13 +101,18 @@ public class InventoryFastActivity extends ActionBarActivity implements Inventor
     }
 
     @Override
+    public void onPutProduct() {
+        // TODO: NOTHING.
+    }
+
+    @Override
     public void onInsideInventory(boolean inside) {
         // TODO: NOTHING.
     }
 
     @Override
-    public void onDoInventory() {
-        mWaitingOnUpdate = true;
+    public void onPutInventory() {
+        mWaitingForInventoryUpdate = true;
     }
 
     public void startPeriodically() {
@@ -169,25 +178,24 @@ public class InventoryFastActivity extends ActionBarActivity implements Inventor
                 }
             }
 
-            // If and old JSON-object exists. (e.g not the first GET)
-            if (mOldJSON != null) {
 
-                // And the new JSON-object NOT equals to the old, return the new one.
-                if (!newJSON.equals(mOldJSON)) {
-                    mOldJSON = newJSON;
-                    return new Gson().fromJson(newJSON, new TypeToken<Product>() {
-                    }.getType());
-                }
-                // Else, there has not been any changes in the database. Retain the old one.
-                else {
-                    return null;
-                }
+            // If the returned JSON is not "null".
+            if (!newJSON.equals("null")) {
+
+                    // If the new JSON-object NOT equals to the old one, return the new one.
+                    if (!newJSON.equals(mOldJSON)) {
+                        mOldJSON = newJSON;
+                        return new Gson().fromJson(newJSON, new TypeToken<Product>() {
+                        }.getType());
+                    }
+                    // Else, there has not been any changes in the database. Keep the old one.
+                    else { return null; }
             }
 
-            // Else, this is the first GET.
+            // Else the EAN cannot be found in the database.
             else {
-                mOldJSON = newJSON;
-                return new Gson().fromJson(newJSON, new TypeToken<Product>() {}.getType());
+                mEANNotFound = true;
+                return null;
             }
         }
 
@@ -195,7 +203,14 @@ public class InventoryFastActivity extends ActionBarActivity implements Inventor
         protected void onPostExecute(Product result) {
             super.onPostExecute(result);
 
-            if ((wrActivity.get() != null) && (wrActivity.get().isFinishing() != true)) {
+            if ((wrActivity.get() != null) && (!wrActivity.get().isFinishing())) {
+
+                if(mEANNotFound){
+                    Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_ean_doesnt_exists, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
+                    toast.show();
+                    onBackPressed();
+                }
 
                 if (result != null) {
 
@@ -204,7 +219,7 @@ public class InventoryFastActivity extends ActionBarActivity implements Inventor
                     bundle.putBoolean(INVENTORY_LAYOUT_TAG, true);
 
                     // Create an instance of ProductListFragment and add the bundle.
-                    mInventoryViewFragment = new InventoryViewFragment();
+                    InventoryViewFragment mInventoryViewFragment = new InventoryViewFragment();
                     mInventoryViewFragment.setArguments(bundle);
 
                     // Get FragmentManager,replace whatever is in the container with a ProductListFragment.
@@ -212,13 +227,13 @@ public class InventoryFastActivity extends ActionBarActivity implements Inventor
                             .beginTransaction()
                             .replace(R.id.fragment_inventory_view_container, mInventoryViewFragment, INVENTORY_VIEW_FRAGMENT_TAG)
                             .commit();
-                }
 
-                if (mWaitingOnUpdate) {
-                    mWaitingOnUpdate = false;
-                    Toast toast = Toast.makeText(getApplicationContext(), R.string.inventory_finished, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
-                    toast.show();
+                    if (mWaitingForInventoryUpdate) {
+                        mWaitingForInventoryUpdate = false;
+                        Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_inventory_finished, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
+                        toast.show();
+                    }
                 }
             }
         }

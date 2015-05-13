@@ -70,7 +70,8 @@ public class ProductListFragment extends Fragment {
 
     private String oldJSON;
 
-    public boolean mWaitingOnUpdate;
+    public boolean mWaitingForProductUpdate;
+    public boolean mWaitingForInventoryUpdate;
     public boolean insideSearch;
     private Product selectedProduct;
 
@@ -417,23 +418,13 @@ public class ProductListFragment extends Fragment {
                 }
             }
 
-            // If and old JSON-object exists. (e.g not the first GET)
-            if(oldJSON != null) {
-
-                // And the new JSON-object NOT equals to the old, return the new one.
-                if (!newJSON.equals(oldJSON)) {
-                    oldJSON = newJSON;
-                    return new Gson().fromJson(newJSON, new TypeToken<List<Product>>() {}.getType());
-                }
-                // Else, there has not been any changes in the database. Retain the old one.
-                else { return null; }
-            }
-
-            // Else, this is the first GET.
-            else {
+            // If the new JSON-object NOT equals to the old, return the new one.
+            if (!newJSON.equals(oldJSON)) {
                 oldJSON = newJSON;
                 return new Gson().fromJson(newJSON, new TypeToken<List<Product>>() {}.getType());
             }
+            // Else, there has not been any changes in the database. Retain the old one.
+            else { return null; }
         }
 
         @Override
@@ -457,9 +448,14 @@ public class ProductListFragment extends Fragment {
                 }
             }
 
-            if(mWaitingOnUpdate) {
-                mWaitingOnUpdate = false;
-                mCallback.onInventoryFinished();
+            if(mWaitingForProductUpdate) {
+                mWaitingForProductUpdate = false;
+                mCallback.onProductUpdateFinished();
+            }
+
+            if(mWaitingForInventoryUpdate) {
+                mWaitingForInventoryUpdate = false;
+                mCallback.onInventoryUpdateFinished();
             }
         }
     }

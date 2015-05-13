@@ -14,7 +14,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,14 +25,10 @@ import android.widget.Toast;
 import com.example.andreaslengqvist.aware_test.Helpers.ProductPager;
 import com.example.andreaslengqvist.aware_test.Helpers.ZoomOutPageTransformer;
 import com.example.andreaslengqvist.aware_test.R;
-import com.example.andreaslengqvist.aware_test.Storage.Inventory.InventoryListener;
 import com.example.andreaslengqvist.aware_test.Storage.Inventory.InventoryViewFragment;
 import com.example.andreaslengqvist.aware_test.Storage.Products.ProductViewFragment;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
-
 
 
 /**
@@ -43,7 +38,7 @@ import java.util.ArrayList;
  * and all communications between them (ProductListListener/InventoryListener).
  *
  */
-public class ProductListActivity extends ActionBarActivity implements ProductListListener, InventoryListener {
+public class ProductListActivity extends ActionBarActivity implements ProductListListener, ProductListener {
 
     private static final String INTENT_KEY = "INTENT_KEY";
 
@@ -52,6 +47,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
 
     private static final String PRODUCT_LIST_FRAGMENT_TAG = "PRODUCT_LIST_FRAGMENT_TAG";
     private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
+    private static final String PARCELABLE_PRODUCT_LIST_TAG = "PARCELABLE_PRODUCT_LIST_TAG";
 
     private static final String UNFILTRED_PRODUCTS = "UNFILTRED_PRODUCTS";
     private static final String SEARCH_OPENED = "SEARCH_OPENED";
@@ -59,6 +55,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
 
 
     private ProductListFragment mProductListFragment;
+    private Fragment mCurrentFragment;
     private ArrayList<Product> mProducts;
     private FrameLayout mListContainer;
     private ProductPager mPager;
@@ -203,43 +200,6 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
         mProductListFragment.filterAdapter(performSearch(mUnFilteredProducts, mSearchQuery));
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-
-        // Receive the scanned EAN, bundles it and starts the InventoryFastActivity.
-        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanResult.getContents() != null) {
-
-            boolean eanExists = false;
-
-            for(Product product : mProducts) {
-                if (product.getEAN().equals(scanResult.getContents())) {
-                    eanExists = true;
-                    Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_ean_already_exists, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
-                    toast.show();
-                }
-            }
-
-            if(!eanExists) {
-
-            }
-        }
-    }
-
-    @Override
-    public void onScanEAN() {
-
-        // Create an Integrator which is used to initiate the scanner.
-        IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES);
-        integrator.setPrompt("Scanna streckkod");
-        integrator.setResultDisplayDuration(0);
-        integrator.setWide();
-        integrator.setOrientation(1);
-        integrator.initiateScan();
-    }
-
-
     @Override
     public void onCloseSearch() {
         cancelSearchBar(false);
@@ -277,18 +237,33 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     }
 
     @Override
-    public void onInventoryFinished() {
+    public void onInventoryUpdateFinished() {
         mProductListFragment.selectList(mPagerPosition + 1);
         mPager.setCurrentItem(mPagerPosition + 1);
 
-        Toast toast = Toast.makeText(getApplicationContext(), R.string.inventory_finished, Toast.LENGTH_LONG);
+        Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_inventory_finished, Toast.LENGTH_LONG);
         toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
         toast.show();
     }
 
     @Override
-    public void onDoInventory() {
-        mProductListFragment.mWaitingOnUpdate = true;
+    public void onProductUpdateFinished() {
+        mProductListFragment.selectList(mPagerPosition);
+        mPager.setCurrentItem(mPagerPosition);
+
+        Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_product_updated, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
+        toast.show();
+    }
+
+    @Override
+    public void onPutProduct() {
+        mProductListFragment.mWaitingForProductUpdate = true;
+    }
+
+    @Override
+    public void onPutInventory() {
+        mProductListFragment.mWaitingForInventoryUpdate = true;
     }
 
     public void addListFragment(){
@@ -494,15 +469,16 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
         public Fragment getItem(int position) {
 
             Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList(PARCELABLE_PRODUCT_LIST_TAG, mProducts);
             bundle.putParcelable(PARCELABLE_PRODUCT_TAG, mProducts.get(position));
 
             if(mTypeOfActivity.equals(ACTIVITY_INVENTORY_FULL)){
-                final InventoryViewFragment f = new InventoryViewFragment();
+                InventoryViewFragment f = new InventoryViewFragment();
                 f.setArguments(bundle);
                 return f;
             }
             if(mTypeOfActivity.equals(ACTIVITY_PRODUCTS)){
-                final ProductViewFragment f = new ProductViewFragment();
+                ProductViewFragment f = new ProductViewFragment();
                 f.setArguments(bundle);
                 return f;
             }
@@ -513,5 +489,6 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
         public int getCount() {
             return mProducts.size();
         }
-    }
+
+}
 }

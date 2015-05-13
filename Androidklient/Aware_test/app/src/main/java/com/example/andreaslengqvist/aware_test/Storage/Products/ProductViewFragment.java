@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,15 +16,25 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.andreaslengqvist.aware_test.Storage.ProductListener;
+import com.google.zxing.integration.android.IntentIntegrator;
+
+
+import com.example.andreaslengqvist.aware_test.Connection.Connection;
 import com.example.andreaslengqvist.aware_test.R;
-import com.example.andreaslengqvist.aware_test.Storage.Inventory.InventoryFastActivity;
 import com.example.andreaslengqvist.aware_test.Storage.ProductListListener;
 import com.example.andreaslengqvist.aware_test.Storage.Product;
-import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.IOException;
 import java.io.InputStream;
-
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 
 /**
@@ -32,10 +43,10 @@ import java.io.InputStream;
  */
 public class ProductViewFragment extends Fragment {
 
+    private static final String PARCELABLE_PRODUCT_LIST_TAG = "PARCELABLE_PRODUCT_LIST_TAG";
     private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
-    private static final String EAN_TAG = "EAN_TAG";
 
-    private ProductListListener mCallback;
+    private ProductListener mCallback;
     private View mView;
     private boolean mInsideEditMenu;
 
@@ -48,6 +59,23 @@ public class ProductViewFragment extends Fragment {
     private ImageView icon_product_view_show_edit_menu;
     private ImageView img_product_picture;
 
+    private ArrayList<Product> mProducts;
+    private Product mProduct;
+    private String jsonProduct;
+
+    private void initializeVariables() {
+
+        output_product_position = (TextView) mView.findViewById(R.id.output_product_position);
+        output_product_name = (TextView) mView.findViewById(R.id.output_product_name);
+        output_product_number = (TextView) mView.findViewById(R.id.output_product_number);
+        img_product_picture = (ImageView) mView.findViewById(R.id.img_product_picture);
+        output_product_balance = (TextView) mView.findViewById(R.id.output_product_balance);
+
+        btn_product_view_show_edit_menu = (RelativeLayout) mView.findViewById(R.id.btn_product_view_show_edit_menu);
+        icon_product_view_show_edit_menu = (ImageView) mView.findViewById(R.id.icon_product_view_show_edit_menu);
+        btn_product_view_create_EAN = (Button) mView.findViewById(R.id.btn_product_view_create_EAN);
+    }
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -56,7 +84,7 @@ public class ProductViewFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            mCallback = (ProductListListener) activity;
+            mCallback = (ProductListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnProductSelectedListener");
@@ -77,7 +105,12 @@ public class ProductViewFragment extends Fragment {
 
         // Get the bundled Product.
         Bundle bundle = getArguments();
-        setProduct((Product)bundle.getParcelable(PARCELABLE_PRODUCT_TAG));
+        mProducts = bundle.getParcelableArrayList(PARCELABLE_PRODUCT_LIST_TAG);
+        mProduct = bundle.getParcelable(PARCELABLE_PRODUCT_TAG);
+
+
+        // Set Product to View.
+        setProduct();
 
 
         // When user clicks Edit-symbol (pencil).
@@ -99,33 +132,54 @@ public class ProductViewFragment extends Fragment {
         btn_product_view_create_EAN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                mCallback.onScanEAN();
+                FragmentIntentIntegrator integrator = new FragmentIntentIntegrator(ProductViewFragment.this);
+                integrator.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES);
+                integrator.setPrompt("Scanna streckkod");
+                integrator.setResultDisplayDuration(0);
+                integrator.setWide();
+                integrator.setOrientation(1);
+                integrator.initiateScan();
             }
         });
     }
 
-    private void initializeVariables() {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
-        output_product_position = (TextView) mView.findViewById(R.id.output_product_position);
-        output_product_name = (TextView) mView.findViewById(R.id.output_product_name);
-        output_product_number = (TextView) mView.findViewById(R.id.output_product_number);
-        img_product_picture = (ImageView) mView.findViewById(R.id.img_product_picture);
-        output_product_balance = (TextView) mView.findViewById(R.id.output_product_balance);
+        // Receive the scanned EAN, bundles it and starts the InventoryFastActivity.
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        String ean = scanResult.getContents();
 
-        btn_product_view_show_edit_menu = (RelativeLayout) mView.findViewById(R.id.btn_product_view_show_edit_menu);
-        icon_product_view_show_edit_menu = (ImageView) mView.findViewById(R.id.icon_product_view_show_edit_menu);
-        btn_product_view_create_EAN = (Button) mView.findViewById(R.id.btn_product_view_create_EAN);
+        if (ean != null) {
+
+            boolean eanExists = false;
+
+            for(Product product : mProducts) {
+                if (product.getEAN().equals(ean)) {
+                    eanExists = true;
+                    Toast toast = Toast.makeText(getActivity().getApplicationContext(), R.string.toast_ean_already_exists, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
+                    toast.show();
+                }
+            }
+
+            if(!eanExists) {
+                mProduct.setEAN(ean);
+                jsonProduct = new Gson().toJson(mProduct);
+                new PutProduct().execute();
+            }
+        }
     }
 
-    private void setProduct(Product product) {
-        output_product_position.setText(product.getStorageSpace());
-        output_product_name.setText(product.getName());
-        output_product_number.setText(product.getSKU());
-        output_product_balance.setText(Integer.toString(product.getQuantity()));
+    private void setProduct() {
+
+        output_product_position.setText(mProduct.getStorageSpace());
+        output_product_name.setText(mProduct.getName());
+        output_product_number.setText(mProduct.getSKU());
+        output_product_balance.setText(Integer.toString(mProduct.getQuantity()));
         new ImageDownloader(img_product_picture).execute("https://psmedia.playstation.com/is/image/psmedia/the-last-of-us-remastered-two-column-01-ps4-us-28jul14?$TwoColumn_Image$");
 
-        if(!product.getEAN().equals("0")) {
+        if(!mProduct.getEAN().equals("0")) {
             btn_product_view_create_EAN.setText(R.string.btn_product_view_change_EAN);
         }
     }
@@ -156,6 +210,59 @@ public class ProductViewFragment extends Fragment {
         protected void onPostExecute(Bitmap result) {
             mView.findViewById(R.id.img_product_picture);
             bmImage.setImageBitmap(result);
+        }
+    }
+
+
+    /**
+     *
+     * AsyncTask which will run in the background and PUT a updated Product to the Server.
+     *
+     */
+    private class PutProduct extends AsyncTask<Void, String, Boolean> {
+
+        private Socket socket;
+
+
+        @Override
+        protected Boolean doInBackground(Void... arg0) {
+
+            try {
+
+                // Establish a Socket Connection.
+                Connection OC = new Connection();
+                socket = OC.establish();
+
+                // Create a PrintWriter to PUT (inventory) product.
+                PrintWriter out = new PrintWriter(socket.getOutputStream());
+
+                // Write a PUT-method to the Server.
+                out.println("PUT/products/json=" + jsonProduct);
+                out.flush();
+
+            } catch (UnknownHostException e) {
+
+                Log.d("UnknownHostException: ", e.toString());
+                return false;
+            } catch (IOException e) {
+
+                Log.d("IOException: ", e.toString());
+                return false;
+            } finally {
+                try {
+                    socket.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean finished) {
+            super.onPostExecute(finished);
+            mCallback.onPutProduct();
         }
     }
 }

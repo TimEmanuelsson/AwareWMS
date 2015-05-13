@@ -39,7 +39,7 @@ import java.util.List;
  */
 public class ProductListFragment extends Fragment {
 
-    private static final String INTENT_KEY = "Intent_Key";
+    private static final String INTENT_KEY = "INTENT_KEY";
 
     private ListView list_products;
 

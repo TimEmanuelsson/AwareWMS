@@ -29,6 +29,9 @@ import com.example.andreaslengqvist.aware_test.R;
 import com.example.andreaslengqvist.aware_test.Storage.Inventory.InventoryListener;
 import com.example.andreaslengqvist.aware_test.Storage.Inventory.InventoryViewFragment;
 import com.example.andreaslengqvist.aware_test.Storage.Products.ProductViewFragment;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 import java.util.ArrayList;
 
 
@@ -42,12 +45,12 @@ import java.util.ArrayList;
  */
 public class ProductListActivity extends ActionBarActivity implements ProductListListener, InventoryListener {
 
-    private static final String INTENT_KEY = "Intent_Key";
+    private static final String INTENT_KEY = "INTENT_KEY";
 
-    private static final String ACTIVITY_INVENTORY_FULL = "Inventory_Full_Actvity";
-    private static final String ACTIVITY_PRODUCTS = "Products_Actvity";
+    private static final String ACTIVITY_INVENTORY_FULL = "ACTIVITY_INVENTORY_FULL";
+    private static final String ACTIVITY_PRODUCTS = "ACTIVITY_PRODUCTS";
 
-    private static final String PRODUCT_LIST_FRAGMENT_TAG = "Product_List_Fragment";
+    private static final String PRODUCT_LIST_FRAGMENT_TAG = "PRODUCT_LIST_FRAGMENT_TAG";
     private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
 
     private static final String UNFILTRED_PRODUCTS = "UNFILTRED_PRODUCTS";
@@ -163,7 +166,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
             mPager.setVisibility(View.GONE);
             mListContainer.setVisibility(View.VISIBLE);
             mProductListFragment.deselectList();
-
+            mProductListFragment.unlockList();
             if(mSearchOpened) {
                 getSupportActionBar().setDisplayShowCustomEnabled(true);
             }
@@ -199,6 +202,43 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
         mUnFilteredProducts = products;
         mProductListFragment.filterAdapter(performSearch(mUnFilteredProducts, mSearchQuery));
     }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        // Receive the scanned EAN, bundles it and starts the InventoryFastActivity.
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanResult.getContents() != null) {
+
+            boolean eanExists = false;
+
+            for(Product product : mProducts) {
+                if (product.getEAN().equals(scanResult.getContents())) {
+                    eanExists = true;
+                    Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_ean_already_exists, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
+                    toast.show();
+                }
+            }
+
+            if(!eanExists) {
+
+            }
+        }
+    }
+
+    @Override
+    public void onScanEAN() {
+
+        // Create an Integrator which is used to initiate the scanner.
+        IntentIntegrator integrator = new IntentIntegrator(this);
+        integrator.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES);
+        integrator.setPrompt("Scanna streckkod");
+        integrator.setResultDisplayDuration(0);
+        integrator.setWide();
+        integrator.setOrientation(1);
+        integrator.initiateScan();
+    }
+
 
     @Override
     public void onCloseSearch() {

@@ -30,9 +30,9 @@ public class MainActivity extends FragmentActivity implements MenuListener {
      */
     private static final int NUM_PAGES = 2;
 
-    private static final String INTENT_KEY = "Intent_Key";
-    private static final String ACTIVITY_INVENTORY_FULL = "Inventory_Full_Actvity";
-    private static final String ACTIVITY_PRODUCTS = "Products_Actvity";
+    private static final String INTENT_KEY = "INTENT_KEY";
+    private static final String ACTIVITY_INVENTORY_FULL = "ACTIVITY_INVENTORY_FULL";
+    private static final String ACTIVITY_PRODUCTS = "ACTIVITY_PRODUCTS";
 
     private static final String EAN_TAG = "EAN_TAG";
 

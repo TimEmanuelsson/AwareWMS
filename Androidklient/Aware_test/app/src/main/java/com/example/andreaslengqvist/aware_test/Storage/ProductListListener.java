@@ -16,4 +16,5 @@ public interface ProductListListener {
     void onCloseSearch();
     void onInventoryFinished();
     void onListUpdatedInsideSearch(ArrayList<Product> products);
+    void onScanEAN();
 }

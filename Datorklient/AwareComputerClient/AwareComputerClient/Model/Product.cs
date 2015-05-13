@@ -17,7 +17,8 @@ namespace AwareComputerClient.Model
         public int Quantity { get; set; }
         public double Weight { get; set; }
         public string StorageSpace { get; set; }
-        public string BarcodeNumber { get; set; }
+        public string EAN { get; set; }
+        [Browsable(false)]
         public string ImageLocation { get; set; }
         [Browsable(false)]
        public int LastInventory { get; set; }

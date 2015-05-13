@@ -54,6 +54,7 @@
     <Compile Include="Model\AsynchronousClient.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="MainClass.cs" />
+    <Compile Include="Model\HandleInput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\MenuView.cs">
       <SubType>Form</SubType>

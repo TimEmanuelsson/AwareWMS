@@ -28,26 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.MainMenuPanel = new System.Windows.Forms.Panel();
             this.ShowProductsButton = new System.Windows.Forms.Button();
             this.GoodsIn = new System.Windows.Forms.Button();
             this.ViewOrders = new System.Windows.Forms.Button();
             this.Stocktaking = new System.Windows.Forms.Button();
             this.Returns = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
+            this.MainMenuPanel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // panel1
+            // MainMenuPanel
             // 
-            this.panel1.Controls.Add(this.ShowProductsButton);
-            this.panel1.Controls.Add(this.GoodsIn);
-            this.panel1.Controls.Add(this.ViewOrders);
-            this.panel1.Controls.Add(this.Stocktaking);
-            this.panel1.Controls.Add(this.Returns);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(168, 184);
-            this.panel1.TabIndex = 25;
+            this.MainMenuPanel.Controls.Add(this.ShowProductsButton);
+            this.MainMenuPanel.Controls.Add(this.GoodsIn);
+            this.MainMenuPanel.Controls.Add(this.ViewOrders);
+            this.MainMenuPanel.Controls.Add(this.Stocktaking);
+            this.MainMenuPanel.Controls.Add(this.Returns);
+            this.MainMenuPanel.Location = new System.Drawing.Point(29, 43);
+            this.MainMenuPanel.Name = "MainMenuPanel";
+            this.MainMenuPanel.Size = new System.Drawing.Size(168, 184);
+            this.MainMenuPanel.TabIndex = 25;
             // 
             // ShowProductsButton
             // 
@@ -104,17 +104,17 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 262);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.MainMenuPanel);
             this.Name = "MenuView";
             this.Text = "MenuView";
-            this.panel1.ResumeLayout(false);
+            this.MainMenuPanel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
+        public System.Windows.Forms.Panel MainMenuPanel;
         private System.Windows.Forms.Button ShowProductsButton;
         private System.Windows.Forms.Button GoodsIn;
         private System.Windows.Forms.Button ViewOrders;

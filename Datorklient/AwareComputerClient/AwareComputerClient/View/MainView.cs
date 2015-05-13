@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.Drawing.Printing;
 
 namespace AwareComputerClient.View
 {
@@ -20,16 +21,19 @@ namespace AwareComputerClient.View
         public MainView()
         {
             InitializeComponent();
+            
         }
         private AsynchronousClient async = new AsynchronousClient();
         private List<Product> products;
         private BindingList<Product> bindinglist;
         private Timer checkForChanged;
+        HandleInput handleinput = new HandleInput();
         private string savedJsonString = null;
         private string response = null;
         private void ShowProducts_Click()
         {
 
+            
             // ShowProductsButton.Enabled = false;
             // TableView.ColumnHeaderMouseClick
             TableViewPanel.Visible = true;
@@ -41,16 +45,20 @@ namespace AwareComputerClient.View
             checkForChanged.Interval = 1000;
             checkForChanged.Tick += new EventHandler(updateList);
             checkForChanged.Start();
-            
+
             if (savedJsonString == null)
             {
                 async.StartClient("GET/products");
                 response = async.Response;
                 savedJsonString = response;
-
                 products = JsonConvert.DeserializeObject<List<Product>>(response);
-                renewDataSource();
-                
+
+                bindinglist = new BindingList<Product>(products);
+                var source = new BindingSource(bindinglist, null);
+
+                TableView.DataSource = source;
+                refreshDataSource();
+
             }
 
         }
@@ -66,18 +74,13 @@ namespace AwareComputerClient.View
                 {
                     savedJsonString = response;
                     products = JsonConvert.DeserializeObject<List<Product>>(response);
-                    renewDataSource();
+                    refreshDataSource();
                 }
             }
         }
-        private void renewDataSource()
+        private void refreshDataSource()
         {
-
-            bindinglist = new BindingList<Product>(products);
-            var source = new BindingSource(bindinglist, null);
-            
-            TableView.DataSource = source;
-
+            TableView.Refresh();
             TableView.ClearSelection();
             TableView.Rows[cellRowIndex].Selected = true;
         }
@@ -98,33 +101,33 @@ namespace AwareComputerClient.View
         private int cellRowIndex;
         private void TableView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            
+           
 
             //Gets our current selected rowcell
             cellRowIndex = TableView.SelectedCells[0].RowIndex;
             TableView.Rows[cellRowIndex].Selected = true;
-            int cellColumnIndex = TableView.ColumnCount - 1;
-            // var cellcollection = TableView.Rows[cellRowIndex].Cells[0];  
-    // ProductIdLabel.Text = TableView.Rows[cellRowIndex].Cells[0].Value.ToString();
-            NameLabel.Text     = TableView.Rows[cellRowIndex].Cells[0].Value.ToString();
-            SKULabel.Text      = TableView.Rows[cellRowIndex].Cells[1].Value.ToString();
+           // int cellColumnIndex = TableView.ColumnCount - 1;
+            
+            // ProductIdLabel.Text = TableView.Rows[cellRowIndex].Cells[0].Value.ToString();
+            NameLabel.Text = TableView.Rows[cellRowIndex].Cells[0].Value.ToString();
+            SKULabel.Text = TableView.Rows[cellRowIndex].Cells[1].Value.ToString();
             QuantityLabel.Text = TableView.Rows[cellRowIndex].Cells[2].Value.ToString();
-            WeightLabel.Text   = TableView.Rows[cellRowIndex].Cells[3].Value.ToString();
-            StorageSpaceLabel.Text  = TableView.Rows[cellRowIndex].Cells[4].Value.ToString();
-            BarcodeNumberLabel.Text = TableView.Rows[cellRowIndex].Cells[5].Value.ToString();
-            ImageLocationLabel.Text = TableView.Rows[cellRowIndex].Cells[6].Value.ToString();
-    //LastInventoryLabel.Text = TableView.Rows[cellRowIndex].Cells[8].Value.ToString();
+            WeightLabel.Text = TableView.Rows[cellRowIndex].Cells[3].Value.ToString();
+            StorageSpaceLabel.Text = TableView.Rows[cellRowIndex].Cells[4].Value.ToString();
+            // BarcodeNumberLabel.Text = TableView.Rows[cellRowIndex].Cells[5].Value.ToString();
+            // ImageLocationLabel.Text = TableView.Rows[cellRowIndex].Cells[6].Value.ToString();
+            //LastInventoryLabel.Text = TableView.Rows[cellRowIndex].Cells[8].Value.ToString();
         }
         //TODO:: All Edit Stora Bokstäver
         private void SearchField_TextChanged(object sender, EventArgs e)
         {
             //Capitalizes All Words In A Sentence
             string capitalizedSearchBoxText = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(SearchField.Text);
-         
+
             //Looks using the Product object class, if it contains any character within the searchfield filter.
             BindingList<Product> filtered = new BindingList<Product>(products.Where(p => p.Name.Contains(capitalizedSearchBoxText)).ToList());
 
-            
+
             TableView.DataSource = filtered;
         }
 
@@ -135,32 +138,60 @@ namespace AwareComputerClient.View
 
         protected override void ViewOrders_Click(object sender, EventArgs e)
         {
-            //OrderView s = new OrderView();
-
             ShowProductsMainContainer.Visible = false;
-            //ShowProductsButton.Enabled = true;
+            TableViewPanel.Visible = false;
         }
 
         protected override void Stocktaking_Click(object sender, EventArgs e)
         {
             // ShowProductsButton.Enabled = true;
         }
-
+        
         private void SaveEditButton_Click(object sender, EventArgs e)
         {
+           //Uppercase edited textboxes
+            NameLabel.Text = handleinput.uppercaseFirst(NameLabel.Text);
+            SKULabel.Text = handleinput.uppercaseFirst(SKULabel.Text);
+            StorageSpaceLabel.Text = handleinput.uppercaseFirst(StorageSpaceLabel.Text);
 
+            
             Product currentobject = (Product)TableView.CurrentRow.DataBoundItem;
-            currentobject.Name = NameLabel.Text;
-            currentobject.SKU = SKULabel.Text;
-            currentobject.Quantity = Convert.ToInt32(QuantityLabel.Text);
-            currentobject.Weight = Convert.ToDouble(WeightLabel.Text);
-            currentobject.StorageSpace = StorageSpaceLabel.Text;
-             renewDataSource();
-            string serializedObject = JsonConvert.SerializeObject(currentobject);
-            async.StartClient("PUT/products/json=" + serializedObject);
+            if (!handleinput.stringValidation(NameLabel.Text)
+                || !handleinput.stringValidation(SKULabel.Text)
+                || !handleinput.stringValidation(QuantityLabel.Text)
+                || !handleinput.stringValidation(WeightLabel.Text)
+                || !handleinput.stringValidation(StorageSpaceLabel.Text))
+            {
+                MessageBox.Show("Input fields cannot be empty");
+            }
+            else
+            {
+                currentobject.Name = NameLabel.Text;
+                currentobject.SKU = SKULabel.Text;
+                currentobject.Quantity = Convert.ToInt32(QuantityLabel.Text);
+                currentobject.Weight = Convert.ToDouble(WeightLabel.Text);
+                currentobject.StorageSpace = StorageSpaceLabel.Text;
+                refreshDataSource();
+                string serializedObject = JsonConvert.SerializeObject(currentobject);
+                async.StartClient("PUT/products/json=" + serializedObject);
+            }
+        }
+        private PrintDialog printDialog = new PrintDialog();
+        private void print_Click(object sender, EventArgs e)
+        {
+            
+            if (printDialog.ShowDialog() == DialogResult.OK)
+            {
+                printDocument1.Print();
+            }
         }
 
-  
+        private void printDocument1_PrintPage(object sender, PrintPageEventArgs e)
+        {
+            Bitmap bm = new Bitmap(this.TableView.Width, this.TableView.Height);
+            TableView.DrawToBitmap(bm, new Rectangle(0, 0, this.TableView.Width, this.TableView.Height));
+            e.Graphics.DrawImage(bm, 0, 0);
+        }
     }
 }
 

@@ -121,7 +121,7 @@ namespace MagentoConnection
 
                         int increment = 0;
 
-                        string filePath = String.Format("{0}{1}_{2}{3}", imageFolderPath, product.product_id, increment.ToString(), fileType);
+                        string filePath = String.Format("{0}{1}_{2}.{3}", imageFolderPath, product.product_id, increment.ToString(), fileType);
                         if (!File.Exists(filePath))
                         {
                             try

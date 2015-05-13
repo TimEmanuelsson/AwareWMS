@@ -26,8 +26,8 @@ namespace AwareServer
         {
             try
             {
-                //MagentoConnection.MagentoHelper mgHelper = new MagentoConnection.MagentoHelper();
-                //mgHelper.DownloadAllProductImages();
+                DataFetch dataFetch = new DataFetch();
+                dataFetch.FetchAndInsert();
                 AsynchronousSocketListener.Start();
             }
             catch (Exception e)

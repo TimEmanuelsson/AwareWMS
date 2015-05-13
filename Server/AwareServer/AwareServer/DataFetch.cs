@@ -23,10 +23,11 @@ namespace AwareServer
         public void FetchAndInsert()
         {
             List<Product> products = magentoHelper.GetAllProductsWithInventory();
+            List<Product> productsWithImages = magentoHelper.DownloadAllProductImages();
 
-            foreach (Product product in products)
+            foreach (Product product in productsWithImages)
             {
-                products.First(p => p.ProductId == product.ProductId).ImageLocation = magentoHelper.DownloadProductImage(product).ImageLocation;
+                products.First(p => p.ProductId == product.ProductId).ImageLocation = product.ImageLocation;
             }
 
             service.InsertAndUpdateProductList(products);

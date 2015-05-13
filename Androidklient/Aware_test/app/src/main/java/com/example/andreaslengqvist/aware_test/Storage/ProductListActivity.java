@@ -15,12 +15,14 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 import com.example.andreaslengqvist.aware_test.Helpers.ProductPager;
 import com.example.andreaslengqvist.aware_test.Helpers.ZoomOutPageTransformer;
 import com.example.andreaslengqvist.aware_test.R;
@@ -46,7 +48,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     private static final String ACTIVITY_PRODUCTS = "Products_Actvity";
 
     private static final String PRODUCT_LIST_FRAGMENT_TAG = "Product_List_Fragment";
-    private static final String PARCELABLE_PRODUCT_TAG = "Product";
+    private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
 
     private static final String UNFILTRED_PRODUCTS = "UNFILTRED_PRODUCTS";
     private static final String SEARCH_OPENED = "SEARCH_OPENED";
@@ -152,14 +154,120 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
         return super.onOptionsItemSelected(item);
     }
 
-    private void openSearchBar(String queryText) {
+    @Override
+    public void onBackPressed() {
 
-//        if(insideProduct) {
-//            insideProduct = false;
-//            mPager.setVisibility(View.GONE);
-//            mListContainer.setVisibility(View.VISIBLE);
-//            mProductListFragment.deselectList();
-//        }
+        if(insideProduct) {
+            insideProduct = false;
+            mSearchAction.setVisible(true);
+            mPager.setVisibility(View.GONE);
+            mListContainer.setVisibility(View.VISIBLE);
+            mProductListFragment.deselectList();
+
+            if(mSearchOpened) {
+                getSupportActionBar().setDisplayShowCustomEnabled(true);
+            }
+        }
+        else {
+            super.onBackPressed();
+            mProductListFragment.stopPeriodically();
+            overridePendingTransition(R.anim.pull_in_bottom, R.anim.push_out_top);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mProductListFragment.stopPeriodically();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mProductListFragment.stopPeriodically();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mProductListFragment.stopPeriodically();
+        mProductListFragment.startPeriodically();
+    }
+
+    @Override
+    public void onListUpdatedInsideSearch(ArrayList<Product> products) {
+        mUnFilteredProducts = products;
+        mProductListFragment.filterAdapter(performSearch(mUnFilteredProducts, mSearchQuery));
+    }
+
+    @Override
+    public void onCloseSearch() {
+        cancelSearchBar(false);
+    }
+
+    @Override
+    public void onProductListLoaded(ArrayList<Product> products, int position) {
+        mProducts = products;
+        if(mPager != null){
+            setPager(position);
+        }
+    }
+
+    @Override
+    public void onProductSelected(int position) {
+        mPagerPosition = position;
+        setPager(position);
+    }
+
+    @Override
+    public void onProductDeSelected() {
+        mPager.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onInsideInventory(boolean inside) {
+
+        if(inside) {
+            mPager.setPagingEnabled(false);
+            mProductListFragment.lockList(false);
+        } else {
+            mPager.setPagingEnabled(true);
+            mProductListFragment.unlockList();
+        }
+    }
+
+    @Override
+    public void onInventoryFinished() {
+        mProductListFragment.selectList(mPagerPosition + 1);
+        mPager.setCurrentItem(mPagerPosition + 1);
+
+        Toast toast = Toast.makeText(getApplicationContext(), R.string.inventory_finished, Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
+        toast.show();
+    }
+
+    @Override
+    public void onDoInventory() {
+        mProductListFragment.mWaitingOnUpdate = true;
+    }
+
+    public void addListFragment(){
+
+        Bundle bundle = new Bundle();
+        bundle.putString(INTENT_KEY, mTypeOfActivity);
+
+        // Create an instance of ProductListFragment and add the bundle.
+        mProductListFragment = new ProductListFragment();
+        mProductListFragment.setArguments(bundle);
+
+        // Get FragmentManager,replace whatever is in the container with a ProductListFragment.
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_product_list_container, mProductListFragment, PRODUCT_LIST_FRAGMENT_TAG)
+                .commit();
+    }
+
+    private void openSearchBar(String queryText) {
 
         if(mUnFilteredProducts == null) {
             mUnFilteredProducts = mProducts;
@@ -289,98 +397,6 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
 
         return moviesFiltered;
     }
-
-
-    @Override
-    public void onBackPressed() {
-
-        if(insideProduct) {
-            insideProduct = false;
-            mSearchAction.setVisible(true);
-            mPager.setVisibility(View.GONE);
-            mListContainer.setVisibility(View.VISIBLE);
-            mProductListFragment.deselectList();
-
-            if(mSearchOpened) {
-                getSupportActionBar().setDisplayShowCustomEnabled(true);
-            }
-        }
-        else {
-            super.onBackPressed();
-            mProductListFragment.stopPeriodically();
-            overridePendingTransition(R.anim.pull_in_bottom, R.anim.push_out_top);
-        }
-    }
-
-    @Override
-    public void onListUpdatedInsideSearch(ArrayList<Product> products) {
-        mUnFilteredProducts = products;
-        mProductListFragment.filterAdapter(performSearch(mUnFilteredProducts, mSearchQuery));
-    }
-
-    @Override
-    public void onCloseSearch() {
-        cancelSearchBar(false);
-    }
-
-    @Override
-    public void onProductListLoaded(ArrayList<Product> products, int position) {
-        mProducts = products;
-        if(mPager != null){
-            setPager(position);
-        }
-    }
-
-    @Override
-    public void onProductSelected(int position) {
-        mPagerPosition = position;
-        setPager(position);
-    }
-
-    @Override
-    public void onProductDeSelected() {
-        mPager.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onInsideInventory(boolean inside) {
-
-        if(inside) {
-            mPager.setPagingEnabled(false);
-            mProductListFragment.lockList(false);
-        } else {
-            mPager.setPagingEnabled(true);
-            mProductListFragment.unlockList();
-        }
-    }
-
-    @Override
-    public void onUpdatedFinished() {
-        mProductListFragment.selectList(mPagerPosition+1);
-        mPager.setCurrentItem(mPagerPosition+1);
-    }
-
-    @Override
-    public void onDoInventory() {
-        mProductListFragment.waitingOnUpdate = true;
-    }
-
-    public void addListFragment(){
-
-        Bundle bundle = new Bundle();
-        bundle.putString(INTENT_KEY, mTypeOfActivity);
-
-        // Create an instance of ProductListFragment and add the bundle.
-        mProductListFragment = new ProductListFragment();
-        mProductListFragment.setArguments(bundle);
-
-        // Get FragmentManager,replace whatever is in the container with a ProductListFragment.
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragment_product_list_container, mProductListFragment, PRODUCT_LIST_FRAGMENT_TAG)
-                .commit();
-    }
-
 
     public void setPager(int position){
 

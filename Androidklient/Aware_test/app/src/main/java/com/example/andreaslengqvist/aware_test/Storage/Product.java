@@ -20,7 +20,7 @@ public class Product implements Parcelable {
     private Integer Quantity;
     private double Weight;
     private String StorageSpace;
-    private String BarcodeNumber;
+    private String EAN;
     private String ImageLocation;
     private Integer LastInventory;
 
@@ -58,6 +58,13 @@ public class Product implements Parcelable {
     }
     public void setWeight(double weight) {
         this.Weight = weight;
+    }
+
+    public void setEAN(String ean) {
+        this.EAN = ean;
+    }
+    public String getEAN() {
+        return EAN;
     }
 
     public String getStorageSpace() {

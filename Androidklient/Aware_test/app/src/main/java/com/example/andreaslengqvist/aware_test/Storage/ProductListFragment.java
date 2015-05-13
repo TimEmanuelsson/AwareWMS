@@ -70,7 +70,7 @@ public class ProductListFragment extends Fragment {
 
     private String oldJSON;
 
-    public boolean waitingOnUpdate;
+    public boolean mWaitingOnUpdate;
     public boolean insideSearch;
     private Product selectedProduct;
 
@@ -136,6 +136,7 @@ public class ProductListFragment extends Fragment {
             mProducts = new ArrayList<>();
             mAdapter = new ProductListAdapter(getActivity(), mTypeOfActivity);
 
+            mHandler = new Handler();
             startPeriodically();
         }
 
@@ -352,7 +353,6 @@ public class ProductListFragment extends Fragment {
     }
 
     public void startPeriodically() {
-        mHandler = new Handler();
         mHandler.post(runPeriodically);
     }
 
@@ -364,7 +364,7 @@ public class ProductListFragment extends Fragment {
 
         @Override
         public void run() {
-        new GetProducts().execute();
+            new GetProducts().execute();
         mHandler.postDelayed(runPeriodically, 1000);
         }
     };
@@ -448,8 +448,6 @@ public class ProductListFragment extends Fragment {
                     Collections.sort(result, currentSort);
                 }
 
-
-                // TODO: Sätta ditt en close (false).
                 if(insideSearch) {
                     mCallback.onListUpdatedInsideSearch(result);
                 }
@@ -457,11 +455,11 @@ public class ProductListFragment extends Fragment {
                     unlockList();
                     setList(result);
                 }
+            }
 
-                if(waitingOnUpdate) {
-                    waitingOnUpdate = false;
-                    mCallback.onUpdatedFinished();
-                }
+            if(mWaitingOnUpdate) {
+                mWaitingOnUpdate = false;
+                mCallback.onInventoryFinished();
             }
         }
     }

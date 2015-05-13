@@ -62,6 +62,7 @@ public class MainActivity extends FragmentActivity implements MenuListener {
             Intent fastInventory = new Intent(this, InventoryFastActivity.class);
             fastInventory.putExtra(EAN_TAG, scanResult.getContents());
             startActivity(fastInventory);
+            overridePendingTransition(R.anim.pull_in_top, R.anim.push_out_bottom);
         }
     }
 

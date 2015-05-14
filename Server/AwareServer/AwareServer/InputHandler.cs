@@ -37,8 +37,14 @@ namespace AwareServer
                             ret = JsonConvert.SerializeObject(order);
                             retByte = Encoding.UTF8.GetBytes(ret);
                         }
-
-                        else if (content.Equals("GET/orders"))
+                        else if (content.IndexOf("GET/orders/rows/id=") > -1)
+                        {
+                            string id = content.Replace("GET/orders/rows/id=", "");
+                            IEnumerable<OrderRow> orderRows = service.GetOrderRowsByOrderId(int.Parse(id));
+                            ret = JsonConvert.SerializeObject(orderRows);
+                            retByte = Encoding.UTF8.GetBytes(ret);
+                        }
+                        else if (content.IndexOf("GET/orders") > -1)
                         {
                             IEnumerable<Order> orders = service.GetOrders();
                             ret = JsonConvert.SerializeObject(orders);

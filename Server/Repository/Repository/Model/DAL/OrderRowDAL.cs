@@ -22,7 +22,7 @@ namespace Repository.Model.DAL
         static OrderRowDAL() 
         {
             //Get connectionstring
-            _connectionString = Repository.Properties.Settings.Default.AwareConnectionString;
+            _connectionString = Repository.Properties.Settings.Default.temp;
         }
 
         #endregion
@@ -40,12 +40,14 @@ namespace Repository.Model.DAL
         #region CRUD Functions
 
         //SKICKA IN ORDERID ISTÄLLET FÖR ORDERROWID!!!!
-        public OrderRow GetOrderRowById(int OrderRowId)
+        public IEnumerable<OrderRow> GetOrderRowsByOrderId(int OrderRowId)
         {
             using (SqlConnection conn = CreateConnection())
             {
                 try
                 {
+                    var OrderRows = new List<OrderRow>(1000);
+
                     // Create SqlCommand-objekt that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_GetOrderRows", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -59,20 +61,26 @@ namespace Repository.Model.DAL
                     {
                         if (reader.Read())
                         {
+                            var OrderRowIdIndex = reader.GetOrdinal("Id");
                             var OrderIdIndex = reader.GetOrdinal("OrderId");
                             var ProductIdIndex = reader.GetOrdinal("ProductId");
                             var AmountIndex = reader.GetOrdinal("Amount");
 
-                            return new OrderRow
-                            (
-                                OrderRowId,
-                                reader.GetInt32(OrderIdIndex),
-                                reader.GetInt32(ProductIdIndex),
-                                reader.GetInt32(AmountIndex)
-                            );
+                            while (reader.Read())
+                            {
+                                OrderRows.Add(new OrderRow
+                                (
+                                    reader.GetInt32(OrderRowIdIndex),
+                                    reader.GetInt32(OrderIdIndex),
+                                    reader.GetInt32(ProductIdIndex),
+                                    reader.GetInt32(AmountIndex)
+                                ));
+                            }
                         }
                     }
-                    return null;
+                    OrderRows.TrimExcess();
+
+                    return OrderRows;
                 }
                 catch
                 {
@@ -82,7 +90,7 @@ namespace Repository.Model.DAL
             }
         }
 
-        public IEnumerable<OrderRow> GetOrderRow()
+        public IEnumerable<OrderRow> GetOrderRows()
         {
             using (var conn = CreateConnection())
             {

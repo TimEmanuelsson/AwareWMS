@@ -21,7 +21,7 @@ namespace Repository.Model
         static ExceptionLogDAL() 
         {
             //Get connectionstring
-            _connectionString = Repository.Properties.Settings.Default.temp;
+            _connectionString = Repository.Properties.Settings.Default.AwareConnectionString;
         }
 
         #endregion

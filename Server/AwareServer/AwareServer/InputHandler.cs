@@ -58,9 +58,9 @@ namespace AwareServer
                         }
                     }
 
-                    else if (content.IndexOf("GET/orderrow/id=") > -1)
+                    else if (content.IndexOf("GET/orderrows/id=") > -1)
                     {
-                        string id = content.Replace("GET/orderrow/id=", "");
+                        string id = content.Replace("GET/orderrows/id=", "");
                         OrderRow row = service.GetOrderRowById(int.Parse(id));
                         ret = JsonConvert.SerializeObject(row);
                         retByte = Encoding.UTF8.GetBytes(ret);

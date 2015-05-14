@@ -39,8 +39,54 @@ namespace Repository.Model.DAL
 
         #region CRUD Functions
 
+        public OrderRow GetOrderRowById(int OrderRowId)
+        {
+            using (SqlConnection conn = CreateConnection())
+            {
+                try
+                {
+                    // Create SqlCommand-objekt that execute stored procedure.
+                    SqlCommand cmd = new SqlCommand("dbo.usp_GetOrderRow", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@Id", OrderRowId);
+
+                    //Open database connection
+                    conn.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            var OrderRowIdIndex = reader.GetOrdinal("Id");
+                            var OrderIdIndex = reader.GetOrdinal("OrderId");
+                            var ProductIdIndex = reader.GetOrdinal("ProductId");
+                            var AmountIndex = reader.GetOrdinal("Amount");
+                            
+                            return new OrderRow
+                            (
+                                reader.GetInt32(OrderRowIdIndex),
+                                reader.GetInt32(OrderIdIndex),
+                                reader.GetInt32(ProductIdIndex),
+                                reader.GetInt32(AmountIndex)
+                            );
+                        }
+                        else
+                        {
+                            throw new NullReferenceException("There is no order with this ID.");
+                        }
+                    }
+                }
+                catch
+                {
+                    //Throw Exception.
+                    throw new ApplicationException("An error occurred while trying to retrieve the orderrow.");
+                }
+            }
+        }
+
         //SKICKA IN ORDERID ISTÄLLET FÖR ORDERROWID!!!!
-        public IEnumerable<OrderRow> GetOrderRowsByOrderId(int OrderRowId)
+        public IEnumerable<OrderRow> GetOrderRowsByOrderId(int OrderId)
         {
             using (SqlConnection conn = CreateConnection())
             {
@@ -52,7 +98,7 @@ namespace Repository.Model.DAL
                     SqlCommand cmd = new SqlCommand("dbo.usp_GetOrderRows", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("@Id", OrderRowId);
+                    cmd.Parameters.AddWithValue("@Id", OrderId);
 
                     //Open database connection.
                     conn.Open();

@@ -58,6 +58,14 @@ namespace AwareServer
                         }
                     }
 
+                    else if (content.IndexOf("GET/orderrow/id=") > -1)
+                    {
+                        string id = content.Replace("GET/orderrow/id=", "");
+                        OrderRow row = service.GetOrderRowById(int.Parse(id));
+                        ret = JsonConvert.SerializeObject(row);
+                        retByte = Encoding.UTF8.GetBytes(ret);
+                    }
+
                     else if (content.IndexOf("GET/products") > -1)
                     {
                         if (content.IndexOf("GET/products/id=") > -1)

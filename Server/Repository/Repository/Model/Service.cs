@@ -135,6 +135,11 @@ namespace Repository.Model
             get { return _orderRowDAL ?? (_orderRowDAL = new OrderRowDAL()); }
         }
 
+        public OrderRow GetOrderRowById(int id)
+        {
+            return OrderRowDAL.GetOrderRowById(id);
+        }
+
         public IEnumerable<OrderRow> GetOrderRows()
         {
             return OrderRowDAL.GetOrderRows();

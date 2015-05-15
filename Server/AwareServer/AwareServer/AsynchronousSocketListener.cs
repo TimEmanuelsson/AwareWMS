@@ -78,21 +78,21 @@ namespace AwareServer
 
         public static void ReadCallback(IAsyncResult ar)
         {
-            StateObject state = (StateObject)ar.AsyncState;
-            Socket handler = state.workSocket;
-            String content = String.Empty;
-            int bytesRead = handler.EndReceive(ar);
-        
-            if (bytesRead > 0)
-            {
-                state.sb.Append(Encoding.UTF8.GetString(
-                    state.buffer, 0, bytesRead));
-
-                content = state.sb.ToString();
-            }
-
             try
             {
+                StateObject state = (StateObject)ar.AsyncState;
+                Socket handler = state.workSocket;
+                String content = String.Empty;
+                int bytesRead = handler.EndReceive(ar);
+        
+                if (bytesRead > 0)
+                {
+                    state.sb.Append(Encoding.UTF8.GetString(
+                        state.buffer, 0, bytesRead));
+
+                    content = state.sb.ToString();
+                }
+
                 InputHandler inputHandler = new InputHandler();
                 byte[] returnStr = inputHandler.GetReturnBytes(content);
                 Send(handler, returnStr);

@@ -1,7 +1,6 @@
 package com.example.andreaslengqvist.aware_test.Storage;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.example.andreaslengqvist.aware_test.R;
+
 
 
 /**
@@ -24,8 +24,8 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
     // Using a ViewHolder to speed things up. Basically just stores all the objects to solve the DRY-issue.
     private static class ViewHolder {
         LinearLayout rowLayout;
-        TextView productPosition;
         TextView productLastInventory;
+        TextView productPosition;
         TextView productName;
         TextView productSKU;
         TextView productBalance;
@@ -49,8 +49,8 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.fragment_products_list_item, parent, false);
             viewHolder.rowLayout = (LinearLayout) convertView.findViewById(R.id.layout_product_row);
-            viewHolder.productPosition = (TextView) convertView.findViewById(R.id.output_product_position);
             viewHolder.productLastInventory = (TextView) convertView.findViewById(R.id.output_product_last_inventory);
+            viewHolder.productPosition = (TextView) convertView.findViewById(R.id.output_product_position);
             viewHolder.productName = (TextView) convertView.findViewById(R.id.output_product_name);
             viewHolder.productSKU = (TextView) convertView.findViewById(R.id.output_product_sku);
             viewHolder.productBalance = (TextView) convertView.findViewById(R.id.output_product_balance);
@@ -87,7 +87,17 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
 
         viewHolder.productPosition.setText(product.getStorageSpace());
         viewHolder.productLastInventory.setText(Integer.toString(product.getLastInventory()));
-        viewHolder.productName.setText(product.getName());
+
+        String name = product.getName();
+
+        // If Name is longer than 20 characters. Cut it and add "..." on the end.
+        if(name.length() > 20) {
+            name = name.substring(0, 20);
+            viewHolder.productName.setText(name + "...");
+        } else {
+            viewHolder.productName.setText(name);
+        }
+
         viewHolder.productSKU.setText(product.getSKU());
         viewHolder.productBalance.setText(Integer.toString(product.getQuantity()));
 

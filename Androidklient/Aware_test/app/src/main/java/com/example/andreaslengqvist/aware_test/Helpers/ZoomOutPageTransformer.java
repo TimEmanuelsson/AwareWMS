@@ -8,6 +8,10 @@ import android.view.View;
 /**
  * Created by andreaslengqvist on 15-04-26.
  *
+ * Transformer used to animate the swipe between fragments in the ViewPager.
+ *
+ * http://developer.android.com/training/animation/screen-slide.html
+ *
  */
 public class ZoomOutPageTransformer implements ViewPager.PageTransformer {
     private static final float MIN_SCALE = 0.85f;

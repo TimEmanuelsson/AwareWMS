@@ -3,31 +3,14 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/btn_product_view_show_edit_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:padding="10dp">
-
-        <ImageView
-            android:contentDescription="@string/btn_product_view_show_edit_menu"
-            android:id="@+id/icon_product_view_show_edit_menu"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:background="@drawable/ic_action_edit"/>
-
-    </RelativeLayout>
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:weightSum="10">
 
-        <TextView
+
+    <TextView
             android:id="@+id/output_product_position"
             android:layout_height="match_parent"
             android:layout_width="0dp"
@@ -109,7 +92,63 @@
 
     </LinearLayout>
 
+    <RelativeLayout
+        android:id="@+id/layout_inventory_bar"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_above="@+id/layout_button_menu"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/btn_decrease_balance"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/icon_decrease_balance"
+                android:contentDescription="@string/increase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/decrease_symbol_small"/>
+
+        </RelativeLayout>
+
+        <SeekBar
+            android:id="@+id/seekBar_product_balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:padding="30dp">
+        </SeekBar>
+
+        <RelativeLayout
+            android:id="@+id/btn_increase_balance"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:id="@+id/icon_increase_balance"
+                android:contentDescription="@string/decrease"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@drawable/increase_symbol_small"/>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_button_menu"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -118,21 +157,29 @@
 
         <Button
             style="?android:attr/borderlessButtonStyle"
-            android:id="@+id/btn_product_view_create_EAN"
+            android:id="@+id/btn_inventory_view_inventory_cancel"
             android:layout_height="55dp"
             android:layout_width="0dp"
             android:layout_weight="0.5"
-            android:text="@string/btn_product_view_create_EAN"
+            android:text="@string/btn_inventory_view_inventory_cancel"
             android:visibility="gone"/>
 
-        <!--<Button-->
-            <!--style="?android:attr/borderlessButtonStyle"-->
-            <!--android:id="@+id/btn_product_view_create_picture"-->
-            <!--android:layout_height="55dp"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="0.5"-->
-            <!--android:layout_marginEnd="10dp"-->
-            <!--android:text="@string/btn_product_view_create_picture"-->
-            <!--android:visibility="gone"/>-->
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/btn_inventory_view_inventory_save"
+            android:layout_height="55dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:text="@string/btn_inventory_view_inventory_save"
+            android:visibility="gone"/>
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/btn_inventory_view_inventory_show"
+            android:layout_height="55dp"
+            android:layout_width="0dp"
+            android:layout_weight="0.5"
+            android:text="@string/btn_inventory_view_inventory_show" />
+
     </LinearLayout>
 </RelativeLayout>

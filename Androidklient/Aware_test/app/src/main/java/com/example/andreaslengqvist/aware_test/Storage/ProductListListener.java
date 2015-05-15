@@ -7,14 +7,14 @@ import java.util.ArrayList;
 /**
  * Created by andreaslengqvist on 15-04-27.
  *
- * Interface listening for changes in ProductList and ProductView.
+ * Interface listening for changes in ProductListFragment.
  */
 public interface ProductListListener {
-    void onProductListLoaded(ArrayList<Product> products, int position);
+    void onProductsAddedToAdapter(ArrayList<Product> products, int position);
+    void onProductsUpdated(ArrayList<Product> products);
     void onProductSelected(int position);
     void onProductDeSelected();
-    void onCloseSearch();
-    void onInventoryUpdateFinished();
-    void onProductUpdateFinished();
-    void onListUpdatedInsideSearch(ArrayList<Product> products);
+    void onProductUpdateFinished(boolean updatedInventory);
+    void onDoneSearching();
+    void onScannedForEAN(String ean);
 }

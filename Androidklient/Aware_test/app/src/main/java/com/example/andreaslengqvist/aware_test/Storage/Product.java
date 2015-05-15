@@ -2,17 +2,18 @@ package com.example.andreaslengqvist.aware_test.Storage;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.text.DateFormat;
 import java.util.Comparator;
-import java.util.Date;
+
 
 
 /**
  * Created by andreaslengqvist on 15-04-07.
+ *
+ * Product Class which handles sorting and stores each Product.
+ * Implements Parcelable for easily send between activities and fragments.
+ *
  */
 public class Product implements Parcelable {
-
 
     private Integer ProductId;
     private String Name;
@@ -74,7 +75,6 @@ public class Product implements Parcelable {
         this.StorageSpace = storageSpace;
     }
 
-
     public void setImageLocation(String imageLocation) {
         this.ImageLocation = imageLocation;
     }
@@ -89,7 +89,10 @@ public class Product implements Parcelable {
         return LastInventory;
     }
 
-    // Sort StorageSpace ascending.
+
+    /**
+     * Sort StorageSpace ascending.
+     */
     public static Comparator<Product> ProductStorageSpaceComparatorASC = new Comparator<Product>() {
 
         public int compare(Product s1, Product s2) {
@@ -97,7 +100,10 @@ public class Product implements Parcelable {
         }
     };
 
-    // Sort StorageSpace descending.
+
+    /**
+     * Sort StorageSpace descending.
+     */
     public static Comparator<Product> ProductStorageSpaceComparatorDESC = new Comparator<Product>() {
 
         public int compare(Product s1, Product s2) {
@@ -105,7 +111,10 @@ public class Product implements Parcelable {
         }
     };
 
-    // Sort LastInventory ascending.
+
+    /**
+     * Sort LastInventory ascending.
+     */
     public static Comparator<Product> ProductLastInventoryComparatorASC = new Comparator<Product>() {
 
         public int compare(Product s1, Product s2) {
@@ -113,7 +122,10 @@ public class Product implements Parcelable {
         }
     };
 
-    // Sort LastInventory descending.
+
+    /**
+     * Sort LastInventory descending.
+     */
     public static Comparator<Product> ProductLastInventoryComparatorDESC = new Comparator<Product>() {
 
         public int compare(Product s1, Product s2) {
@@ -121,7 +133,10 @@ public class Product implements Parcelable {
         }
     };
 
-    // Sort Name ascending.
+
+    /**
+     * Sort Name ascending.
+     */
     public static Comparator<Product> ProductNameComparatorASC = new Comparator<Product>() {
 
         public int compare(Product s1, Product s2) {
@@ -129,7 +144,10 @@ public class Product implements Parcelable {
         }
     };
 
-    // Sort Name descending.
+
+    /**
+     * Sort Name descending.
+     */
     public static Comparator<Product> ProductNameComparatorDESC = new Comparator<Product>() {
 
         public int compare(Product s1, Product s2) {
@@ -137,7 +155,10 @@ public class Product implements Parcelable {
         }
     };
 
-    // Sort SKU ascending.
+
+    /**
+     * Sort SKU ascending.
+     */
     public static Comparator<Product> ProductSKUComparatorASC = new Comparator<Product>() {
 
         public int compare(Product s1, Product s2) {
@@ -145,7 +166,10 @@ public class Product implements Parcelable {
         }
     };
 
-    // Sort SKU descending.
+
+    /**
+     * Sort SKU descending.
+     */
     public static Comparator<Product> ProductSKUComparatorDESC = new Comparator<Product>() {
 
         public int compare(Product s1, Product s2) {
@@ -153,7 +177,10 @@ public class Product implements Parcelable {
         }
     };
 
-    // Sort Balance ascending.
+
+    /**
+     * Sort Balance ascending.
+     */
     public static Comparator<Product> ProductBalanceComparatorASC = new Comparator<Product>() {
 
         public int compare(Product s1, Product s2) {
@@ -161,7 +188,10 @@ public class Product implements Parcelable {
         }
     };
 
-    // Sort Balance descending.
+
+    /**
+     * Sort Balance descending.
+     */
     public static Comparator<Product> ProductBalanceComparatorDESC = new Comparator<Product>() {
 
         public int compare(Product s1, Product s2) {
@@ -169,6 +199,10 @@ public class Product implements Parcelable {
         }
     };
 
+
+    /**
+     * Parcelable settings
+     */
 
     @Override
     public int describeContents() {

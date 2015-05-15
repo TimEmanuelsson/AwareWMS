@@ -154,11 +154,11 @@
 
         <Button
             style="?android:attr/borderlessButtonStyle"
-            android:id="@+id/btn_inventory_view_inventory_do_inventory"
+            android:id="@+id/btn_inventory_view_inventory_save"
             android:layout_height="55dp"
             android:layout_width="0dp"
             android:layout_weight="0.5"
-            android:text="@string/btn_inventory_view_inventory_do_inventory"
+            android:text="@string/btn_inventory_view_inventory_save"
             android:visibility="gone"/>
 
         <Button

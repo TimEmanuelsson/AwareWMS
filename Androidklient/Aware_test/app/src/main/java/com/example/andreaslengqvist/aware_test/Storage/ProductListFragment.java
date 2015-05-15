@@ -1,6 +1,8 @@
 package com.example.andreaslengqvist.aware_test.Storage;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,6 +19,9 @@ import com.example.andreaslengqvist.aware_test.Connection.Connection;
 import com.example.andreaslengqvist.aware_test.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -40,6 +45,7 @@ import java.util.List;
 public class ProductListFragment extends Fragment {
 
     private static final String INTENT_KEY = "INTENT_KEY";
+    private static final String ACTIVITY_INVENTORY_FULL = "ACTIVITY_INVENTORY_FULL";
 
     private ListView list_products;
 
@@ -234,9 +240,28 @@ public class ProductListFragment extends Fragment {
         layout_dimmer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.onCloseSearch();
+                mCallback.onDoneSearching();
             }
         });
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+
+        // Receive the scanned EAN and search to find the Product.
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanResult.getContents() != null) {
+            mCallback.onScannedForEAN(scanResult.getContents());
+        }
+    }
+
+    public void searchOnEAN() {
+        FragmentIntentIntegrator integrator = new FragmentIntentIntegrator(ProductListFragment.this);
+        // Create an Integrator which is used to initiate the scanner.
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            integrator.setOrientation(90);
+        }
+        integrator.initiateScan();
     }
 
     public void filterAdapter(ArrayList<Product> products) {
@@ -255,7 +280,6 @@ public class ProductListFragment extends Fragment {
     public void setSearchedProduct() {
 
         int position = mAdapter.getSelectedPosition();
-        Log.d("asd", Integer.toString(position));
         if(position != -1) {
             selectedProduct = mAdapter.getItem(mAdapter.getSelectedPosition());
         }
@@ -272,20 +296,15 @@ public class ProductListFragment extends Fragment {
             mProducts = result;
         }
 
-        list_products.setAdapter(mAdapter);
+        if(list_products.getAdapter() == null) {
+            list_products.setAdapter(mAdapter);
+        }
         mAdapter.setNotifyOnChange(false);
         mAdapter.clear();
         mAdapter.addAll(mProducts);
         mAdapter.notifyDataSetChanged();
 
-        mCallback.onProductListLoaded(mProducts, mAdapter.getSelectedPosition());
-    }
-
-    private void refreshList(){
-        mAdapter.setNotifyOnChange(false);
-        mAdapter.clear();
-        mAdapter.addAll(mProducts);
-        mAdapter.notifyDataSetChanged();
+        mCallback.onProductsAddedToAdapter(mProducts, mAdapter.getSelectedPosition());
     }
 
     public void deselectList() {
@@ -303,8 +322,7 @@ public class ProductListFragment extends Fragment {
 
     private void sortList(Comparator<Product> sort) {
         Collections.sort(mProducts, sort);
-        refreshList();
-        mCallback.onProductListLoaded(mProducts, mAdapter.getSelectedPosition());
+        setList(mProducts);
     }
 
     private void setSort(ImageView column, Comparator<Product> asc, Comparator<Product> desc) {
@@ -366,6 +384,7 @@ public class ProductListFragment extends Fragment {
         @Override
         public void run() {
             new GetProducts().execute();
+            Log.d("asdasd", "KÖÖÖR");
         mHandler.postDelayed(runPeriodically, 1000);
         }
     };
@@ -440,22 +459,21 @@ public class ProductListFragment extends Fragment {
                 }
 
                 if(insideSearch) {
-                    mCallback.onListUpdatedInsideSearch(result);
+                    mCallback.onProductsUpdated(result);
                 }
                 else {
                     unlockList();
                     setList(result);
                 }
             }
-
             if(mWaitingForProductUpdate) {
                 mWaitingForProductUpdate = false;
-                mCallback.onProductUpdateFinished();
+                mCallback.onProductUpdateFinished(false);
             }
 
             if(mWaitingForInventoryUpdate) {
                 mWaitingForInventoryUpdate = false;
-                mCallback.onInventoryUpdateFinished();
+                mCallback.onProductUpdateFinished(true);
             }
         }
     }

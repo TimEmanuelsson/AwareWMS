@@ -2,6 +2,7 @@ package com.example.andreaslengqvist.aware_test.Menu;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -42,7 +43,8 @@ public class MainActivity extends FragmentActivity implements MenuListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // If user is NOT using a tablet.
+
+        // If user is NOT using a tablet set the orientation to only allow Portrait-mode.
         if (!getResources().getBoolean(R.bool.isTablet)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
@@ -56,12 +58,14 @@ public class MainActivity extends FragmentActivity implements MenuListener {
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
-        // Receive the scanned EAN, bundles it and starts the InventoryFastActivity.
+        // Receive the scanned EAN, bundle it and start the InventoryFastActivity.
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult.getContents() != null) {
             Intent fastInventory = new Intent(this, InventoryFastActivity.class);
             fastInventory.putExtra(EAN_TAG, scanResult.getContents());
             startActivity(fastInventory);
+
+            // Animation slide in / out.
             overridePendingTransition(R.anim.pull_in_top, R.anim.push_out_bottom);
         }
     }
@@ -69,10 +73,12 @@ public class MainActivity extends FragmentActivity implements MenuListener {
     @Override
     public void onMenuProducts() {
 
-        // Start ProductActivity.
+        // Start ProductActivity and also tell the ListFragment to handle a "Products"-activity.
         Intent intent = new Intent(this, ProductListActivity.class);
         intent.putExtra(INTENT_KEY, ACTIVITY_PRODUCTS);
         startActivity(intent);
+
+        // Animation slide in / out.
         overridePendingTransition(R.anim.pull_in_top, R.anim.push_out_bottom);
     }
 
@@ -81,27 +87,29 @@ public class MainActivity extends FragmentActivity implements MenuListener {
 
         // Create an Integrator which is used to initiate the scanner.
         IntentIntegrator integrator = new IntentIntegrator(this);
-        integrator.setDesiredBarcodeFormats(IntentIntegrator.PRODUCT_CODE_TYPES);
-        integrator.setPrompt("Scanna streckkod");
-        integrator.setResultDisplayDuration(0);
-        integrator.setWide();
-        integrator.setOrientation(1);
+
+        // Check which orientation to set.
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            integrator.setOrientation(90);
+        }
         integrator.initiateScan();
     }
 
     @Override
     public void onMenuInventoryFull() {
 
-        // Start InventoryFullActivity.
+        // Start InventoryFullActivity and also tell the ListFragment to handle a "Inventory"-activity.
         Intent intent = new Intent(this, ProductListActivity.class);
         intent.putExtra(INTENT_KEY, ACTIVITY_INVENTORY_FULL);
         startActivity(intent);
+
+        // Animation slide in / out.
         overridePendingTransition(R.anim.pull_in_top, R.anim.push_out_bottom);
     }
 
 
 /**
- * A simple pager adapter that represents 2 MenuFragments, in sequence.
+ * A simple FragmentStatePagerAdapter that represents 2 MenuFragments, in sequence to swipe between.
  *
  */
     private class MenuPagerAdapter extends FragmentStatePagerAdapter {

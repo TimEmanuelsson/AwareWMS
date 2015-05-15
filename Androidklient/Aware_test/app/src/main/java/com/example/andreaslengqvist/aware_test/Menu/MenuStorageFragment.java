@@ -5,21 +5,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.andreaslengqvist.aware_test.Connection.Connection;
 import com.example.andreaslengqvist.aware_test.R;
-import com.example.andreaslengqvist.aware_test.Storage.Inventory.InventoryViewFragment;
-import com.example.andreaslengqvist.aware_test.Storage.Product;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,20 +20,23 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 
+
 /**
  * Created by andreaslengqvist on 15-04-07.
  *
  */
 public class MenuStorageFragment extends Fragment {
 
-    private View mView;
-    private MenuListener mCallback;
     private TextView output_total_products;
     private Button btn_storage_menu_products;
     private Button btn_storage_menu_inventory;
     private Button btn_inventory_menu_fast;
     private Button btn_inventory_menu_full;
     private Button btn_inventory_menu_cancel;
+
+    private View mView;
+    private MenuListener mCallback;
+
 
     private void initializeVariables() {
         output_total_products = (TextView) mView.findViewById(R.id.output_total_products);
@@ -67,7 +62,6 @@ public class MenuStorageFragment extends Fragment {
         }
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_menu_storage, container, false);
@@ -79,8 +73,9 @@ public class MenuStorageFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         initializeVariables();
 
-        new GetTotalBalance().execute();
 
+        // Get the Menu-Data once. In this case show the total number of products.
+        new GetTotalProducts().execute();
 
 
         // Menu choice - "Products".
@@ -140,10 +135,10 @@ public class MenuStorageFragment extends Fragment {
     }
 
     /**
-     * AsyncTask which will run in the background and fetch a new version of the Scanned Product.
-     * If the new Product is the same as the old one no changes have been made and NO need to replace the old one.
+     * AsyncTask which will run in the background and fetch the total number of Products.
+     *
      */
-    private class GetTotalBalance extends AsyncTask<Void, Void, String> {
+    private class GetTotalProducts extends AsyncTask<Void, Void, String> {
 
         private Socket socket;
         private String newJSON;
@@ -192,10 +187,9 @@ public class MenuStorageFragment extends Fragment {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-                if (result != null) {
-                    output_total_products.setText(result);
-                }
-
+            if (result != null) {
+                output_total_products.setText(result);
+            }
         }
     }
 }

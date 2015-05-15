@@ -3,7 +3,6 @@ package com.example.andreaslengqvist.aware_test.Storage;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -27,76 +26,92 @@ import com.example.andreaslengqvist.aware_test.Helpers.ZoomOutPageTransformer;
 import com.example.andreaslengqvist.aware_test.R;
 import com.example.andreaslengqvist.aware_test.Storage.Inventory.InventoryViewFragment;
 import com.example.andreaslengqvist.aware_test.Storage.Products.ProductViewFragment;
-
 import java.util.ArrayList;
+
 
 
 /**
  * Created by andreaslengqvist on 15-04-13.
  *
  * ProductListActivity handles ProductListFragment, ProductPagerFragment, ProductViewFragment / InventoryViewFragment
- * and all communications between them (ProductListListener/InventoryListener).
+ * and all communications between them (ProductListListener/ProductListener).
  *
  */
 public class ProductListActivity extends ActionBarActivity implements ProductListListener, ProductListener {
 
+    // Static Name variables.
     private static final String INTENT_KEY = "INTENT_KEY";
 
     private static final String ACTIVITY_INVENTORY_FULL = "ACTIVITY_INVENTORY_FULL";
     private static final String ACTIVITY_PRODUCTS = "ACTIVITY_PRODUCTS";
 
     private static final String PRODUCT_LIST_FRAGMENT_TAG = "PRODUCT_LIST_FRAGMENT_TAG";
-    private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
     private static final String PARCELABLE_PRODUCT_LIST_TAG = "PARCELABLE_PRODUCT_LIST_TAG";
+    private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
 
-    private static final String UNFILTRED_PRODUCTS = "UNFILTRED_PRODUCTS";
+    private static final String UNFILTERED_PRODUCTS = "UNFILTERED_PRODUCTS";
     private static final String SEARCH_OPENED = "SEARCH_OPENED";
     private static final String SEARCH_QUERY = "SEARCH_QUERY";
 
-
+    // Layout variables.
     private ProductListFragment mProductListFragment;
-    private Fragment mCurrentFragment;
-    private ArrayList<Product> mProducts;
     private FrameLayout mListContainer;
-    private ProductPager mPager;
 
+    // Pager variables.
+    private ProductPager mPager;
     private int mPagerPosition;
-    private boolean insideProduct;
+
+    // ActivityType variable.
     private String mTypeOfActivity;
 
+    // List variables.
+    private ArrayList<Product> mFilteredProducts;
+    private ArrayList<Product> mUnFilteredProducts;
+
+    // Handheld Device variables.
+    private boolean mInsideProduct;
+
+    // Search variables.
+    private MenuItem mSearchAction;
+    private MenuItem mSearchEANAction;
     private EditText mSearchEt;
     private String mSearchQuery;
     private boolean mSearchOpened;
-    private ArrayList<Product> mUnFilteredProducts;
 
-    private MenuItem mSearchAction;
-    private Drawable mIconOpenSearch;
-    private Drawable mIconCloseSearch;
 
+    /**
+     * Called when this Activity is being created.
+     *
+     * Basically initialize all elements from the XML-layout.
+     */
     private void initializeVariables() {
         mListContainer = (FrameLayout) findViewById(R.id.fragment_product_list_container);
         mPager = (ProductPager) findViewById(R.id.pager);
-
-        // Getting the icons.
-        mIconOpenSearch = getResources().getDrawable(R.drawable.ic_action_search);
-        mIconCloseSearch = getResources().getDrawable(R.drawable.ic_action_cancel);
     }
 
+
     @Override
+    /**
+     * Called when this Activity is being created.
+     *
+     * Basically just do thing that needs to be done upon creation.
+     *
+     * @param savedInstanceState saved data from a Configuration change
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
         initializeVariables();
 
 
-
-        // Get which type (Products / Inventory).
+        // Get which Activity to handle (Products / InventoryFull).
         Intent i = getIntent();
         if (i.hasExtra(INTENT_KEY)) {
             mTypeOfActivity = i.getStringExtra(INTENT_KEY);
         }
 
-        // If coming from new state. (e.g NOT screen rotation)
+
+        // If coming from new state.
         if (savedInstanceState == null) {
 
             // If user is using a tablet or a handheld.
@@ -106,43 +121,84 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 addListFragment();
             }
-        } else {
+        }
+
+
+        // Else coming from already created state. (e.g screen orientation)
+        else {
             mProductListFragment = (ProductListFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.fragment_product_list_container);
-
-            mUnFilteredProducts = savedInstanceState.getParcelableArrayList(UNFILTRED_PRODUCTS);
+            mUnFilteredProducts = savedInstanceState.getParcelableArrayList(UNFILTERED_PRODUCTS);
             mSearchOpened = savedInstanceState.getBoolean(SEARCH_OPENED);
             mSearchQuery = savedInstanceState.getString(SEARCH_QUERY);
-
         }
     }
 
+
     @Override
+    /**
+     * Called when this Activity is destroyed upon Configuration change (e.g Screen orientation)
+     *
+     * Saves the necessary data which is needed when coming back from an Configuration change.
+     *
+     * @param outState the Bundle in which the saved data will be stored
+     */
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList(UNFILTRED_PRODUCTS, mUnFilteredProducts);
+        outState.putParcelableArrayList(UNFILTERED_PRODUCTS, mUnFilteredProducts);
         outState.putBoolean(SEARCH_OPENED, mSearchOpened);
         outState.putString(SEARCH_QUERY, mSearchQuery);
     }
 
+
     @Override
+    /**
+     * Called when this Activity is being created.
+     *
+     * Basically just inflates the Menu.
+     *
+     * @param menu Menu
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
         return true;
     }
 
+
     @Override
+    /**
+     * Called when this Activity is being created.
+     *
+     * Finds the two ActionBar elements Search and Search for EAN.
+     * Also checks if an SearchBar should already be opened.
+     *
+     * @param menu Menu
+     */
     public boolean onPrepareOptionsMenu(Menu menu) {
         mSearchAction = menu.findItem(R.id.action_search);
+        mSearchEANAction = menu.findItem(R.id.action_search_ean);
+        mSearchEANAction.setVisible(false);
+
+        // If inside a search.
         if (mSearchOpened) {
             openSearchBar(mSearchQuery);
         }
         return super.onPrepareOptionsMenu(menu);
     }
 
+
     @Override
+    /**
+     * Called when a item in the ActionBar is clicked.
+     *
+     * Checks which item that users clicked and either Show / Hide SearchBar or Searches on EAN.
+     *
+     * @param item MenuItem
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
+        // Open / Close the SearchBar.
         if (id == R.id.action_search) {
             if (mSearchOpened) {
                 cancelSearchBar(true);
@@ -151,80 +207,197 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
             }
             return true;
         }
-        return super.onOptionsItemSelected(item);
+
+        // Search on EAN. (Barcode)
+        if (id == R.id.action_search_ean) {
+            mProductListFragment.searchOnEAN();
+        }
+            return super.onOptionsItemSelected(item);
     }
 
+
     @Override
+    /**
+     * Called when pressing Back button.
+     *
+     * When using a handheld device and when inside ProductView / InventoryView the back
+     * button works like an Show-function for the hidden ProductListFragment.
+     *
+     * Other, it works like an regular back button goes back to the previous Activity.
+     */
     public void onBackPressed() {
 
-        if(insideProduct) {
-            insideProduct = false;
+        if(mInsideProduct) {
+            mInsideProduct = false;
             mSearchAction.setVisible(true);
-            mPager.setVisibility(View.GONE);
             mListContainer.setVisibility(View.VISIBLE);
-            mProductListFragment.deselectList();
             mProductListFragment.unlockList();
             if(mSearchOpened) {
-                getSupportActionBar().setDisplayShowCustomEnabled(true);
+                mSearchEANAction.setVisible(true);
             }
+            getSupportActionBar().setDisplayShowCustomEnabled(true);
+            mPager.setVisibility(View.GONE);
+            mProductListFragment.deselectList();
         }
         else {
             super.onBackPressed();
-            mProductListFragment.stopPeriodically();
             overridePendingTransition(R.anim.pull_in_bottom, R.anim.push_out_top);
         }
     }
 
+
     @Override
+    /**
+     * Called when Activity get destroyed.
+     *
+     * Stops the periodically background thread inside ProductListFragment (GetProducts).
+     */
     protected void onDestroy() {
         super.onDestroy();
         mProductListFragment.stopPeriodically();
     }
 
+
     @Override
+    /**
+     * Called when Activity get paused. (e.g sleep-mode or user heads to another app)
+     *
+     * Stops the periodically background thread inside ProductListFragment (GetProducts).
+     */
     protected void onPause() {
         super.onPause();
         mProductListFragment.stopPeriodically();
     }
 
+
     @Override
+    /**
+     * Called when Activity get resumed. (e.g from sleep-mode or user in again from another app)
+     *
+     * Stops the old periodically background thread inside ProductListFragment (GetProducts) and starts
+     * a new one.
+     */
     protected void onResume() {
         super.onResume();
         mProductListFragment.stopPeriodically();
         mProductListFragment.startPeriodically();
     }
 
+
     @Override
-    public void onListUpdatedInsideSearch(ArrayList<Product> products) {
+    /**
+     * From ProductsListFragment - AsyncTask (GetProducts)
+     *
+     * Called when inside SearchBar and a updated list is ready.
+     * Replaces the old list and again, filters it with the search query.
+     *
+     * @param products with updated ArrayList of Products
+     */
+    public void onProductsUpdated(ArrayList<Product> products) {
         mUnFilteredProducts = products;
         mProductListFragment.filterAdapter(performSearch(mUnFilteredProducts, mSearchQuery));
     }
 
-    @Override
-    public void onCloseSearch() {
-        cancelSearchBar(false);
-    }
 
     @Override
-    public void onProductListLoaded(ArrayList<Product> products, int position) {
-        mProducts = products;
+    /**
+     * From ProductsListFragments - setList()
+     *
+     * Called when products were added to the ProductListAdapter.
+     * Replaces the filtered products and restarts the ViewPager with the replaced products.
+     *
+     * @param products with added ArrayList of Products
+     * @param position of selected item in ListView
+     */
+    public void onProductsAddedToAdapter(ArrayList<Product> products, int position) {
+        mFilteredProducts = products;
         if(mPager != null){
             setPager(position);
         }
     }
 
+
     @Override
+    /**
+     * From ProductsListFragment - OnItemClickListener (Select)
+     *
+     * Called when a selection has been made in the ListView.
+     * Replaces the old position and restarts the ViewPager.
+     *
+     * @param position of selected item in ListView
+     */
     public void onProductSelected(int position) {
         mPagerPosition = position;
         setPager(position);
     }
 
+
     @Override
+    /**
+     * From ProductsListFragment - OnItemClickListener (Deselect)
+     *
+     * Called when a deselection has been made in the ListView.
+     * Basically just hides the ViewPager.
+     */
     public void onProductDeSelected() {
         mPager.setVisibility(View.GONE);
     }
 
+
     @Override
+    /**
+     * From InventoryViewFragment / ProductViewFragment - AsyncTask (GetProducts) onPostExecute
+     *
+     * Called after an "Inventory" / "Update" was made in a Product and the list was updated.
+     * Toasts a success message, different message for each type of update.
+     *
+     * @param updatedInventory boolean if update is because of an Inventory or an regular Update
+     */
+    public void onProductUpdateFinished(boolean updatedInventory) {
+
+        if(updatedInventory) {
+            Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_inventory_finished, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
+            toast.show();
+        } else {
+            Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_product_updated, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
+            toast.show();
+        }
+    }
+
+
+    @Override
+    /**
+     * From InventoryViewFragment - OnCLickListener (Save Inventory)
+     *
+     * Called when user clicked Save in InventoryView.
+     */
+    public void onPutProduct() {
+        mProductListFragment.mWaitingForProductUpdate = true;
+    }
+
+
+    @Override
+    /**
+     * From ProductViewFragment - AsyncTask (PutProduct) onPostExecute
+     *
+     * Called when user finished update a Product in ProductView.
+     */
+    public void onPutInventory() {
+        mProductListFragment.mWaitingForInventoryUpdate = true;
+    }
+
+
+    @Override
+    /**
+     * From InventoryViewFragment - OnItemClickListener (Show/Hide/Save)
+     *
+     * Called when inside a Product and user clicked "Do Inventory" / "Cancel" / "Save".
+     * Enable / Disable swipe in the ViewPager and locks / unlocks the ListView.
+     *
+     * @param inside boolean if user clicked "Do Inventory" / "Cancel" / "Save"
+     */
     public void onInsideInventory(boolean inside) {
 
         if(inside) {
@@ -236,36 +409,13 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
         }
     }
 
-    @Override
-    public void onInventoryUpdateFinished() {
-        mProductListFragment.selectList(mPagerPosition + 1);
-        mPager.setCurrentItem(mPagerPosition + 1);
 
-        Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_inventory_finished, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
-        toast.show();
-    }
-
-    @Override
-    public void onProductUpdateFinished() {
-        mProductListFragment.selectList(mPagerPosition);
-        mPager.setCurrentItem(mPagerPosition);
-
-        Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_product_updated, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
-        toast.show();
-    }
-
-    @Override
-    public void onPutProduct() {
-        mProductListFragment.mWaitingForProductUpdate = true;
-    }
-
-    @Override
-    public void onPutInventory() {
-        mProductListFragment.mWaitingForInventoryUpdate = true;
-    }
-
+    /**
+     * From onCreate
+     *
+     * Called when this Activity is being created.
+     * Creates a ProductListFragment.
+     */
     public void addListFragment(){
 
         Bundle bundle = new Bundle();
@@ -282,10 +432,48 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
                 .commit();
     }
 
+
+    @Override
+    /**
+     * From ProductListFragment - OnCLickListener (dimmer)
+     *
+     * Called when user clicked on the dimmer-background.
+     * Loses the focus from the SearchBar.
+     */
+    public void onDoneSearching() {
+        cancelSearchBar(false);
+    }
+
+
+    @Override
+    /**
+     * From ProductListFragment - onActivityResult
+     *
+     * Called when scanner returned an EAN (barcode).
+     * Reopens the SearchBar and adds the search query with the EAN.
+     *
+     * @param ean scanned barcode to search for Product.
+     */
+    public void onScannedForEAN(String ean) {
+        openSearchBar(ean);
+    }
+
+
+    /**
+     * From ActionBar or onScannedForEAN
+     *
+     * Called when user clicked on the Search icon.
+     * Displays and setups the SearchBar.
+     *
+     * @param queryText search query
+     */
     private void openSearchBar(String queryText) {
 
+        mSearchEANAction.setVisible(true);
+
+        // If this is the first time searching. Save the unfiltered list.
         if(mUnFilteredProducts == null) {
-            mUnFilteredProducts = mProducts;
+            mUnFilteredProducts = mFilteredProducts;
         }
 
         // Set custom view on action bar.
@@ -293,9 +481,10 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setCustomView(R.layout.search_bar);
 
-
-        // Search edit text field setup.
+        // SearchBar setup.
         mSearchEt = (EditText) actionBar.getCustomView().findViewById(R.id.etSearch);
+
+        // OnFocusListener to Lock / Unlock ListView and also Show / Hide keyboard.
         mSearchEt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -312,62 +501,65 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
             }
         });
 
+        // Add TextWatcher.
         mSearchEt.addTextChangedListener(new SearchWatcher());
+
+        // Set focus to the search field and set the search query.
         mSearchEt.setText(queryText);
         mSearchEt.requestFocus();
 
+        // Lock the ListView.
         mProductListFragment.lockList(true);
 
-        mSearchAction.setIcon(mIconCloseSearch);
+        // Change the Search icon into a Cancel icon.
+        mSearchAction.setIcon(R.drawable.ic_action_cancel);
 
+        // SearchBar is open.
         mSearchOpened = true;
     }
 
+
+    /**
+     * From ActionBar or onDoneSearching
+     *
+     * Called when user clicked on the Search icon.
+     * Sets the SearchBar to either "Close" or "Unfocus".
+     *
+     * @param close boolean to check if the SearchBar should close or not
+     */
     private void cancelSearchBar(boolean close) {
+
+        // Loses the focus from the SearchBar.
         mSearchEt.clearFocus();
 
-        if(close) {
 
+        // If the SearchBar should be closed.
+        if(close) {
             mProductListFragment.setSearchedProduct();
             mSearchEt.setText(null);
             mPager.setCurrentItem(mProductListFragment.getSearchedProduct());
         }
 
+        // If the search query is empty. Close it.
         if (mSearchEt.getText().length() == 0) {
+            mSearchEANAction.setVisible(false);
             getSupportActionBar().setDisplayShowCustomEnabled(false);
-            mSearchAction.setIcon(mIconOpenSearch);
+            mSearchAction.setIcon(R.drawable.ic_action_search);
+
+            // The SearchBar is closed.
             mSearchOpened = false;
         }
     }
 
-    /**
-     * Responsible for handling changes in search edit text.
-     */
-    private class SearchWatcher implements TextWatcher {
-
-        @Override
-        public void beforeTextChanged(CharSequence c, int i, int i2, int i3) {
-        }
-
-        @Override
-        public void onTextChanged(CharSequence c, int i, int i2, int i3) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            mSearchQuery = mSearchEt.getText().toString();
-            mProductListFragment.filterAdapter(performSearch(mUnFilteredProducts, mSearchQuery));
-        }
-
-    }
 
     /**
+     * From SearchWatcher (AfterTextChanged) or onProductsUpdated
+     *
+     * Called when query has been changed or the list have been updated.
      * Goes through the given list and filters it according to the given query.
      *
-     * @param products list given as search sample
-     * @param query to be searched
-     * @return new filtered list
+     * @param products list to search in
+     * @param query to be searched for
      */
     private ArrayList<Product> performSearch(ArrayList<Product> products, String query) {
 
@@ -376,16 +568,17 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
         String[] queryByWords = query.toLowerCase().split("\\s+");
 
         // Empty list to fill with matches.
-        ArrayList<Product> moviesFiltered = new ArrayList<>();
+        ArrayList<Product> productsFiltered = new ArrayList<>();
 
         // Go through initial releases and perform search.
-        for (Product movie : products) {
+        for (Product product : products) {
 
             // Content to search through (in lower case).
             String content = (
-                    movie.getName() + " " +
-                            movie.getSKU() + " " +
-                            String.valueOf(movie.getStorageSpace())
+                    product.getName() + " " +
+                            product.getSKU() + " " +
+                            String.valueOf(product.getStorageSpace() + " " +
+                            String.valueOf(product.getEAN()))
             ).toLowerCase();
 
             for (String word : queryByWords) {
@@ -403,16 +596,44 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
 
                 // They all match.
                 if (numberOfMatches == 0) {
-                    moviesFiltered.add(movie);
+                    productsFiltered.add(product);
                 }
-
             }
+        }
+        return productsFiltered;
+    }
+
+
+    /**
+     * Class TextWatcher which is responsible for handling changes in the SearchBar.
+     */
+    private class SearchWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence c, int i, int i2, int i3) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence c, int i, int i2, int i3) {
 
         }
 
-        return moviesFiltered;
+        @Override
+        public void afterTextChanged(Editable editable) {
+            mSearchQuery = mSearchEt.getText().toString();
+            mProductListFragment.filterAdapter(performSearch(mUnFilteredProducts, mSearchQuery));
+        }
     }
 
+
+    /**
+     * From onProductSelected or onProductsAddedToAdapter
+     *
+     * Called when the ViewPager should be set or reset.
+     * Setups the ViewPager and the ProductSlidePagerAdapter and adds the Products to it.
+     *
+     * @param position to set the Pager to the selected Product
+     */
     public void setPager(int position){
 
         // Instantiate a ProductPagerAdapter.
@@ -440,25 +661,30 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
                 }
             }
         });
+
+        // Set Adapter to the Pager and display selected Product from the ListView.
         mPager.setAdapter(mPagerAdapter);
         mPager.setCurrentItem(position);
 
+        // If there is an selected Product in the list.
         if (position != -1) {
             mPager.setVisibility(View.VISIBLE);
 
+            // Check if user is NOT using a tablet. Then go inside the selected Product.
             if (!getResources().getBoolean(R.bool.isTablet)) {
-                insideProduct = true;
+                mInsideProduct = true;
                 getSupportActionBar().setDisplayShowCustomEnabled(false);
                 mSearchAction.setVisible(false);
+                mSearchEANAction.setVisible(false);
                 mListContainer.setVisibility(View.GONE);
             }
         }
     }
 
 
-/**
- * PagerAdapter to swipe between products in the ProductList -> ProductView.
- */
+    /**
+     * Class ProductSlidePagerAdapter to swipe between products in the ProductList -> ProductView.
+     */
     private class ProductSlidePagerAdapter extends FragmentStatePagerAdapter {
 
         public ProductSlidePagerAdapter(FragmentManager fm) {
@@ -469,14 +695,17 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
         public Fragment getItem(int position) {
 
             Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(PARCELABLE_PRODUCT_LIST_TAG, mProducts);
-            bundle.putParcelable(PARCELABLE_PRODUCT_TAG, mProducts.get(position));
+            bundle.putParcelableArrayList(PARCELABLE_PRODUCT_LIST_TAG, mFilteredProducts);
+            bundle.putParcelable(PARCELABLE_PRODUCT_TAG, mFilteredProducts.get(position));
 
+            // If Activity is of type Products.
             if(mTypeOfActivity.equals(ACTIVITY_INVENTORY_FULL)){
                 InventoryViewFragment f = new InventoryViewFragment();
                 f.setArguments(bundle);
                 return f;
             }
+
+            // If Activity is of type Inventory.
             if(mTypeOfActivity.equals(ACTIVITY_PRODUCTS)){
                 ProductViewFragment f = new ProductViewFragment();
                 f.setArguments(bundle);
@@ -487,8 +716,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
 
         @Override
         public int getCount() {
-            return mProducts.size();
+            return mFilteredProducts.size();
         }
-
-}
+    }
 }

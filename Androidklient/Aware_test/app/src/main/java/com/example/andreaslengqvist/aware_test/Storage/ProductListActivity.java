@@ -159,6 +159,8 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      * Basically just inflates the Menu.
      *
      * @param menu Menu
+     *
+     * @return boolean true
      */
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
@@ -174,6 +176,8 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      * Also checks if an SearchBar should already be opened.
      *
      * @param menu Menu
+     *
+     * @return boolean true
      */
     public boolean onPrepareOptionsMenu(Menu menu) {
         mSearchAction = menu.findItem(R.id.action_search);
@@ -195,6 +199,8 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      * Checks which item the users clicked and either Show / Hide SearchBar or Searches on EAN.
      *
      * @param item MenuItem
+     *
+     * @return boolean true
      */
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -563,6 +569,8 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      *
      * @param products list to search in
      * @param query to be searched for
+     *
+     * @return productsFiltered filtered list of products
      */
     private ArrayList<Product> performSearch(ArrayList<Product> products, String query) {
 
@@ -694,7 +702,16 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
             super(fm);
         }
 
+
         @Override
+        /**
+         * Called when item gets added to the ProductSlidePagerAdapter.
+         * Appends a ProductViewFragment / InventoryViewFragment as an item in the Adapter.
+         *
+         * @param position of the item within the adapters data set
+         *
+         * @return Fragment to start
+         */
         public Fragment getItem(int position) {
 
             Bundle bundle = new Bundle();
@@ -717,7 +734,13 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
             return null;
         }
 
+
         @Override
+        /**
+         * Called when adapter get created and gets the number of pages the pager should consist of.
+         *
+         * @return size of the list of products
+         */
         public int getCount() {
             return mFilteredProducts.size();
         }

@@ -119,6 +119,8 @@ public class InventoryViewFragment extends Fragment {
      * @param inflater that can be used to inflate any views in the fragment
      * @param container this can be used to generate the LayoutParams of the view
      * @param savedInstanceState saved data from a Configuration change
+     *
+     * @return mView inflated with the correct layout
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

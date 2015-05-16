@@ -193,7 +193,7 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
      * From startPeriodically
      *
      * Called when the Handler wants to run the periodically AsyncTask GetProductByEAN.
-     * Runs a GetProductByEAN each 1000ms (delayed).
+     * Runs a instance of GetProductByEAN each 1000ms (delayed).
      */
     private Runnable runPeriodically = new Runnable() {
 
@@ -208,7 +208,7 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
 
 
     /**
-     * AsyncTask which will run in the background and fetch a new version of the Scanned Product.
+     * AsyncTask which will run in the background and fetch a JSON of the Scanned Product.
      * If the new Product is the same as the old Product no changes have been made and NO need to replace the old Product.
      */
     private class GetProductByEAN extends AsyncTask<Void, Void, Product> {

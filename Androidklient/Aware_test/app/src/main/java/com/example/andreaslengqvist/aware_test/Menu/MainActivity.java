@@ -26,19 +26,24 @@ import com.google.zxing.integration.android.IntentResult;
  */
 public class MainActivity extends FragmentActivity implements MenuListener {
 
-    /**
-     * The number of pages (two MenuFragments) to show in this demo.
-     */
+    // Number of pages in the ViewPager.
     private static final int NUM_PAGES = 2;
 
+    // Static Name variables.
     private static final String INTENT_KEY = "INTENT_KEY";
     private static final String ACTIVITY_INVENTORY_FULL = "ACTIVITY_INVENTORY_FULL";
     private static final String ACTIVITY_PRODUCTS = "ACTIVITY_PRODUCTS";
-
     private static final String EAN_TAG = "EAN_TAG";
 
 
     @Override
+    /**
+     * Called when this Activity is being created.
+     *
+     * Basically just do thing that needs to be done upon creation.
+     *
+     * @param savedInstanceState saved data from a Configuration change
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -56,6 +61,16 @@ public class MainActivity extends FragmentActivity implements MenuListener {
         mPager.setAdapter(mPagerAdapter);
     }
 
+
+    @Override
+    /**
+     * Called when Activity gets back a response from a Intent in this case the Barcode scanner.
+     * Handles the scanned EAN.
+     *
+     * @param requestCode allowing you to identify who this result came from
+     * @param resultCode result code returned by the child activity through its setResult()
+     * @param intent which can return result data to the caller
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
         // Receive the scanned EAN, bundle it and start the InventoryFastActivity.
@@ -71,6 +86,12 @@ public class MainActivity extends FragmentActivity implements MenuListener {
     }
 
     @Override
+    /**
+     * From MenuStorageFragment - OnClickListener (Products)
+     *
+     * Called when user clicked Products in the menu.
+     * Starts a new ProductListActivity with ActivityType set to Products.
+     */
     public void onMenuProducts() {
 
         // Start ProductActivity and also tell the ListFragment to handle a "Products"-activity.
@@ -82,7 +103,14 @@ public class MainActivity extends FragmentActivity implements MenuListener {
         overridePendingTransition(R.anim.pull_in_top, R.anim.push_out_bottom);
     }
 
+
     @Override
+    /**
+     * From MenuStorageFragment - OnClickListener (Inventory Fast)
+     *
+     * Called when user clicked Inventory Fast in the menu.
+     * Starts the Barcode scanner.
+     */
     public void onMenuInventoryFast() {
 
         // Create an Integrator which is used to initiate the scanner.
@@ -95,7 +123,14 @@ public class MainActivity extends FragmentActivity implements MenuListener {
         integrator.initiateScan();
     }
 
+
     @Override
+    /**
+     * From MenuStorageFragment - OnClickListener (Inventory Full)
+     *
+     * Called when user clicked Inventory Full in the menu.
+     * Starts a new ProductListActivity with ActivityType set to Inventory.
+     */
     public void onMenuInventoryFull() {
 
         // Start InventoryFullActivity and also tell the ListFragment to handle a "Inventory"-activity.
@@ -108,16 +143,24 @@ public class MainActivity extends FragmentActivity implements MenuListener {
     }
 
 
-/**
- * A simple FragmentStatePagerAdapter that represents 2 MenuFragments, in sequence to swipe between.
- *
- */
+    /**
+     * A simple FragmentStatePagerAdapter that represents 2 MenuFragments, in sequence to swipe between.
+     */
     private class MenuPagerAdapter extends FragmentStatePagerAdapter {
         public MenuPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
+
         @Override
+        /**
+         * Called when item gets added to the ProductSlidePagerAdapter.
+         * Checks which Fragment to start.
+         *
+         * @param position of the item within the adapters data set
+         *
+         * @return Fragment to start
+         */
         public Fragment getItem(int position) {
 
             switch (position) {
@@ -127,7 +170,13 @@ public class MainActivity extends FragmentActivity implements MenuListener {
             }
         }
 
+
         @Override
+        /**
+         * Called when adapter get created and gets the number of pages the pager should consist of.
+         *
+         * @return size of the number of pages
+         */
         public int getCount() {
             return NUM_PAGES;
         }

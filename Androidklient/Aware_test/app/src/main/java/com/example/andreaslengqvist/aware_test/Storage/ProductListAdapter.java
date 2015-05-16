@@ -53,9 +53,11 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
      * Called on every element added to the Adapter.
      * Gets and sets the Product to the list item layout.
      *
-     * @param position of the item within the adapter's data set of the item whose view we want
+     * @param position of the item within the adapters data set
      * @param convertView old view to reuse
      * @param parent that this view will eventually be attached to
+     *
+     * @return convertView new view
      */
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -137,6 +139,8 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
     /**
      * Called when application needs to know the selected position.
      * Returns the selected position.
+     *
+     * @return mSelectedPosition of which item selected
      */
     public int getSelectedPosition() {
         return mSelectedPosition;

@@ -41,13 +41,13 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/sort_storagespace"
+            android:id="@+id/sort_storage_space"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="2.0">
 
             <ImageView
-                android:id="@+id/icon_sort_storagespace"
+                android:id="@+id/icon_sort_storage_space"
                 android:contentDescription="@string/icon_sorting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -122,13 +122,13 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/sort_balance"
+            android:id="@+id/sort_quantity"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_weight="0.9">
 
             <ImageView
-                android:id="@+id/icon_sort_balance"
+                android:id="@+id/icon_sort_quantity"
                 android:contentDescription="@string/icon_sorting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

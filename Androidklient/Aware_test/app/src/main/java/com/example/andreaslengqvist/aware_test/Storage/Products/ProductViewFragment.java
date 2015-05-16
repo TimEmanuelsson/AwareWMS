@@ -53,7 +53,7 @@ public class ProductViewFragment extends Fragment {
     private TextView output_product_position;
     private TextView output_product_name;
     private TextView output_product_number;
-    private TextView output_product_balance;
+    private TextView output_product_quantity;
     private ImageView icon_product_view_show_edit_menu;
     private ImageView img_product_picture;
 
@@ -77,7 +77,7 @@ public class ProductViewFragment extends Fragment {
         output_product_name = (TextView) mView.findViewById(R.id.output_product_name);
         output_product_number = (TextView) mView.findViewById(R.id.output_product_number);
         img_product_picture = (ImageView) mView.findViewById(R.id.img_product_picture);
-        output_product_balance = (TextView) mView.findViewById(R.id.output_product_quantity);
+        output_product_quantity = (TextView) mView.findViewById(R.id.output_product_quantity);
 
         btn_product_view_show_edit_menu = (RelativeLayout) mView.findViewById(R.id.btn_product_view_show_edit_menu);
         icon_product_view_show_edit_menu = (ImageView) mView.findViewById(R.id.icon_product_view_show_edit_menu);
@@ -94,9 +94,6 @@ public class ProductViewFragment extends Fragment {
      */
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
         try {
             mCallback = (ProductListener) activity;
         } catch (ClassCastException e) {
@@ -115,6 +112,8 @@ public class ProductViewFragment extends Fragment {
      * @param inflater that can be used to inflate any views in the fragment
      * @param container this can be used to generate the LayoutParams of the view
      * @param savedInstanceState saved data from a Configuration change
+     *
+     * @return mView inflated with the correct layout
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_product_view, container, false);
@@ -179,7 +178,7 @@ public class ProductViewFragment extends Fragment {
 
     @Override
     /**
-     * Called when a IntentResult is called into the Activity.
+     * Called when Activity gets back a response from a Intent in this case the Barcode scanner.
      * Handles the scanned EAN.
      *
      * @param requestCode allowing you to identify who this result came from
@@ -224,10 +223,19 @@ public class ProductViewFragment extends Fragment {
      */
     private void setProduct() {
 
+        // Storage Space.
         output_product_position.setText(mProduct.getStorageSpace());
+
+        // Name.
         output_product_name.setText(mProduct.getName());
+
+        // SKU (Number).
         output_product_number.setText(mProduct.getSKU());
-        output_product_balance.setText(Integer.toString(mProduct.getQuantity()));
+
+        // Quantity.
+        output_product_quantity.setText(Integer.toString(mProduct.getQuantity()));
+
+        // Image.
         new ImageDownloader(img_product_picture).execute("https://psmedia.playstation.com/is/image/psmedia/the-last-of-us-remastered-two-column-01-ps4-us-28jul14?$TwoColumn_Image$");
 
         // If Product has EAN. Change "Add EAN"-Button to "Edit EAN"-Button.

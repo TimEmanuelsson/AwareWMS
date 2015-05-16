@@ -181,7 +181,7 @@ public class Product implements Parcelable {
     /**
      * Sort Quantity ascending.
      */
-    public static Comparator<Product> ProductBalanceComparatorASC = new Comparator<Product>() {
+    public static Comparator<Product> ProductQuantityComparatorASC = new Comparator<Product>() {
 
         public int compare(Product s1, Product s2) {
             return ((Integer)s1.getQuantity()).compareTo(s2.getQuantity());
@@ -192,7 +192,7 @@ public class Product implements Parcelable {
     /**
      * Sort Quantity descending.
      */
-    public static Comparator<Product> ProductBalanceComparatorDESC = new Comparator<Product>() {
+    public static Comparator<Product> ProductQuantityComparatorDESC = new Comparator<Product>() {
 
         public int compare(Product s1, Product s2) {
             return ((Integer)s2.getQuantity()).compareTo(s1.getQuantity());

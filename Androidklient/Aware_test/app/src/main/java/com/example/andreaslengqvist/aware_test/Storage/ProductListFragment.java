@@ -21,7 +21,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -44,69 +43,76 @@ import java.util.List;
  */
 public class ProductListFragment extends Fragment {
 
+    // Static Name variables.
     private static final String INTENT_KEY = "INTENT_KEY";
-    private static final String ACTIVITY_INVENTORY_FULL = "ACTIVITY_INVENTORY_FULL";
 
+    // Layout variables.
     private ListView list_products;
-
-    private RelativeLayout sort_storagespace;
+    private RelativeLayout sort_storage_space;
     private RelativeLayout sort_name;
     private RelativeLayout sort_last_inventory;
     private RelativeLayout sort_sku;
-    private RelativeLayout sort_balance;
-
-    private ImageView icon_sort_storagespace;
+    private RelativeLayout sort_quantity;
+    private ImageView icon_sort_storage_space;
     private ImageView icon_sort_name;
     private ImageView icon_sort_last_inventory;
     private ImageView icon_sort_sku;
-    private ImageView icon_sort_balance;
-
+    private ImageView icon_sort_quantity;
     private RelativeLayout layout_dimmer;
 
-
+    // Member variables.
     private View mView;
     private Handler mHandler;
     private ProductListAdapter mAdapter;
     private ProductListListener mCallback;
     private ArrayList<Product> mProducts;
-
-    private Comparator<Product> currentSort;
-
-    private boolean sortASC = false;
-
-    private String oldJSON;
-
+    private Product mSelectedProduct;
     public boolean mWaitingForProductUpdate;
     public boolean mWaitingForInventoryUpdate;
-    public boolean insideSearch;
-    private Product selectedProduct;
+    public boolean mInsideSearch;
+
+    // Sorting variables.
+    private Comparator<Product> currentSort;
+    private boolean sortASC = false;
+
+    // Current JSON.
+    private String oldJSON;
 
 
+    /**
+     * From onCreate
+     *
+     * Basically initialize all elements from the XML-layout (res/layout/activity_products.xml).
+     */
     private void initializeVariables() {
         list_products = (ListView) mView.findViewById(R.id.list_products);
         list_products.setEmptyView(mView.findViewById(R.id.progress_loading_list));
 
         sort_name = (RelativeLayout) mView.findViewById(R.id.sort_name);
-        sort_storagespace = (RelativeLayout) mView.findViewById(R.id.sort_storagespace);
+        sort_storage_space = (RelativeLayout) mView.findViewById(R.id.sort_storage_space);
         sort_last_inventory = (RelativeLayout) mView.findViewById(R.id.sort_last_inventory);
         sort_sku = (RelativeLayout) mView.findViewById(R.id.sort_sku);
-        sort_balance = (RelativeLayout) mView.findViewById(R.id.sort_balance);
+        sort_quantity = (RelativeLayout) mView.findViewById(R.id.sort_quantity);
 
         icon_sort_name = (ImageView) mView.findViewById(R.id.icon_sort_name);
-        icon_sort_storagespace = (ImageView) mView.findViewById(R.id.icon_sort_storagespace);
+        icon_sort_storage_space = (ImageView) mView.findViewById(R.id.icon_sort_storage_space);
         icon_sort_last_inventory = (ImageView) mView.findViewById(R.id.icon_sort_last_inventory);
         icon_sort_sku = (ImageView) mView.findViewById(R.id.icon_sort_sku);
-        icon_sort_balance = (ImageView) mView.findViewById(R.id.icon_sort_balance);
+        icon_sort_quantity = (ImageView) mView.findViewById(R.id.icon_sort_quantity);
 
         layout_dimmer = (RelativeLayout) mView.findViewById(R.id.layout_dimmer);
     }
 
+
     @Override
+    /**
+     * Called when this Fragment is being created.
+     *
+     * This makes sure that the container activity has implemented
+     * the callback interface. If not, it throws an exception
+     */
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
         try {
             mCallback = (ProductListListener) activity;
         } catch (ClassCastException e) {
@@ -115,19 +121,48 @@ public class ProductListFragment extends Fragment {
         }
     }
 
+
     @Override
+    /**
+     * Called when this Fragment is being created.
+     *
+     * Basically just do thing that needs to be done upon creation.
+     * In this case, sets the Fragment to retain its instance upon Configuration changes.
+     *
+     * @param savedInstanceState saved data from a Configuration change
+     */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
     }
 
+
     @Override
+    /**
+     * Called when this Fragments View is being created.
+     *
+     * Basically just do thing that needs to be done upon creation of the View.
+     *
+     * @param inflater that can be used to inflate any views in the fragment
+     * @param container this can be used to generate the LayoutParams of the view
+     * @param savedInstanceState saved data from a Configuration change
+     *
+     * @return mView inflated with the correct layout
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_products_list, container, false);
         return mView;
     }
 
+
     @Override
+    /**
+     * Called when this Fragments Activity finished its creation.
+     *
+     * Basically just do thing that needs to be done upon creation of the Fragment.
+     *
+     * @param savedInstanceState saved data from a Configuration change
+     */
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initializeVariables();
@@ -147,11 +182,13 @@ public class ProductListFragment extends Fragment {
             startPeriodically();
         }
 
+
         // Else coming from already saved state.
         // setList from RetainInstanceState.
         else {
             setList(mProducts);
         }
+
 
         list_products.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -173,19 +210,6 @@ public class ProductListFragment extends Fragment {
         });
 
 
-        // Sort items - StorageSpace.
-        sort_storagespace.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setSort(
-                        icon_sort_storagespace,
-                        Product.ProductStorageSpaceComparatorASC,
-                        Product.ProductStorageSpaceComparatorDESC
-                );
-            }
-        });
-
-
         // Sort items - LastInventory.
         sort_last_inventory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,6 +218,19 @@ public class ProductListFragment extends Fragment {
                         icon_sort_last_inventory,
                         Product.ProductLastInventoryComparatorASC,
                         Product.ProductLastInventoryComparatorDESC
+                );
+            }
+        });
+
+
+        // Sort items - StorageSpace.
+        sort_storage_space.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setSort(
+                        icon_sort_storage_space,
+                        Product.ProductStorageSpaceComparatorASC,
+                        Product.ProductStorageSpaceComparatorDESC
                 );
             }
         });
@@ -225,18 +262,20 @@ public class ProductListFragment extends Fragment {
         });
 
 
-        // Sort items - Balance.
-        sort_balance.setOnClickListener(new View.OnClickListener() {
+        // Sort items - Quantity.
+        sort_quantity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setSort(
-                        icon_sort_balance,
-                        Product.ProductBalanceComparatorASC,
-                        Product.ProductBalanceComparatorDESC
+                        icon_sort_quantity,
+                        Product.ProductQuantityComparatorASC,
+                        Product.ProductQuantityComparatorDESC
                 );
             }
         });
 
+
+        // Background dimmer when inside SearchBar.
         layout_dimmer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,6 +285,15 @@ public class ProductListFragment extends Fragment {
     }
 
 
+    @Override
+    /**
+     * Called when Activity gets back a response from a Intent in this case the Barcode scanner.
+     * Handles the scanned EAN.
+     *
+     * @param requestCode allowing you to identify who this result came from
+     * @param resultCode result code returned by the child activity through its setResult()
+     * @param intent which can return result data to the caller
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
         // Receive the scanned EAN and search to find the Product.
@@ -255,6 +303,13 @@ public class ProductListFragment extends Fragment {
         }
     }
 
+
+    /**
+     * From ProductListActivity - onOptionsItemSelected
+     *
+     * Called when user clicked Search on EAN (Barcode).
+     * Starts the Barcode scanner.
+     */
     public void searchOnEAN() {
         FragmentIntentIntegrator integrator = new FragmentIntentIntegrator(ProductListFragment.this);
         // Create an Integrator which is used to initiate the scanner.
@@ -264,31 +319,70 @@ public class ProductListFragment extends Fragment {
         integrator.initiateScan();
     }
 
+
+    /**
+     * From ProductListActivity - SearchWatcher / onProductsUpdated
+     *
+     * Called when a search query have changed upon a Search.
+     * Replaces the Adapters list with a new filtered version.
+     */
     public void filterAdapter(ArrayList<Product> products) {
+
+        // If a sorting is made. Sort it.
         if (currentSort != null) {
             Collections.sort(products, currentSort);
         }
         setList(products);
     }
 
+
+    /**
+     * From ProductListActivity - openSearchBar (onFocus)
+     *
+     * Called when the SearchBar gets focus.
+     * Deselects the Product in the ListView and alerts the Fragment that the SearchBar has focus.
+     */
     public void openSearch() {
         mCallback.onProductDeSelected();
         deselectList();
-        insideSearch = true;
+        mInsideSearch = true;
     }
 
+
+    /**
+     * From ProductListActivity - cancelSearchBar (noFocus)
+     *
+     * Called when the SearchBar loses its focus.
+     * Remembers the selected searched Products position.
+     */
     public void setSearchedProduct() {
 
         int position = mAdapter.getSelectedPosition();
         if(position != -1) {
-            selectedProduct = mAdapter.getItem(mAdapter.getSelectedPosition());
+            mSelectedProduct = mAdapter.getItem(mAdapter.getSelectedPosition());
         }
     }
 
+
+    /**
+     * From ProductListActivity - cancelSearchBar (noFocus)
+     *
+     * Called when the SearchBar loses its focus and a unfiltered list has been deployed to the Adapter.
+     *
+     * @return mSelectedProduct that were selected before the search was cancelled.
+     */
     public int getSearchedProduct() {
-        return mAdapter.getPosition(selectedProduct);
+        return mAdapter.getPosition(mSelectedProduct);
     }
 
+
+    /**
+     * From onCreate / filterAdapter / sortList / onPostExecute (AsyncTask - GetProducts)
+     *
+     * Called when the list is ready to be added to the Adapter.
+     *
+     * @param result list of products
+     */
     private void setList(ArrayList<Product> result){
 
         // When a new ArrayList of Products is fetched.
@@ -296,22 +390,50 @@ public class ProductListFragment extends Fragment {
             mProducts = result;
         }
 
+        // If there is NO Adapter set to the list. Set it.
         if(list_products.getAdapter() == null) {
             list_products.setAdapter(mAdapter);
         }
+
+        // If there is a change, don't destroy the scroll position.
         mAdapter.setNotifyOnChange(false);
+
+        // Clear the Adapter from items.
         mAdapter.clear();
+
+        // Add all Products to the Adapter.
         mAdapter.addAll(mProducts);
+
+        // Notify the Adapter that data has changed.
         mAdapter.notifyDataSetChanged();
 
+        // Notify the Activity that the Adapter has Products.
         mCallback.onProductsAddedToAdapter(mProducts, mAdapter.getSelectedPosition());
     }
 
+
+    /**
+     * From openSearch / Deselect item (OnListItemClickListener) / onBackPressed (insideProduct)
+     *
+     * Called when the ListView needs to be deselected.
+     * Sets the selected position to -1 which in this case is no item selected.
+     * And notifies the Adapter.
+     */
     public void deselectList() {
         mAdapter.setSelectedPosition(-1);
         mAdapter.notifyDataSetChanged();
     }
 
+
+    /**
+     * From Select item (OnListItemClickListener) / onPageSelected (ViewPager)
+     *
+     * Called when the ListView needs to be selected.
+     * Sets the selected position to the correct position and notifies the Adapter.
+     * Also scrolls to the correct position in the ListView.
+     *
+     * @param position selected position
+     */
     public void selectList(int position) {
         if(mAdapter.getSelectedPosition() != -1) {
             mAdapter.setSelectedPosition(position);
@@ -320,11 +442,31 @@ public class ProductListFragment extends Fragment {
         }
     }
 
+
+    /**
+     * From setSort
+     *
+     * Called when the list is ready to sort.
+     * Sorts the list with the correct sorting and sets the new sorted list to the Adapter.
+     *
+     * @param sort type of sorting
+     */
     private void sortList(Comparator<Product> sort) {
         Collections.sort(mProducts, sort);
         setList(mProducts);
     }
 
+
+    /**
+     * From LastInventory / StorageSpace / Name / SKU / Quantity - OnClickListener
+     *
+     * Called when users clicked one of the sorting functions.
+     * Setups the sorting.
+     *
+     * @param column which column to sort
+     * @param asc sort ascending
+     * @param desc sort descending
+     */
     private void setSort(ImageView column, Comparator<Product> asc, Comparator<Product> desc) {
 
         if (!sortASC) {
@@ -343,58 +485,97 @@ public class ProductListFragment extends Fragment {
         column.setVisibility(View.VISIBLE);
     }
 
+
+    /**
+     * From setSort
+     *
+     * Called before the sorted column is set to Visible.
+     * Resets all the columns to Invisible.
+     */
     private void resetSortVisibility(){
         icon_sort_name.setVisibility(View.INVISIBLE);
-        icon_sort_storagespace.setVisibility(View.INVISIBLE);
+        icon_sort_storage_space.setVisibility(View.INVISIBLE);
         icon_sort_last_inventory.setVisibility(View.INVISIBLE);
         icon_sort_sku.setVisibility(View.INVISIBLE);
-        icon_sort_balance.setVisibility(View.INVISIBLE);
+        icon_sort_quantity.setVisibility(View.INVISIBLE);
     }
 
+
+    /**
+     * From ProductListActivity - onInsideInventory / openSearchBar (SearchBar onFocus)
+     *
+     * Called before the sorted column is set to Visible.
+     * Resets all the columns to Invisible.
+     */
     public void lockList(boolean clickable) {
         layout_dimmer.setEnabled(clickable);
         layout_dimmer.setVisibility(View.VISIBLE);
-        sort_storagespace.setEnabled(false);
+        sort_storage_space.setEnabled(false);
         sort_name.setEnabled(false);
         sort_sku.setEnabled(false);
-        sort_balance.setEnabled(false);
+        sort_quantity.setEnabled(false);
         list_products.setEnabled(false);
 
     }
 
+
+    /**
+     * From ProductListActivity - onInsideInventory / onBackPressed / openSearchBar (SearchBar No Focus)
+     *
+     * Called before the sorted column is set to Visible.
+     * Resets all the columns to Invisible.
+     */
     public void unlockList() {
         layout_dimmer.setVisibility(View.GONE);
-        sort_storagespace.setEnabled(true);
+        sort_storage_space.setEnabled(true);
         sort_name.setEnabled(true);
         sort_sku.setEnabled(true);
-        sort_balance.setEnabled(true);
+        sort_quantity.setEnabled(true);
         list_products.setEnabled(true);
     }
 
+
+    /**
+     * From onCreate and ProductListActivity - onResume
+     *
+     * Called when activity is created or resumed.
+     * Posts runPeriodically to the Handler.
+     */
     public void startPeriodically() {
         mHandler.post(runPeriodically);
     }
 
+
+    /**
+     * From ProductListActivity - onPaused / onDestroy
+     *
+     * Called when activity is paused or destroyed.
+     * Removes runPeriodically from the callbacks.
+     */
     public void stopPeriodically() {
         mHandler.removeCallbacks(runPeriodically);
     }
 
+
+    /**
+     * From startPeriodically
+     *
+     * Called when the Handler wants to run the periodically AsyncTask GetProducts.
+     * Runs a instance of GetProducts each 1000ms (delayed).
+     */
     private Runnable runPeriodically = new Runnable() {
 
         @Override
         public void run() {
             new GetProducts().execute();
-            Log.d("asdasd", "KÖÖÖR");
         mHandler.postDelayed(runPeriodically, 1000);
         }
     };
 
 
     /**
-     *
-     * AsyncTask which will run in the background and fetch a ArrayList of Products.
-     * If the new ArrayList is the same as the old one no changes have been made and NO need to replace the old one.
-     *
+     * AsyncTask which will run in the background and fetch a JSON of Products.
+     * If the new Products is the same as the old Products no changes have been made and NO need to replace the old Products.
      */
     private class GetProducts extends AsyncTask<Void, Void, ArrayList<Product>> {
 
@@ -454,23 +635,31 @@ public class ProductListFragment extends Fragment {
             // Replace the old list with the new list.
             if(result != null) {
 
+
+                // If a sorting is made. Sort it.
                 if (currentSort != null) {
                     Collections.sort(result, currentSort);
                 }
 
-                if(insideSearch) {
+                // If inside the SearchBar. Update the searched list.
+                if(mInsideSearch) {
                     mCallback.onProductsUpdated(result);
                 }
+
+                // Else unlock the ListView and set the new list of products.
                 else {
                     unlockList();
                     setList(result);
                 }
             }
+
+            // If an ProductUpdate has been made.
             if(mWaitingForProductUpdate) {
                 mWaitingForProductUpdate = false;
                 mCallback.onProductUpdateFinished(false);
             }
 
+            // If an Inventory has been made.
             if(mWaitingForInventoryUpdate) {
                 mWaitingForInventoryUpdate = false;
                 mCallback.onProductUpdateFinished(true);

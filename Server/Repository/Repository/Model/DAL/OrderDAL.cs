@@ -182,6 +182,32 @@ namespace Repository.Model.DAL
             }
         }
 
+        public void UpdateOrderStatus(int orderId, int statusId)
+        {
+            using (SqlConnection conn = CreateConnection())
+            {
+                try
+                {
+                    // Create SqlCommand-objekt that execute stored procedure.
+                    SqlCommand cmd = new SqlCommand("dbo.usp_UpdateOrderStatus", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@Id", SqlDbType.Int, 4).Value = orderId;
+                    cmd.Parameters.Add("@OrderStatus", SqlDbType.Int, 4).Value = statusId;
+
+                    //Open database connection.
+                    conn.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    //Throw Exception
+                    throw new ApplicationException("An error occurred while trying to update the order.");
+                }
+            }
+        }
+
         public void InsertAndUpdateOrder(Order order)
         {
             using (SqlConnection conn = CreateConnection())

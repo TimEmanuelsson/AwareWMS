@@ -22,7 +22,7 @@ namespace Repository.Model.DAL
         static OrderStatusDAL() 
         {
             //Get connectionstring
-            _connectionString = Repository.Properties.Settings.Default.AwareConnectionString;
+            _connectionString = Repository.Properties.Settings.Default.temp;
         }
 
         #endregion
@@ -58,6 +58,7 @@ namespace Repository.Model.DAL
                     {
                         if (reader.Read())
                         {
+                            var IdIndex = reader.GetOrdinal("Id");
                             var StatusIndex = reader.GetOrdinal("Status");
 
                             return new OrderStatus
@@ -68,6 +69,40 @@ namespace Repository.Model.DAL
                         }
                     }
                     return null;
+                }
+                catch
+                {
+                    //Throw Exception.
+                    throw new ApplicationException("An error occurred while trying to retrieve the orderstatus.");
+                }
+            }
+        }
+
+        public int GetOrderStatusByOrderId(int orderId)
+        {
+            using (SqlConnection conn = CreateConnection())
+            {
+                try
+                {
+                    // Create SqlCommand-objekt that execute stored procedure.
+                    SqlCommand cmd = new SqlCommand("dbo.usp_GetOrderStatusByOrderId", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@OrderId", orderId);
+
+                    //Open database connection.
+                    conn.Open();
+
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            var StatusIndex = reader.GetOrdinal("OrderStatus");
+
+                            return reader.GetInt32(StatusIndex);
+                        }
+                    }
+                    return 0;
                 }
                 catch
                 {

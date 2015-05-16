@@ -44,6 +44,20 @@ namespace AwareServer
                             ret = JsonConvert.SerializeObject(orderRows);
                             retByte = Encoding.UTF8.GetBytes(ret);
                         }
+                        else if (content.IndexOf("GET/orders/status/id=") > -1)
+                        {
+                            string id = content.Replace("GET/orders/status/id=", "");
+                            OrderStatus status = service.GetOrderStatusByOrderId(int.Parse(id));
+                            ret = JsonConvert.SerializeObject(status);
+                            retByte = Encoding.UTF8.GetBytes(ret);
+                        }
+                        else if (content.IndexOf("GET/orderstatus/id=") > -1)
+                        {
+                            string id = content.Replace("GET/orderstatus/id=", "");
+                            OrderStatus status = service.GetOrderStatusById(int.Parse(id));
+                            ret = JsonConvert.SerializeObject(status);
+                            retByte = Encoding.UTF8.GetBytes(ret);
+                        }
                         else if (content.IndexOf("GET/orders") > -1)
                         {
                             IEnumerable<Order> orders = service.GetOrders();
@@ -177,9 +191,23 @@ namespace AwareServer
 
                     else if (content.IndexOf("orders") > -1)
                     {
+                        if(content.IndexOf("status") > -1)
+                        {
+                            string status = content.Replace("PUT/orders/id=", "");
+                            char[] split = { '/' };
+                            string[] values = status.Split(split);
+                            int orderId = int.Parse(values[0]);
+                            status = values[1].Replace("status=", "");
+                            int statusId = int.Parse(status);
+                            service.UpdateOrderStatus(orderId, statusId);
+
+                        }
+                        else
+                        {
                         json = content.Replace("PUT/orders/json=", "");
                         Order result = JsonConvert.DeserializeObject<Order>(json);
                         service.UpdateOrder(result);
+                        }
                     }
 
                     else

@@ -96,6 +96,11 @@ namespace Repository.Model
             OrderDAL.UpdateOrder(order);
         }
 
+        public void UpdateOrderStatus(int orderId, int statusId)
+        {
+            OrderDAL.UpdateOrderStatus(orderId, statusId);
+        }
+
         public void InsertAndUpdateOrder(Order order)
         {
             //Kanske någon validering här!
@@ -164,6 +169,12 @@ namespace Repository.Model
         public OrderStatus GetOrderStatusById(int Id)
         {
             return OrderStatusDAL.GetOrderStatusById(Id);
+        }
+
+        public OrderStatus GetOrderStatusByOrderId(int id)
+        {
+            int statusId = OrderStatusDAL.GetOrderStatusByOrderId(id);
+            return GetOrderStatusById(statusId);
         }
 
         #endregion

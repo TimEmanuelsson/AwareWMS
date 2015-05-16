@@ -68,21 +68,21 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     private ArrayList<Product> mFilteredProducts;
     private ArrayList<Product> mUnFilteredProducts;
 
-    // Handheld Device variables.
+    // Handheld device variable.
     private boolean mInsideProduct;
 
     // Search variables.
     private MenuItem mSearchAction;
     private MenuItem mSearchEANAction;
     private EditText mSearchEt;
-    private String mSearchQuery;
     private boolean mSearchOpened;
+    private String mSearchQuery;
 
 
     /**
-     * Called when this Activity is being created.
+     * From onCreate
      *
-     * Basically initialize all elements from the XML-layout.
+     * Basically initialize all elements from the XML-layout (res/layout/activity_products.xml).
      */
     private void initializeVariables() {
         mListContainer = (FrameLayout) findViewById(R.id.fragment_product_list_container);
@@ -125,6 +125,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
 
 
         // Else coming from already created state. (e.g screen orientation)
+        // Get saved data.
         else {
             mProductListFragment = (ProductListFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.fragment_product_list_container);
@@ -191,7 +192,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     /**
      * Called when a item in the ActionBar is clicked.
      *
-     * Checks which item that users clicked and either Show / Hide SearchBar or Searches on EAN.
+     * Checks which item the users clicked and either Show / Hide SearchBar or Searches on EAN.
      *
      * @param item MenuItem
      */
@@ -223,7 +224,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      * When using a handheld device and when inside ProductView / InventoryView the back
      * button works like an Show-function for the hidden ProductListFragment.
      *
-     * Other, it works like an regular back button goes back to the previous Activity.
+     * Other, it works like an regular back button and goes back to the previous Activity (MainActivity).
      */
     public void onBackPressed() {
 
@@ -248,7 +249,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
 
     @Override
     /**
-     * Called when Activity get destroyed.
+     * Called when Activity destroyed.
      *
      * Stops the periodically background thread inside ProductListFragment (GetProducts).
      */
@@ -260,7 +261,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
 
     @Override
     /**
-     * Called when Activity get paused. (e.g sleep-mode or user heads to another app)
+     * Called when Activity paused. (e.g sleep-mode or user heads to another app)
      *
      * Stops the periodically background thread inside ProductListFragment (GetProducts).
      */
@@ -272,7 +273,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
 
     @Override
     /**
-     * Called when Activity get resumed. (e.g from sleep-mode or user in again from another app)
+     * Called when Activity resumed. (e.g from sleep-mode or user in again from another app)
      *
      * Stops the old periodically background thread inside ProductListFragment (GetProducts) and starts
      * a new one.
@@ -307,7 +308,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      * Replaces the filtered products and restarts the ViewPager with the replaced products.
      *
      * @param products with added ArrayList of Products
-     * @param position of selected item in ListView
+     * @param position of the selected item in ListView
      */
     public void onProductsAddedToAdapter(ArrayList<Product> products, int position) {
         mFilteredProducts = products;
@@ -324,7 +325,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      * Called when a selection has been made in the ListView.
      * Replaces the old position and restarts the ViewPager.
      *
-     * @param position of selected item in ListView
+     * @param position of the selected item in ListView
      */
     public void onProductSelected(int position) {
         mPagerPosition = position;
@@ -349,7 +350,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      * From InventoryViewFragment / ProductViewFragment - AsyncTask (GetProducts) onPostExecute
      *
      * Called after an "Inventory" / "Update" was made in a Product and the list was updated.
-     * Toasts a success message, different message for each type of update.
+     * Toasts a success message. (different message for each type of update)
      *
      * @param updatedInventory boolean if update is because of an Inventory or an regular Update
      */
@@ -372,6 +373,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      * From InventoryViewFragment - OnCLickListener (Save Inventory)
      *
      * Called when user clicked Save in InventoryView.
+     * Sets a waiting variable in the ProductListFragment.
      */
     public void onPutProduct() {
         mProductListFragment.mWaitingForProductUpdate = true;
@@ -383,6 +385,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      * From ProductViewFragment - AsyncTask (PutProduct) onPostExecute
      *
      * Called when user finished update a Product in ProductView.
+     * Sets a waiting variable in the ProductListFragment.
      */
     public void onPutInventory() {
         mProductListFragment.mWaitingForInventoryUpdate = true;
@@ -394,7 +397,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      * From InventoryViewFragment - OnItemClickListener (Show/Hide/Save)
      *
      * Called when inside a Product and user clicked "Do Inventory" / "Cancel" / "Save".
-     * Enable / Disable swipe in the ViewPager and locks / unlocks the ListView.
+     * Enables / Disables swipe in the ViewPager and locks / unlocks the ListView.
      *
      * @param inside boolean if user clicked "Do Inventory" / "Cancel" / "Save"
      */
@@ -463,7 +466,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      * From ActionBar or onScannedForEAN
      *
      * Called when user clicked on the Search icon.
-     * Displays and setups the SearchBar.
+     * Setups and displays the SearchBar.
      *
      * @param queryText search query
      */
@@ -522,7 +525,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     /**
      * From ActionBar or onDoneSearching
      *
-     * Called when user clicked on the Search icon.
+     * Called when user clicked on the Search icon or on the dimmer background in ProductListFragment.
      * Sets the SearchBar to either "Close" or "Unfocus".
      *
      * @param close boolean to check if the SearchBar should close or not
@@ -605,7 +608,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
 
 
     /**
-     * Class TextWatcher which is responsible for handling changes in the SearchBar.
+     * Inner Class TextWatcher which is responsible for handling changes in the SearchBar.
      */
     private class SearchWatcher implements TextWatcher {
 
@@ -683,7 +686,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
 
 
     /**
-     * Class ProductSlidePagerAdapter to swipe between products in the ProductList -> ProductView.
+     * Inner Class ProductSlidePagerAdapter to swipe between products in the ProductList -> ProductView.
      */
     private class ProductSlidePagerAdapter extends FragmentStatePagerAdapter {
 

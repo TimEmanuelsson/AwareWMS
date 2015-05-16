@@ -38,12 +38,16 @@ import java.util.ArrayList;
 /**
  * Created by andreaslengqvist on 15-04-15.
  *
+ * ProductViewFragment handles displaying and updating of a Product.
+ *
  */
 public class ProductViewFragment extends Fragment {
 
+    // Static Name variables.
     private static final String PARCELABLE_PRODUCT_LIST_TAG = "PARCELABLE_PRODUCT_LIST_TAG";
     private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
 
+    // Layout variables.
     private RelativeLayout btn_product_view_show_edit_menu;
     private Button btn_product_view_create_EAN;
     private TextView output_product_position;
@@ -53,6 +57,7 @@ public class ProductViewFragment extends Fragment {
     private ImageView icon_product_view_show_edit_menu;
     private ImageView img_product_picture;
 
+    // Member variables.
     private ProductListener mCallback;
     private View mView;
     private ArrayList<Product> mProducts;
@@ -61,13 +66,18 @@ public class ProductViewFragment extends Fragment {
     private String mJSONProduct;
 
 
+    /**
+     * From onCreate
+     *
+     * Basically initialize all elements from the XML-layout (res/layout/fragment_product_view.xml).
+     */
     private void initializeVariables() {
 
         output_product_position = (TextView) mView.findViewById(R.id.output_product_position);
         output_product_name = (TextView) mView.findViewById(R.id.output_product_name);
         output_product_number = (TextView) mView.findViewById(R.id.output_product_number);
         img_product_picture = (ImageView) mView.findViewById(R.id.img_product_picture);
-        output_product_balance = (TextView) mView.findViewById(R.id.output_product_balance);
+        output_product_balance = (TextView) mView.findViewById(R.id.output_product_quantity);
 
         btn_product_view_show_edit_menu = (RelativeLayout) mView.findViewById(R.id.btn_product_view_show_edit_menu);
         icon_product_view_show_edit_menu = (ImageView) mView.findViewById(R.id.icon_product_view_show_edit_menu);
@@ -76,6 +86,12 @@ public class ProductViewFragment extends Fragment {
 
 
     @Override
+    /**
+     * Called when this Fragment is being created.
+     *
+     * This makes sure that the container activity has implemented
+     * the callback interface. If not, it throws an exception
+     */
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
@@ -91,12 +107,29 @@ public class ProductViewFragment extends Fragment {
 
 
     @Override
+    /**
+     * Called when this Fragments View is being created.
+     *
+     * Basically just do thing that needs to be done upon creation of the View.
+     *
+     * @param inflater that can be used to inflate any views in the fragment
+     * @param container this can be used to generate the LayoutParams of the view
+     * @param savedInstanceState saved data from a Configuration change
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_product_view, container, false);
         return mView;
     }
 
+
     @Override
+    /**
+     * Called when this Fragments Activity finished its creation.
+     *
+     * Basically just do thing that needs to be done upon creation of the Fragment.
+     *
+     * @param savedInstanceState saved data from a Configuration change
+     */
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initializeVariables();
@@ -143,7 +176,16 @@ public class ProductViewFragment extends Fragment {
         });
     }
 
+
     @Override
+    /**
+     * Called when a IntentResult is called into the Activity.
+     * Handles the scanned EAN.
+     *
+     * @param requestCode allowing you to identify who this result came from
+     * @param resultCode result code returned by the child activity through its setResult()
+     * @param intent which can return result data to the caller
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
         // Receive the scanned EAN, bundles it and starts the InventoryFastActivity.
@@ -173,6 +215,13 @@ public class ProductViewFragment extends Fragment {
         }
     }
 
+
+    /**
+     * From onActivityCreated
+     *
+     * Called when Fragment is being created.
+     * Sets the enclosed Product to the layout elements.
+     */
     private void setProduct() {
 
         output_product_position.setText(mProduct.getStorageSpace());
@@ -189,7 +238,7 @@ public class ProductViewFragment extends Fragment {
 
 
     /**
-     * Helper class which loads the ProductPicture into the ImageView in background thread.
+     * Helper class which loads the image into the ImageView in a background thread.
      */
     class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
@@ -218,9 +267,7 @@ public class ProductViewFragment extends Fragment {
 
 
     /**
-     *
-     * AsyncTask which will run in the background and PUT a updated Product to the Server.
-     *
+     * AsyncTask which will run in the background and PUT a updated Product to the Servers Database.
      */
     private class PutProduct extends AsyncTask<Void, String, Boolean> {
 
@@ -265,6 +312,8 @@ public class ProductViewFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean finished) {
             super.onPostExecute(finished);
+
+            // Call the Activity through the interface that an Update have been made.
             mCallback.onPutProduct();
         }
     }

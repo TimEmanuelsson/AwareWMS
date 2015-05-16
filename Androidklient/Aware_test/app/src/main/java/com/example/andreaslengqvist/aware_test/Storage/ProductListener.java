@@ -4,7 +4,6 @@ package com.example.andreaslengqvist.aware_test.Storage;
  * Created by andreaslengqvist on 15-05-13.
  *
  * Interface listening for changes in ProductView and InventoryView.
- *
  */
 public interface ProductListener {
     void onPutProduct();

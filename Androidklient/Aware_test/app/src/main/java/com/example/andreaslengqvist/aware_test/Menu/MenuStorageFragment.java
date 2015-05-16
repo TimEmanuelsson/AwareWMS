@@ -136,7 +136,6 @@ public class MenuStorageFragment extends Fragment {
 
     /**
      * AsyncTask which will run in the background and fetch the total number of Products.
-     *
      */
     private class GetTotalProducts extends AsyncTask<Void, Void, String> {
 

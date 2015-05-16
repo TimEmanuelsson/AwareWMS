@@ -33,39 +33,48 @@ import java.net.UnknownHostException;
 /**
  * Created by andreaslengqvist on 15-04-15.
  *
- * InventoryViewFragment handles a Product, displays it and also handles the Inventory of that Product.
+ * InventoryViewFragment handles displaying and inventory of a Product.
  *
  */
 public class InventoryViewFragment extends Fragment {
 
+    // Static Name variables.
     private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
     private static final String INVENTORY_LAYOUT_TAG = "INVENTORY_LAYOUT_TAG";
 
-    private static final int MAX_BALANCE = 1000;
-    private static final int MIN_BALANCE = 0;
+    // Range variables.
+    private static final int MAX_QUANTITY = 1000;
+    private static final int MIN_QUANTITY= 0;
 
+    // Layout variables.
     private Button btn_inventory_view_inventory_show;
     private Button btn_inventory_view_inventory_cancel;
     private Button btn_inventory_view_inventory_save;
     private TextView output_product_position;
     private TextView output_product_name;
     private TextView output_product_number;
-    private TextView output_product_balance;
+    private TextView output_product_quantity;
     private ImageView img_product_picture;
-    private SeekBar seekBar_product_balance;
+    private SeekBar seekBar_product_quantity;
     private RelativeLayout layout_inventory_bar;
 
+    // Member variables.
     private ProductListener mCallback;
     private View mView;
     private Product mProduct;
     private String mJSONProduct;
-    private Integer mCurrentBalance;
-
-    private Handler repeatUpdateHandler = new Handler();
+    private Integer mCurrentQuantity;
+    private Handler mRepeatUpdateHandler;
     private boolean mAutoIncrement = false;
     private boolean mAutoDecrement = false;
 
 
+    /**
+     * From onCreate
+     *
+     * Basically initialize all elements from the XML-layout
+     * (res/layout/fragment_inventory_fast_view.xml) or (res/layout/fragment_inventory_full_view.xml).
+     */
     private void initializeVariables() {
 
         btn_inventory_view_inventory_show = (Button) mView.findViewById(R.id.btn_inventory_view_inventory_show);
@@ -76,19 +85,22 @@ public class InventoryViewFragment extends Fragment {
         output_product_name = (TextView) mView.findViewById(R.id.output_product_name);
         output_product_number = (TextView) mView.findViewById(R.id.output_product_number);
         img_product_picture = (ImageView) mView.findViewById(R.id.img_product_picture);
-        output_product_balance = (TextView) mView.findViewById(R.id.output_product_balance);
+        output_product_quantity = (TextView) mView.findViewById(R.id.output_product_quantity);
 
-        seekBar_product_balance = (SeekBar) mView.findViewById(R.id.seekBar_product_balance);
-
+        seekBar_product_quantity = (SeekBar) mView.findViewById(R.id.seekBar_product_quantity);
         layout_inventory_bar = (RelativeLayout) mView.findViewById(R.id.layout_inventory_bar);
     }
 
+
     @Override
+    /**
+     * Called when this Fragment is being created.
+     *
+     * This makes sure that the container activity has implemented
+     * the callback interface. If not, it throws an exception
+     */
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
         try {
             mCallback = (ProductListener) activity;
         } catch (ClassCastException e) {
@@ -97,10 +109,20 @@ public class InventoryViewFragment extends Fragment {
         }
     }
 
+
     @Override
+    /**
+     * Called when this Fragments View is being created.
+     *
+     * Basically just do thing that needs to be done upon creation of the View.
+     *
+     * @param inflater that can be used to inflate any views in the fragment
+     * @param container this can be used to generate the LayoutParams of the view
+     * @param savedInstanceState saved data from a Configuration change
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        // Get the bundled Product and type of Activity.
+        // Get the bundled Product and which type of Activity.
         Bundle bundle = getArguments();
         mProduct = bundle.getParcelable(PARCELABLE_PRODUCT_TAG);
         boolean inventoryLayout = bundle.getBoolean(INVENTORY_LAYOUT_TAG);
@@ -114,11 +136,21 @@ public class InventoryViewFragment extends Fragment {
         return mView;
     }
 
+
     @Override
+    /**
+     * Called when this Fragments Activity finished its creation.
+     *
+     * Basically just do thing that needs to be done upon creation of the Fragment.
+     *
+     * @param savedInstanceState saved data from a Configuration change
+     */
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initializeVariables();
 
+        // Create a Handler for handling LongClicks.
+        mRepeatUpdateHandler = new Handler();
 
         // Set Product to all its elements.
         setProduct();
@@ -134,11 +166,11 @@ public class InventoryViewFragment extends Fragment {
         });
 
 
-        // Hide InventoryBar.
+        // Cancel InventoryBar.
         btn_inventory_view_inventory_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetQuantity();
+                resetBalance();
                 setVisibility(View.VISIBLE, View.GONE, View.GONE, View.INVISIBLE);
                 mCallback.onInsideInventory(false);
             }
@@ -149,7 +181,7 @@ public class InventoryViewFragment extends Fragment {
         btn_inventory_view_inventory_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mProduct.setQuantity(mCurrentBalance);
+                mProduct.setQuantity(mCurrentQuantity);
                 mJSONProduct = new Gson().toJson(mProduct);
                 new PutInventory().execute();
                 setVisibility(View.VISIBLE, View.GONE, View.GONE, View.INVISIBLE);
@@ -158,13 +190,13 @@ public class InventoryViewFragment extends Fragment {
         });
 
 
-        // SeekBar - Slider to change Balance.
-        seekBar_product_balance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        // SeekBar - Slider to change Quantity.
+        seekBar_product_quantity.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
             @Override
             public void onProgressChanged(SeekBar seekBar, int progressValue, boolean fromUser) {
-                mCurrentBalance = progressValue;
-                output_product_balance.setText(String.valueOf(mCurrentBalance));
+                mCurrentQuantity = progressValue;
+                output_product_quantity.setText(String.valueOf(mCurrentQuantity));
             }
 
             @Override
@@ -173,19 +205,17 @@ public class InventoryViewFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                output_product_balance.setText(String.valueOf(mCurrentBalance));
+                output_product_quantity.setText(String.valueOf(mCurrentQuantity));
             }
         });
 
 
-        // Increase Balance - OnTouch.
+        // Increase Quantity - OnTouch.
         mView.findViewById(R.id.btn_increase_balance).setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 if ((event.getAction() == MotionEvent.ACTION_DOWN)) {
-                    if (mCurrentBalance < MAX_BALANCE) {
-                        mCurrentBalance += 1;
-                        output_product_balance.setText(String.valueOf(mCurrentBalance));
-                        setSeekBar(mCurrentBalance);
+                    if (mCurrentQuantity < MAX_QUANTITY) {
+                        increment();
                     }
                 }
                 if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
@@ -197,26 +227,24 @@ public class InventoryViewFragment extends Fragment {
         });
 
 
-        // Increase Balance - LongClick.
+        // Increase Quantity - LongClick.
         mView.findViewById(R.id.btn_increase_balance).setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View arg0) {
-                if (mCurrentBalance < MAX_BALANCE) {
+                if (mCurrentQuantity < MAX_QUANTITY) {
                     mAutoIncrement = true;
-                    repeatUpdateHandler.post(new RptUpdater());
+                    mRepeatUpdateHandler.post(new RptUpdater());
                 }
                 return false;
             }
         });
 
 
-        // Decrease Balance - OnTouch.
+        // Decrease Quantity - OnTouch.
         mView.findViewById(R.id.btn_decrease_balance).setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 if ((event.getAction() == MotionEvent.ACTION_DOWN)) {
-                    if (mCurrentBalance > MIN_BALANCE) {
-                        mCurrentBalance -= 1;
-                        output_product_balance.setText(String.valueOf(mCurrentBalance));
-                        setSeekBar(mCurrentBalance);
+                    if (mCurrentQuantity > MIN_QUANTITY) {
+                        decrement();
                     }
                 }
                 if ((event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
@@ -228,16 +256,28 @@ public class InventoryViewFragment extends Fragment {
         });
 
 
-        // Decrease Balance - LongClick.
+        // Decrease Quantity - LongClick.
         mView.findViewById(R.id.btn_decrease_balance).setOnLongClickListener(new View.OnLongClickListener() {
             public boolean onLongClick(View arg0) {
                 mAutoDecrement = true;
-                repeatUpdateHandler.post(new RptUpdater());
+                mRepeatUpdateHandler.post(new RptUpdater());
                 return false;
             }
         });
     }
 
+
+    /**
+     * From Show / Cancel / Save Inventory - OnClickListener
+     *
+     * Called when the elements of the Inventory should be visible or not.
+     * Sets the Visibility to show or hide.
+     *
+     * @param show_visibility View.VISIBLE / View.GONE
+     * @param cancel_visibility View.VISIBLE / View.GONE
+     * @param save_visibility View.VISIBLE / View.GONE
+     * @param bar_visibility View.VISIBLE / View.INVISIBLE
+     */
     private void setVisibility(int show_visibility, int cancel_visibility, int save_visibility, int bar_visibility) {
         btn_inventory_view_inventory_show.setVisibility(show_visibility);
         btn_inventory_view_inventory_cancel.setVisibility(cancel_visibility);
@@ -245,69 +285,119 @@ public class InventoryViewFragment extends Fragment {
         layout_inventory_bar.setVisibility(bar_visibility);
     }
 
+
+    /**
+     * From onActivityCreated
+     *
+     * Called when Fragment is being created.
+     * Sets the enclosed Product to the layout elements.
+     */
     private void setProduct() {
-        mCurrentBalance = mProduct.getQuantity();
 
+        // Set the current Balance which will be used in the InventoryBar.
+        mCurrentQuantity = mProduct.getQuantity();
+
+        // Storage Space.
         output_product_position.setText(mProduct.getStorageSpace());
+
+        // Name.
         output_product_name.setText(mProduct.getName());
+
+        // SKU (Number).
         output_product_number.setText(mProduct.getSKU());
-        output_product_balance.setText(Integer.toString(mCurrentBalance));
-        setSeekBar(mCurrentBalance);
 
-        new ImageDownloader(img_product_picture).execute("https://psmedia.playstation.com/is/image/psmedia/the-last-of-us-remastered-two-column-01-ps4-us-28jul14?$TwoColumn_Image$");
-    }
+        // Quantity.
+        output_product_quantity.setText(Integer.toString(mCurrentQuantity));
 
-    private void setSeekBar(int current_balance) {
+        // SeekBar (slider).
+        setSeekBar(mCurrentQuantity);
 
-        final Integer balance = current_balance;
-
-
-        // BUG FIX
-        // http://stackoverflow.com/questions/17313197/using-seekbar-and-setprogress-doesnt-change-seekbar-position
-        seekBar_product_balance.post(new Runnable() {
-            @Override
-            public void run() {
-                seekBar_product_balance.setProgress(balance);
-            }
-        });
-        seekBar_product_balance.setMax(MAX_BALANCE);
-        seekBar_product_balance.setProgress(balance);
-    }
-
-    private void resetQuantity() {
-        mCurrentBalance = mProduct.getQuantity();
-        output_product_balance.setText(Integer.toString(mProduct.getQuantity()));
-        setSeekBar(mCurrentBalance);
-    }
-
-    private void decrement(){
-        mCurrentBalance--;
-        output_product_balance.setText(String.valueOf(mCurrentBalance));
-        seekBar_product_balance.setProgress(mCurrentBalance);
-        setSeekBar(mCurrentBalance);
-    }
-
-    private void increment(){
-        mCurrentBalance++;
-        output_product_balance.setText(String.valueOf(mCurrentBalance));
-        setSeekBar(mCurrentBalance);
+        // Image.
+        new ImageDownloader(img_product_picture).execute(
+                "https://psmedia.playstation.com/is/image/psmedia/the-last-of-us-remastered-two-column-01-ps4-us-28jul14?$TwoColumn_Image$");
     }
 
 
     /**
-     * Runnable class which increase or decrease the current balance on LongClick.
+     * From increment / decrement / resetQuantity
+     *
+     * Called when the current quantity is changed upon SeekBar or + - changes.
+     * Sets the SeekBar to the current quantity.
+     *
+     * @param current_quantity the updated quantity
+     */
+    private void setSeekBar(int current_quantity) {
+
+        final Integer balance = current_quantity;
+
+
+        // BUG FIX
+        // http://stackoverflow.com/questions/17313197/using-seekbar-and-setprogress-doesnt-change-seekbar-position
+        seekBar_product_quantity.post(new Runnable() {
+            @Override
+            public void run() {
+                seekBar_product_quantity.setProgress(balance);
+            }
+        });
+        seekBar_product_quantity.setMax(MAX_QUANTITY);
+        seekBar_product_quantity.setProgress(balance);
+    }
+
+
+    /**
+     * From Cancel Inventory
+     *
+     * Called when the quantity should be decremented.
+     * Sets the quantity to the old quantity by getting it from the Product-object.
+     */
+    private void resetBalance() {
+        mCurrentQuantity = mProduct.getQuantity();
+        output_product_quantity.setText(Integer.toString(mProduct.getQuantity()));
+        setSeekBar(mCurrentQuantity);
+    }
+
+
+    /**
+     * From RptUpdater or ( - OnTouch)
+     *
+     * Called when the quantity should be decremented.
+     * Decrements the current quantity by -1.
+     */
+    private void decrement(){
+        mCurrentQuantity--;
+        output_product_quantity.setText(String.valueOf(mCurrentQuantity));
+        seekBar_product_quantity.setProgress(mCurrentQuantity);
+        setSeekBar(mCurrentQuantity);
+    }
+
+
+    /**
+     * From RptUpdater or ( - OnTouch)
+     *
+     * Called when the quantity should be incremented.
+     * Increments the current quantity by +1.
+     */
+    private void increment(){
+        mCurrentQuantity++;
+        output_product_quantity.setText(String.valueOf(mCurrentQuantity));
+        setSeekBar(mCurrentQuantity);
+    }
+
+
+    /**
+     * Runnable class which increase or decrease the current quantity each 50ms on LongClick.
      */
     private class RptUpdater implements Runnable {
         public void run() {
             if (mAutoIncrement) {
-                if (mCurrentBalance < MAX_BALANCE) {
+                if (mCurrentQuantity < MAX_QUANTITY) {
                     increment();
-                    repeatUpdateHandler.postDelayed(new RptUpdater(), 50);
+                    mRepeatUpdateHandler.postDelayed(new RptUpdater(), 50);
                 }
             } else if (mAutoDecrement) {
-                if (mCurrentBalance > MIN_BALANCE) {
+                if (mCurrentQuantity > MIN_QUANTITY) {
                     decrement();
-                    repeatUpdateHandler.postDelayed(new RptUpdater(), 50);
+                    mRepeatUpdateHandler.postDelayed(new RptUpdater(), 50);
                 }
             }
         }
@@ -315,7 +405,7 @@ public class InventoryViewFragment extends Fragment {
 
 
     /**
-     * Helper class which loads the ProductPicture into the ImageView in background thread.
+     * Helper class which loads the image into the ImageView in a background thread.
      */
     private class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
@@ -344,9 +434,7 @@ public class InventoryViewFragment extends Fragment {
 
 
     /**
-     *
-     * AsyncTask which will run in the background and PUT inventory on a Product to the Server.
-     *
+     * AsyncTask which will run in the background and PUT inventory on a Product to the Servers Database.
      */
     private class PutInventory extends AsyncTask<Void, String, Boolean> {
 
@@ -390,6 +478,8 @@ public class InventoryViewFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean finished) {
             super.onPostExecute(finished);
+
+            // Call the Activity through the interface that an Inventory have been made.
             mCallback.onPutInventory();
         }
     }

@@ -34,23 +34,32 @@ import java.net.UnknownHostException;
  */
 public class InventoryFastActivity extends ActionBarActivity implements ProductListener {
 
+    // Static Name variables.
     private static final String EAN_TAG = "EAN_TAG";
 
     private static final String INVENTORY_VIEW_FRAGMENT_TAG = "INVENTORY_VIEW_FRAGMENT_TAG";
     private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
     private static final String INVENTORY_LAYOUT_TAG = "INVENTORY_LAYOUT_TAG";
 
+    // WeakReference variable.
     private static WeakReference<InventoryFastActivity> wrActivity = null;
 
+    // Member variables.
     private Handler mHandler;
     private String mScannedEAN;
     private String mOldJSON;
-
     private boolean mEANNotFound;
     private boolean mWaitingForInventoryUpdate;
 
 
     @Override
+    /**
+     * Called when this Activity is being created.
+     *
+     * Basically just do thing that needs to be done upon creation.
+     *
+     * @param savedInstanceState saved data from a Configuration change
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_fast);
@@ -78,54 +87,114 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
         startPeriodically();
     }
 
+
     @Override
+    /**
+     * Called when pressing Back button.
+     * Works like an regular back button and goes back to the previous Activity (MainActivity).
+     */
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.pull_in_bottom, R.anim.push_out_top);
     }
 
+
     @Override
+    /**
+     * Called when Activity destroyed.
+     *
+     * Stops the periodically background thread GetProductByEAN.
+     */
     protected void onDestroy() {
         super.onDestroy();
         stopPeriodically();
     }
 
+
     @Override
+    /**
+     * Called when Activity paused. (e.g sleep-mode or user heads to another app)
+     *
+     * Stops the periodically background thread GetProductByEAN.
+     */
     protected void onPause() {
         super.onPause();
         stopPeriodically();
     }
 
+
     @Override
+    /**
+     * Called when Activity resumed. (e.g from sleep-mode or user in again from another app)
+     *
+     * Stops the old periodically background thread GetProductByEAN and starts
+     * a new one.
+     */
     protected void onResume() {
         super.onResume();
         mHandler.removeCallbacks(runPeriodically);
         startPeriodically();
     }
 
+
     @Override
+    /**
+     * This Interface-function is never used.
+     */
     public void onPutProduct() {
         // TODO: NOTHING.
     }
 
+
     @Override
+    /**
+     * This Interface-function is never used.
+     */
     public void onInsideInventory(boolean inside) {
         // TODO: NOTHING.
     }
 
+
     @Override
+    /**
+     * From InventoryViewFragment - OnCLickListener (Save Inventory)
+     *
+     * Called when user clicked Save in InventoryView.
+     * Sets a waiting variable to use in the AsyncTask.
+     */
     public void onPutInventory() {
         mWaitingForInventoryUpdate = true;
     }
 
+
+    /**
+     * From onCreate / onResume
+     *
+     * Called when activity is created or resumed.
+     * Posts runPeriodically to the Handler.
+     */
     public void startPeriodically() {
         mHandler.post(runPeriodically);
     }
 
+
+    /**
+     * From onPaused / onDestroy
+     *
+     * Called when activity is paused or destroyed.
+     * Removes runPeriodically from the callbacks.
+     */
     public void stopPeriodically() {
         mHandler.removeCallbacks(runPeriodically);
     }
 
+
+    /**
+     * From startPeriodically
+     *
+     * Called when the Handler wants to run the periodically AsyncTask GetProductByEAN.
+     * Runs a GetProductByEAN each 1000ms (delayed).
+     */
     private Runnable runPeriodically = new Runnable() {
 
         @Override
@@ -183,7 +252,6 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
                 }
             }
 
-
             // If the returned JSON is not "null".
             if (!newJSON.equals("null")) {
 
@@ -208,10 +276,8 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
         protected void onPostExecute(Product result) {
             super.onPostExecute(result);
 
-
             // Weird solution to solve the bug with Activity lost upon screen rotation.
             if ((wrActivity.get() != null) && (!wrActivity.get().isFinishing())) {
-
 
                 // If EAN couldn't be found Toast and destroy Activity and return to the previous one.
                 if(mEANNotFound){

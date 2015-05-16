@@ -42,7 +42,7 @@
                 <string name="label_column_product_last_inventory">Inv.</string>
                 <string name="label_column_product_name">Namn</string>
                 <string name="label_column_product_sku">Art. Nr</string>
-                <string name="label_column_product_balance">Saldo</string>
+                <string name="label_column_product_quantity">Saldo</string>
 
                 <!-- ProductView -->
                 <string name="btn_product_view_show_edit_menu">Visa redigeringsmeny</string>

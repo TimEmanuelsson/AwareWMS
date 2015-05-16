@@ -179,7 +179,7 @@ public class Product implements Parcelable {
 
 
     /**
-     * Sort Balance ascending.
+     * Sort Quantity ascending.
      */
     public static Comparator<Product> ProductBalanceComparatorASC = new Comparator<Product>() {
 
@@ -190,7 +190,7 @@ public class Product implements Parcelable {
 
 
     /**
-     * Sort Balance descending.
+     * Sort Quantity descending.
      */
     public static Comparator<Product> ProductBalanceComparatorDESC = new Comparator<Product>() {
 
@@ -203,7 +203,6 @@ public class Product implements Parcelable {
     /**
      * Parcelable settings
      */
-
     @Override
     public int describeContents() {
         return 0;

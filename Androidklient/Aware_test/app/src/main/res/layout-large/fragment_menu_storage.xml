@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="140dp"
         android:text="@string/label_total_products"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textColor="@color/black"/>
 
     <TextView
@@ -23,7 +23,7 @@
         android:layout_marginTop="5dp"
         android:layout_below="@+id/label_total_products"
         android:clickable="false"
-        android:textSize="24sp"/>
+        android:textSize="22sp"/>
 
     <TextView
         android:id="@+id/label_total_value"
@@ -33,7 +33,7 @@
         android:layout_marginTop="50dp"
         android:layout_below="@+id/output_total_products"
         android:text="@string/label_total_value"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textColor="@color/black"/>
 
     <TextView
@@ -44,7 +44,7 @@
         android:layout_marginTop="5dp"
         android:layout_below="@+id/label_total_value"
         android:clickable="false"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:text="1 000 000 kr"/>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

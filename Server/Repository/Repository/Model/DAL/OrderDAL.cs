@@ -22,7 +22,7 @@ namespace Repository.Model.DAL
         static OrderDAL() 
         {
             //Get connectionstring
-            _connectionString = Repository.Properties.Settings.Default.AwareConnectionString;
+            _connectionString = Repository.Properties.Settings.Default.temp;
         }
 
         #endregion
@@ -168,6 +168,32 @@ namespace Repository.Model.DAL
                     cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = order.Date;
                     cmd.Parameters.Add("@LastUpdate", SqlDbType.DateTime).Value = order.LastUpdate;
                     cmd.Parameters.Add("@PaymentStatus", SqlDbType.Int, 4).Value = order.PaymentStatus;
+
+                    //Open database connection.
+                    conn.Open();
+
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    //Throw Exception
+                    throw new ApplicationException("An error occurred while trying to update the order.");
+                }
+            }
+        }
+
+        public void UpdateOrderStatus(int orderId, int statusId)
+        {
+            using (SqlConnection conn = CreateConnection())
+            {
+                try
+                {
+                    // Create SqlCommand-objekt that execute stored procedure.
+                    SqlCommand cmd = new SqlCommand("dbo.usp_UpdateOrderStatus", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@Id", SqlDbType.Int, 4).Value = orderId;
+                    cmd.Parameters.Add("@OrderStatus", SqlDbType.Int, 4).Value = statusId;
 
                     //Open database connection.
                     conn.Open();

@@ -103,7 +103,7 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/output_product_balance"
+            android:id="@+id/output_product_quantity"
             android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="3"

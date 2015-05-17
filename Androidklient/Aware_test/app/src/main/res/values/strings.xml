@@ -42,7 +42,7 @@
                 <string name="label_column_product_last_inventory">Inv.</string>
                 <string name="label_column_product_name">Namn</string>
                 <string name="label_column_product_sku">Art. Nr</string>
-                <string name="label_column_product_balance">Saldo</string>
+                <string name="label_column_product_quantity">Saldo</string>
 
                 <!-- ProductView -->
                 <string name="btn_product_view_show_edit_menu">Visa redigeringsmeny</string>
@@ -60,8 +60,9 @@
             <string name="increase">Minska</string>
             <string name="btn_inventory_view_inventory_cancel">Avbryt</string>
             <string name="btn_inventory_view_inventory_show">Gör inventering</string>
-            <string name="btn_inventory_view_inventory_do_inventory">Inventera</string>
-            <string name="inventory_finished">Inventerad!</string>
+            <string name="btn_inventory_view_inventory_save">Inventera</string>
+            <string name="toast_inventory_finished">Inventerad!</string>
+            <string name="toast_ean_doesnt_exists">Streckkod ej funnen!</string>
 
     <!-- Activity names -->
     <string name="title_activity_inventory_fast">InventoryFastActivity</string>

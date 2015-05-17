@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_product_columns"
+        android:baselineAligned="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:id="@+id/sort_last_inventory"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.8">
+
+            <ImageView
+                android:id="@+id/icon_sort_last_inventory"
+                android:contentDescription="@string/icon_sorting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/label_column_product_last_inventory"
+                android:src="@drawable/ic_asc"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/label_column_product_last_inventory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/label_column_product_last_inventory"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@drawable/column_sorting_selector"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/sort_storage_space"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="2.0">
+
+            <ImageView
+                android:id="@+id/icon_sort_storage_space"
+                android:contentDescription="@string/icon_sorting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/label_column_product_storagespace"
+                android:src="@drawable/ic_asc"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/label_column_product_storagespace"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/label_column_product_storagespace"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@drawable/column_sorting_selector"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/sort_name"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="3.2">
+
+            <ImageView
+                android:id="@+id/icon_sort_name"
+                android:contentDescription="@string/icon_sorting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/label_column_product_name"
+                android:src="@drawable/ic_asc"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/label_column_product_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/label_column_product_name"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@drawable/column_sorting_selector"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/sort_sku"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="3.1">
+
+            <ImageView
+                android:id="@+id/icon_sort_sku"
+                android:contentDescription="@string/icon_sorting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/label_column_product_sku"
+                android:src="@drawable/ic_asc"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/label_column_product_sku"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/label_column_product_sku"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@drawable/column_sorting_selector"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/sort_quantity"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="0.9">
+
+            <ImageView
+                android:id="@+id/icon_sort_quantity"
+                android:contentDescription="@string/icon_sorting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/label_column_product_quantity"
+                android:src="@drawable/ic_asc"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:id="@+id/label_column_product_quantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/label_column_product_quantity"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@drawable/column_sorting_selector"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_products"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_product_columns"
+        android:layout_marginTop="5dp">
+    </ListView>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/progress_loading_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_dimmer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blacktrans"
+        android:visibility="gone">
+    </RelativeLayout>
+</RelativeLayout>

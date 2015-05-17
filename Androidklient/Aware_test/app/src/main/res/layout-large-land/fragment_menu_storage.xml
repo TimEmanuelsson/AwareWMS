@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginLeft="200dp">
+
+        <TextView
+            android:id="@+id/label_total_products"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/label_total_products"
+            android:textSize="22sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/output_total_products"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/label_total_products"
+            android:layout_centerHorizontal="true"
+            android:clickable="false"
+            android:textSize="22sp"
+            android:text="ASDASD"/>
+
+        </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="200dp"
+        android:layout_marginRight="200dp">
+
+        <TextView
+            android:id="@+id/label_total_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/label_total_value"
+            android:textSize="22sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/output_total_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/label_total_value"
+            android:layout_centerHorizontal="true"
+            android:clickable="false"
+            android:textSize="22sp"
+            android:text="1 000 000 kr"/>
+
+        </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/menu_white">
+
+        <TextView
+            style="@style/ButtonStyleLookalike"
+            android:id="@+id/label_menu_home"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false" />
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/btn_storage_menu_products"
+            android:layout_width="fill_parent"
+            android:layout_height="65dp"
+            android:layout_below="@+id/label_menu_home"
+            android:text="@string/btn_storage_menu_products"
+            android:textSize="24sp" />
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/layout_inventory_menu"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_storage_menu_products">
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:id="@+id/btn_storage_menu_inventory"
+                android:layout_width="fill_parent"
+                android:layout_height="65dp"
+                android:text="@string/btn_storage_menu_inventory"
+                android:textSize="24sp" />
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:id="@+id/btn_inventory_menu_fast"
+                android:layout_width="wrap_content"
+                android:layout_height="65dp"
+                android:layout_weight="0.5"
+                android:text="@string/btn_inventory_menu_fast"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:id="@+id/btn_inventory_menu_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="65dp"
+                android:layout_weight="0.5"
+                android:text="@string/btn_inventory_menu_cancel"
+                android:textSize="24sp"
+                android:visibility="gone" />
+
+            <Button
+                style="?android:attr/borderlessButtonStyle"
+                android:id="@+id/btn_inventory_menu_full"
+                android:layout_width="wrap_content"
+                android:layout_height="65dp"
+                android:layout_weight="0.5"
+                android:text="@string/btn_inventory_menu_full"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/btn_storage_menu_delivery"
+            android:layout_width="fill_parent"
+            android:layout_height="65dp"
+            android:layout_below="@+id/layout_inventory_menu"
+            android:layout_marginBottom="10dp"
+            android:text="@string/btn_storage_menu_delivery"
+            android:textSize="24sp" />
+
+    </RelativeLayout>
+</RelativeLayout>

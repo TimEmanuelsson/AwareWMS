@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Aware</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Colors -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="blacktrans">#99000000</color>
+    <color name="gray">#B2B2B2</color>
+    <color name="menu_white">#F5F5F5</color>
+    <color name="yellow">#FFE191</color>
+    <color name="green">#E8ECE3</color>
+    <color name="red">#DAAEAE</color>
+
+        <!-- Order menu -->
+        <string name="logo">logo</string>
+        <string name="label_order_to_pick">To pick:</string>
+        <string name="label_order_to_pack">To pack:</string>
+        <string name="btn_order_menu_pick">Pick</string>
+        <string name="btn_order_menu_pack">Pack</string>
+        <string name="btn_order_menu_returns">Returns</string>
+
+        <!-- Storage menu -->
+        <string name="label_total_products">Products in stock:</string>
+        <string name="label_total_value">Total value of:</string>
+        <string name="btn_storage_menu_products">Products</string>
+        <string name="btn_storage_menu_inventory">Inventory</string>
+        <string name="btn_inventory_menu_fast">Fast</string>
+        <string name="btn_inventory_menu_cancel">Cancel</string>
+        <string name="btn_inventory_menu_full">Full</string>
+        <string name="btn_storage_menu_delivery">Delivery</string>
+
+            <!-- Products -->
+
+                <!-- ProductList -->
+                <string name="action_search">Search</string>
+                <string name="icon_sorting">Sort</string>
+                <string name="label_column_product_storagespace">Space</string>
+                <string name="label_column_product_last_inventory">Inv</string>
+                <string name="label_column_product_name">Name</string>
+                <string name="label_column_product_sku">Number</string>
+                <string name="label_column_product_quantity">QTY</string>
+
+                <!-- ProductView -->
+                <string name="btn_product_view_show_edit_menu">Show edit menu</string>
+                <string name="btn_product_view_create_EAN">Add Barcode</string>
+                <string name="btn_product_view_change_EAN">Change Barcode</string>
+                <string name="toast_ean_already_exists">Barcode already in use!</string>
+                <string name="toast_product_updated">Product updated!</string>
+                <string name="btn_product_view_create_picture">Add image</string>
+                <string name="btn_product_view_change_picture">Change image</string>
+                <string name="product_picture">Product Image</string>
+
+
+            <!-- Inventory -->
+            <string name="decrease">Increment</string>
+            <string name="increase">Decrement</string>
+            <string name="btn_inventory_view_inventory_cancel">Cancel</string>
+            <string name="btn_inventory_view_inventory_show">Do Inventory</string>
+            <string name="btn_inventory_view_inventory_save">Save</string>
+            <string name="toast_inventory_finished">Inventory done!</string>
+            <string name="toast_ean_doesnt_exists">Barcode not found!</string>
+
+    <!-- Activity names -->
+    <string name="title_activity_inventory_fast">InventoryFastActivity</string>
+    <string name="title_activity_storage_menu">StorageMenuActivity</string>
+    <string name="title_activity_products">ProductsActivity</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_inventory_full">InventoryFullActivity</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+
+</resources>

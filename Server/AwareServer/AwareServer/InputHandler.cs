@@ -108,6 +108,20 @@ namespace AwareServer
                             ret = String.Format("{0}", service.GetProductCount().ToString());
                             retByte = Encoding.UTF8.GetBytes(ret);
                         }
+                        else if (content.IndexOf("GET/products/status/id=") > -1)
+                        {
+                            string id = content.Replace("GET/products/status/id=", "");
+                            int status = service.CheckIfProductBusy(int.Parse(id));
+                            if (status == 0)
+                            {
+                                ret = String.Format("Idle");
+                            }
+                            if (status > 0)
+                            {
+                                ret = String.Format("Busy");
+                            }
+                            retByte = Encoding.UTF8.GetBytes(ret);
+                        } 
                         else if (content.IndexOf("GET/products/image/id=") > -1)
                         {
                             string id = content.Replace("GET/products/image/id=", "");

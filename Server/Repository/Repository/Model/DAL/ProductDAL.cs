@@ -22,7 +22,7 @@ namespace Repository.Model.DAL
         static ProductDAL() 
         {
             //Get connectionstring
-            _connectionString = Repository.Properties.Settings.Default.AwareConnectionString;
+            _connectionString = Repository.Properties.Settings.Default.temp;
         }
 
         #endregion
@@ -211,6 +211,44 @@ namespace Repository.Model.DAL
         {
             IEnumerable<Product> products = GetProducts();
             return products.Count();
+        }
+
+
+        public int CheckIfProductBusy(int productId)
+        {
+            using (SqlConnection conn = CreateConnection())
+            {
+                try
+                {
+                    IEnumerable<Product> products = new List<Product>(1000);
+                    // Create SqlCommand-objekt that execute stored procedure.
+                    SqlCommand cmd = new SqlCommand("dbo.usp_CheckIfProductBusy", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("@ProductId", productId);
+
+                    //Open database connection.
+                    conn.Open();
+                    //int status = (int)cmd.ExecuteScalar();
+                    //return status;
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            return 1;
+                        }
+                        else
+                        {
+                            return 0;
+                        }
+                    }
+                }
+                catch
+                {
+                    //Throw Exception.
+                    throw new ApplicationException("An error occurred while trying to retrieve the product.");
+                }
+            }
         }
 
         public IEnumerable<Product> GetProducts()

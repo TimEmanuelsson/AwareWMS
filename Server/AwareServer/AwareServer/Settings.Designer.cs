@@ -43,7 +43,7 @@ namespace AwareServer {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.4")]
+        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.2")]
         public string IpAddress {
             get {
                 return ((string)(this["IpAddress"]));

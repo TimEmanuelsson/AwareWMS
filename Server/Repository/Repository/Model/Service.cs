@@ -44,6 +44,11 @@ namespace Repository.Model
             return ProductDAL.GetProductCount();
         }
 
+        public int CheckIfProductBusy(int productId)
+        {
+            return ProductDAL.CheckIfProductBusy(productId);
+        }
+
         public void UpdateProduct(Product product) 
         {
             //Kanske någon validering här!

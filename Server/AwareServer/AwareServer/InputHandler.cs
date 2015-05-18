@@ -32,14 +32,15 @@ namespace AwareServer
                         if (content.IndexOf("GET/orders/id=") > -1)
                         {
                             string id = content.Replace("GET/orders/id=", "");
+                            id = id.Replace("\n", "");
                             Order order = service.GetOrderById(int.Parse(id));
-
                             ret = JsonConvert.SerializeObject(order);
                             retByte = Encoding.UTF8.GetBytes(ret);
                         }
                         else if (content.IndexOf("GET/orders/rows/id=") > -1)
                         {
                             string id = content.Replace("GET/orders/rows/id=", "");
+                            id = id.Replace("\n", "");
                             IEnumerable<OrderRow> orderRows = service.GetOrderRowsByOrderId(int.Parse(id));
                             ret = JsonConvert.SerializeObject(orderRows);
                             retByte = Encoding.UTF8.GetBytes(ret);
@@ -47,6 +48,7 @@ namespace AwareServer
                         else if (content.IndexOf("GET/orders/status/id=") > -1)
                         {
                             string id = content.Replace("GET/orders/status/id=", "");
+                            id = id.Replace("\n", "");
                             OrderStatus status = service.GetOrderStatusByOrderId(int.Parse(id));
                             ret = JsonConvert.SerializeObject(status);
                             retByte = Encoding.UTF8.GetBytes(ret);
@@ -54,6 +56,7 @@ namespace AwareServer
                         else if (content.IndexOf("GET/orderstatus/id=") > -1)
                         {
                             string id = content.Replace("GET/orderstatus/id=", "");
+                            id = id.Replace("\n", "");
                             OrderStatus status = service.GetOrderStatusById(int.Parse(id));
                             ret = JsonConvert.SerializeObject(status);
                             retByte = Encoding.UTF8.GetBytes(ret);
@@ -75,6 +78,7 @@ namespace AwareServer
                     else if (content.IndexOf("GET/orderrows/id=") > -1)
                     {
                         string id = content.Replace("GET/orderrows/id=", "");
+                        id = id.Replace("\n", "");
                         OrderRow row = service.GetOrderRowById(int.Parse(id));
                         ret = JsonConvert.SerializeObject(row);
                         retByte = Encoding.UTF8.GetBytes(ret);
@@ -85,6 +89,7 @@ namespace AwareServer
                         if (content.IndexOf("GET/products/id=") > -1)
                         {
                             string id = content.Replace("GET/products/id=", "");
+                            id = id.Replace("\n", "");
                             Product product = service.GetProductById(int.Parse(id));
                             ret = JsonConvert.SerializeObject(product);
                             retByte = Encoding.UTF8.GetBytes(ret);
@@ -92,14 +97,16 @@ namespace AwareServer
                         else if (content.IndexOf("GET/products/sku=") > -1)
                         {
                             string sku = content.Replace("GET/products/sku=", "");
+                            sku = sku.Replace("\n", "");
                             Product product = service.GetProductBySKU(int.Parse(sku));
                             ret = JsonConvert.SerializeObject(product);
                             retByte = Encoding.UTF8.GetBytes(ret);
                         }
                         else if (content.IndexOf("GET/products/ean=") > -1)
                         {
-                            string barcodenumber = content.Replace("GET/products/ean=", "");
-                            Product product = service.GetProductByEAN(int.Parse(barcodenumber));
+                            string ean = content.Replace("GET/products/ean=", "");
+                            ean = ean.Replace("\n", "");
+                            Product product = service.GetProductByEAN(int.Parse(ean));
                             ret = JsonConvert.SerializeObject(product);
                             retByte = Encoding.UTF8.GetBytes(ret);
                         }
@@ -111,6 +118,7 @@ namespace AwareServer
                         else if (content.IndexOf("GET/products/status/id=") > -1)
                         {
                             string id = content.Replace("GET/products/status/id=", "");
+                            id = id.Replace("\n", "");
                             int status = service.CheckIfProductBusy(int.Parse(id));
                             if (status == 0)
                             {
@@ -121,16 +129,14 @@ namespace AwareServer
                                 ret = String.Format("Busy");
                             }
                             retByte = Encoding.UTF8.GetBytes(ret);
-                        } 
-                        else if (content.IndexOf("GET/products/image/id=") > -1)
+                        }
+                        else if (content.IndexOf("GET/products/image=") > -1)
                         {
-                            string id = content.Replace("GET/products/image/id=", "");
-                            Product product = service.GetProductById(int.Parse(id));
-                            string imgUrl = product.ImageLocation;
+                            string imageString = content.Replace("GET/products/image=", "");
+                            imageString = imageString.Replace("\n", "");
+                            string imgUrl = imageString;
                             Bitmap tImage = new Bitmap(imgUrl);
-                            //imageToByte(tImage, tImage.RawFormat);
                             retByte = imageToByte(tImage, tImage.RawFormat);
-                            //byte[] bStream = ImageToByte(tImage);    
                         }
                         else if (content.Equals("GET/products"))
                         {

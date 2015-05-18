@@ -26,8 +26,8 @@ namespace AwareServer
         {
             try
             {
-                //DataFetch dataFetch = new DataFetch();
-                //dataFetch.FetchAndInsert();
+                DataFetch dataFetch = new DataFetch();
+                dataFetch.FetchAndInsert();
                 AsynchronousSocketListener.Start();
             }
             catch (Exception e)

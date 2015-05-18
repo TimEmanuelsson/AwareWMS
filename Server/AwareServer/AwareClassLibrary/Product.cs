@@ -70,5 +70,53 @@ namespace AwareClassLibrary
         }
 
         #endregion
+
+        public void Merge(Product other)
+        {
+            if (ProductId == 0)
+            {
+                ProductId = other.ProductId;
+            }
+
+            if (Name == "")
+            {
+                Name = other.Name;
+            }
+
+            if (SKU == "")
+            {
+                SKU = other.SKU;
+            }
+
+            if (Quantity == 0.0m)
+            {
+                Quantity = other.Quantity;
+            }
+
+            if (Weight == 0.0m)
+            {
+                Weight = other.Weight;
+            }
+
+            if (StorageSpace == "")
+            {
+                StorageSpace = other.StorageSpace;
+            }
+
+            if (EAN == "")
+            {
+                EAN = other.EAN;
+            }
+
+            if (ImageLocation == "")
+            {
+                ImageLocation = other.ImageLocation;
+            }
+
+            if (LastInventory == null)
+            {
+                LastInventory = other.LastInventory;
+            }
+        }
     }
 }

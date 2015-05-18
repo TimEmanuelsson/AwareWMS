@@ -19,8 +19,7 @@ namespace AwareServer
 
         protected override void OnStart(string[] args)
         {
-            DataFetch dataFetch = new DataFetch();
-            dataFetch.FetchAndInsert();
+            // Do the stuff in the Program.cs Main().
         }
 
         protected override void OnStop()

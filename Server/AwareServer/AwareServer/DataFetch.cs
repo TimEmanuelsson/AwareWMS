@@ -41,14 +41,24 @@ namespace AwareServer
             }
         }
 
-        public void FetchAndInsert(Object source, ElapsedEventArgs e)
+        public void FetchAndInsert(Object source, ElapsedEventArgs eventArgs)
         {
             try
             {
-                Debug.WriteLine("Hämtar produkter. Tid: {0}", e.SignalTime);
+                Debug.WriteLine("Hämtar produkter. Tid: {0}", eventArgs.SignalTime);
                 state = State.Busy;
                 List<Product> products = magentoHelper.GetAllProductsWithInventory();
                 List<Product> productsWithImages = magentoHelper.DownloadAllProductImages();
+                List<Product> localProducts = service.GetProducts() as List<Product>;
+
+                // Merge the products from magento with the ones that we store locally.
+                foreach (Product product in products)
+                {
+                    if (localProducts.Exists(p => p.SKU == product.SKU))
+                    {
+                        products.First(p => p.SKU == product.SKU).Merge(localProducts.First(p => p.SKU == product.SKU));
+                    }
+                }
 
                 foreach (Product product in productsWithImages)
                 {

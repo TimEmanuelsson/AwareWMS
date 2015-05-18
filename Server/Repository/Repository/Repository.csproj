@@ -47,7 +47,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="AwareDataSet.xsc">
       <DependentUpon>AwareDataSet.xsd</DependentUpon>
     </None>

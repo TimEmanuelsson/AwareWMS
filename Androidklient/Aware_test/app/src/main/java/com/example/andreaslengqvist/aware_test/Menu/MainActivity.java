@@ -10,6 +10,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+
+import com.example.andreaslengqvist.aware_test.Helpers.SlidingTabLayout;
 import com.example.andreaslengqvist.aware_test.Storage.Inventory.InventoryFastActivity;
 import com.example.andreaslengqvist.aware_test.Storage.ProductListActivity;
 import com.example.andreaslengqvist.aware_test.R;
@@ -35,6 +37,9 @@ public class MainActivity extends FragmentActivity implements MenuListener {
     private static final String ACTIVITY_PRODUCTS = "ACTIVITY_PRODUCTS";
     private static final String EAN_TAG = "EAN_TAG";
 
+    private SlidingTabLayout mSlidingTabLayout;
+
+
 
     @Override
     /**
@@ -59,6 +64,21 @@ public class MainActivity extends FragmentActivity implements MenuListener {
         ViewPager mPager = (ViewPager) findViewById(R.id.menu_pager);
         PagerAdapter mPagerAdapter = new MenuPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+
+
+        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout.setDistributeEvenly(true);
+        mSlidingTabLayout.setViewPager(mPager);
+
+
+        mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+
+            @Override
+            public int getIndicatorColor(int position) {
+                return getResources().getColor(R.color.gray);    //define any color in xml resources and set it here, I have used white
+            }
+        });
+
     }
 
 

@@ -22,7 +22,7 @@ namespace Repository.Model.DAL
         static OrderRowDAL() 
         {
             //Get connectionstring
-            _connectionString = Repository.Properties.Settings.Default.temp;
+            _connectionString = Repository.Properties.Settings.Default.AwareConnectionString;
         }
 
         #endregion
@@ -85,7 +85,6 @@ namespace Repository.Model.DAL
             }
         }
 
-        //SKICKA IN ORDERID ISTÄLLET FÖR ORDERROWID!!!!
         public IEnumerable<OrderRow> GetOrderRowsByOrderId(int OrderId)
         {
             using (SqlConnection conn = CreateConnection())

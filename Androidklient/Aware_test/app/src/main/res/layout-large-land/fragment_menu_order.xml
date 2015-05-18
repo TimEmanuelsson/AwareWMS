@@ -85,7 +85,7 @@
             style="?android:attr/borderlessButtonStyle"
             android:id="@+id/btn_order_menu_pick"
             android:layout_width="fill_parent"
-            android:layout_height="75dp"
+            android:layout_height="65dp"
             android:layout_below="@+id/label_menu_home"
             android:textSize="24sp"
             android:text="@string/btn_order_menu_pick" />
@@ -94,7 +94,7 @@
             style="?android:attr/borderlessButtonStyle"
             android:id="@+id/btn_order_menu_pack"
             android:layout_width="fill_parent"
-            android:layout_height="75dp"
+            android:layout_height="65dp"
             android:layout_below="@+id/btn_order_menu_pick"
             android:textSize="24sp"
             android:text="@string/btn_order_menu_pack" />
@@ -103,9 +103,9 @@
             style="?android:attr/borderlessButtonStyle"
             android:id="@+id/btn_order_menu_returns"
             android:layout_width="fill_parent"
-            android:layout_height="75dp"
+            android:layout_height="65dp"
             android:layout_below="@+id/btn_order_menu_pack"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:textSize="24sp"
             android:text="@string/btn_order_menu_returns" />
 

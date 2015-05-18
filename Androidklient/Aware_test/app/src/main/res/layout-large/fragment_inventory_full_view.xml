@@ -132,6 +132,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true">
 
             <ImageView

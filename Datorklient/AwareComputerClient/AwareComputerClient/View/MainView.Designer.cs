@@ -20,6 +20,7 @@
             base.Dispose(disposing);
         }
 
+       
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -29,13 +30,24 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainView));
-            this.TableView = new System.Windows.Forms.DataGridView();
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.FileMenuContainer = new System.Windows.Forms.ToolStripMenuItem();
             this.FileMenuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.ShowProductsMainContainer = new System.Windows.Forms.Panel();
+            this.ColumnHeaderStorageSpace = new System.Windows.Forms.Label();
+            this.ShowProductsPanel = new System.Windows.Forms.Panel();
+            this.TableView = new System.Windows.Forms.DataGridView();
+            this.HeaderColumnName = new System.Windows.Forms.Label();
+            this.SearchBarPanel = new System.Windows.Forms.Panel();
+            this.Sort = new System.Windows.Forms.Label();
+            this.comboBox = new System.Windows.Forms.ComboBox();
             this.SearchField = new System.Windows.Forms.TextBox();
             this.SearchLabel = new System.Windows.Forms.Label();
-            this.ShowProductsPanel = new System.Windows.Forms.Panel();
+            this.ColumnHeaderEAN = new System.Windows.Forms.Label();
+            this.ColumnHeaderQuantity = new System.Windows.Forms.Label();
+            this.ColumnHeaderSKU = new System.Windows.Forms.Label();
+            this.ColumnHeaderWeight = new System.Windows.Forms.Label();
+            this.printButton = new System.Windows.Forms.Button();
             this.TableViewPanel = new System.Windows.Forms.TableLayoutPanel();
             this.WeightLabel = new System.Windows.Forms.TextBox();
             this.StorageSpaceText = new System.Windows.Forms.Label();
@@ -46,45 +58,26 @@
             this.ImageLocationText = new System.Windows.Forms.Label();
             this.SKUText = new System.Windows.Forms.Label();
             this.SKULabel = new System.Windows.Forms.TextBox();
-            this.ImageLocationLabel = new System.Windows.Forms.TextBox();
             this.QuantityText = new System.Windows.Forms.Label();
-            this.BarcodeNumberText = new System.Windows.Forms.Label();
-            this.BarcodeNumberLabel = new System.Windows.Forms.TextBox();
             this.StorageSpaceLabel = new System.Windows.Forms.TextBox();
             this.SaveEditButton = new System.Windows.Forms.Button();
-            this.SearchBarPanel = new System.Windows.Forms.Panel();
-            this.ShowProductsMainContainer = new System.Windows.Forms.Panel();
-            this.ColumnHeaderImageLocation = new System.Windows.Forms.Label();
-            this.ColumnHeaderStorageSpace = new System.Windows.Forms.Label();
-            this.ColumnHeaderBarcodeNumber = new System.Windows.Forms.Label();
-            this.ColumnHeaderWeight = new System.Windows.Forms.Label();
-            this.ColumnHeaderName = new System.Windows.Forms.Label();
-            this.ColumnHeaderSKU = new System.Windows.Forms.Label();
-            this.ColumnHeaderQuantity = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.TableView)).BeginInit();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.printProductsList = new System.Drawing.Printing.PrintDocument();
             this.MenuBar.SuspendLayout();
-            this.ShowProductsPanel.SuspendLayout();
-            this.TableViewPanel.SuspendLayout();
-            this.SearchBarPanel.SuspendLayout();
             this.ShowProductsMainContainer.SuspendLayout();
+            this.ShowProductsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TableView)).BeginInit();
+            this.SearchBarPanel.SuspendLayout();
+            this.TableViewPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // TableView
-            // 
-            this.TableView.AllowUserToAddRows = false;
-            this.TableView.AllowUserToDeleteRows = false;
-            this.TableView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
-            this.TableView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.TableView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.TableView.Location = new System.Drawing.Point(3, 0);
-            this.TableView.MultiSelect = false;
-            this.TableView.Name = "TableView";
-            this.TableView.Size = new System.Drawing.Size(744, 318);
-            this.TableView.TabIndex = 1;
-            this.TableView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TableView_CellClick);
             // 
             // MenuBar
             // 
+            this.MenuBar.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MenuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.FileMenuContainer});
             this.MenuBar.Location = new System.Drawing.Point(0, 0);
@@ -110,6 +103,111 @@
             this.FileMenuExit.Text = "Exit";
             this.FileMenuExit.Click += new System.EventHandler(this.FileMenuExit_Click);
             // 
+            // ShowProductsMainContainer
+            // 
+            this.ShowProductsMainContainer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderStorageSpace);
+            this.ShowProductsMainContainer.Controls.Add(this.ShowProductsPanel);
+            this.ShowProductsMainContainer.Controls.Add(this.HeaderColumnName);
+            this.ShowProductsMainContainer.Controls.Add(this.SearchBarPanel);
+            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderEAN);
+            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderQuantity);
+            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderSKU);
+            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderWeight);
+            this.ShowProductsMainContainer.Controls.Add(this.printButton);
+            this.ShowProductsMainContainer.Location = new System.Drawing.Point(3, 59);
+            this.ShowProductsMainContainer.Name = "ShowProductsMainContainer";
+            this.ShowProductsMainContainer.Size = new System.Drawing.Size(747, 758);
+            this.ShowProductsMainContainer.TabIndex = 30;
+            this.ShowProductsMainContainer.Visible = false;
+            // 
+            // ColumnHeaderStorageSpace
+            // 
+            this.ColumnHeaderStorageSpace.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ColumnHeaderStorageSpace.AutoSize = true;
+            this.ColumnHeaderStorageSpace.Location = new System.Drawing.Point(478, 63);
+            this.ColumnHeaderStorageSpace.Name = "ColumnHeaderStorageSpace";
+            this.ColumnHeaderStorageSpace.Size = new System.Drawing.Size(75, 13);
+            this.ColumnHeaderStorageSpace.TabIndex = 35;
+            this.ColumnHeaderStorageSpace.Text = "StorageSpace";
+            // 
+            // ShowProductsPanel
+            // 
+            this.ShowProductsPanel.AutoScroll = true;
+            this.ShowProductsPanel.Controls.Add(this.TableView);
+            this.ShowProductsPanel.Location = new System.Drawing.Point(0, 80);
+            this.ShowProductsPanel.Name = "ShowProductsPanel";
+            this.ShowProductsPanel.Size = new System.Drawing.Size(747, 709);
+            this.ShowProductsPanel.TabIndex = 28;
+            // 
+            // TableView
+            // 
+            this.TableView.AllowUserToAddRows = false;
+            this.TableView.AllowUserToDeleteRows = false;
+            this.TableView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.TableView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.TableView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.TableView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TableView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
+            this.TableView.Location = new System.Drawing.Point(54, 0);
+            this.TableView.MultiSelect = false;
+            this.TableView.Name = "TableView";
+            this.TableView.Size = new System.Drawing.Size(693, 318);
+            this.TableView.TabIndex = 1;
+            this.TableView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TableView_CellClick);
+            // 
+            // HeaderColumnName
+            // 
+            this.HeaderColumnName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.HeaderColumnName.AutoSize = true;
+            this.HeaderColumnName.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.HeaderColumnName.Location = new System.Drawing.Point(76, 63);
+            this.HeaderColumnName.Name = "HeaderColumnName";
+            this.HeaderColumnName.Size = new System.Drawing.Size(35, 13);
+            this.HeaderColumnName.TabIndex = 34;
+            this.HeaderColumnName.Text = "Name";
+            // 
+            // SearchBarPanel
+            // 
+            this.SearchBarPanel.Controls.Add(this.Sort);
+            this.SearchBarPanel.Controls.Add(this.comboBox);
+            this.SearchBarPanel.Controls.Add(this.SearchField);
+            this.SearchBarPanel.Controls.Add(this.SearchLabel);
+            this.SearchBarPanel.Location = new System.Drawing.Point(54, 3);
+            this.SearchBarPanel.Name = "SearchBarPanel";
+            this.SearchBarPanel.Size = new System.Drawing.Size(570, 40);
+            this.SearchBarPanel.TabIndex = 29;
+            // 
+            // Sort
+            // 
+            this.Sort.AutoSize = true;
+            this.Sort.Location = new System.Drawing.Point(395, 18);
+            this.Sort.Name = "Sort";
+            this.Sort.Size = new System.Drawing.Size(26, 13);
+            this.Sort.TabIndex = 38;
+            this.Sort.Text = "Sort";
+            // 
+            // comboBox
+            // 
+            this.comboBox.FormattingEnabled = true;
+            this.comboBox.Items.AddRange(new object[] {
+            "Reset",
+            "Name",
+            "SKU",
+            "Quantity",
+            "Weight",
+            "Storagespace"});
+            this.comboBox.Location = new System.Drawing.Point(427, 14);
+            this.comboBox.Name = "comboBox";
+            this.comboBox.Size = new System.Drawing.Size(121, 21);
+            this.comboBox.TabIndex = 37;
+            this.comboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox_SelectedIndexChanged);
+            // 
             // SearchField
             // 
             this.SearchField.Location = new System.Drawing.Point(74, 15);
@@ -127,14 +225,63 @@
             this.SearchLabel.TabIndex = 27;
             this.SearchLabel.Text = "Search";
             // 
-            // ShowProductsPanel
+            // ColumnHeaderEAN
             // 
-            this.ShowProductsPanel.AutoScroll = true;
-            this.ShowProductsPanel.Controls.Add(this.TableView);
-            this.ShowProductsPanel.Location = new System.Drawing.Point(18, 75);
-            this.ShowProductsPanel.Name = "ShowProductsPanel";
-            this.ShowProductsPanel.Size = new System.Drawing.Size(748, 510);
-            this.ShowProductsPanel.TabIndex = 28;
+            this.ColumnHeaderEAN.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ColumnHeaderEAN.AutoSize = true;
+            this.ColumnHeaderEAN.Location = new System.Drawing.Point(577, 63);
+            this.ColumnHeaderEAN.Name = "ColumnHeaderEAN";
+            this.ColumnHeaderEAN.Size = new System.Drawing.Size(29, 13);
+            this.ColumnHeaderEAN.TabIndex = 36;
+            this.ColumnHeaderEAN.Text = "EAN";
+            // 
+            // ColumnHeaderQuantity
+            // 
+            this.ColumnHeaderQuantity.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ColumnHeaderQuantity.AutoSize = true;
+            this.ColumnHeaderQuantity.Location = new System.Drawing.Point(279, 63);
+            this.ColumnHeaderQuantity.Name = "ColumnHeaderQuantity";
+            this.ColumnHeaderQuantity.Size = new System.Drawing.Size(46, 13);
+            this.ColumnHeaderQuantity.TabIndex = 36;
+            this.ColumnHeaderQuantity.Text = "Quantity";
+            // 
+            // ColumnHeaderSKU
+            // 
+            this.ColumnHeaderSKU.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ColumnHeaderSKU.AutoSize = true;
+            this.ColumnHeaderSKU.Location = new System.Drawing.Point(179, 63);
+            this.ColumnHeaderSKU.Name = "ColumnHeaderSKU";
+            this.ColumnHeaderSKU.Size = new System.Drawing.Size(29, 13);
+            this.ColumnHeaderSKU.TabIndex = 35;
+            this.ColumnHeaderSKU.Text = "SKU";
+            // 
+            // ColumnHeaderWeight
+            // 
+            this.ColumnHeaderWeight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ColumnHeaderWeight.AutoSize = true;
+            this.ColumnHeaderWeight.Location = new System.Drawing.Point(375, 63);
+            this.ColumnHeaderWeight.Name = "ColumnHeaderWeight";
+            this.ColumnHeaderWeight.Size = new System.Drawing.Size(41, 13);
+            this.ColumnHeaderWeight.TabIndex = 34;
+            this.ColumnHeaderWeight.Text = "Weight";
+            // 
+            // printButton
+            // 
+            this.printButton.Location = new System.Drawing.Point(630, 10);
+            this.printButton.Name = "printButton";
+            this.printButton.Size = new System.Drawing.Size(91, 28);
+            this.printButton.TabIndex = 34;
+            this.printButton.Text = "Print Products";
+            this.printButton.UseVisualStyleBackColor = true;
+            this.printButton.Click += new System.EventHandler(this.printButton_Click);
             // 
             // TableViewPanel
             // 
@@ -152,13 +299,10 @@
             this.TableViewPanel.Controls.Add(this.ImageLocationText, 0, 3);
             this.TableViewPanel.Controls.Add(this.SKUText, 2, 0);
             this.TableViewPanel.Controls.Add(this.SKULabel, 3, 0);
-            this.TableViewPanel.Controls.Add(this.ImageLocationLabel, 1, 3);
             this.TableViewPanel.Controls.Add(this.QuantityText, 0, 1);
-            this.TableViewPanel.Controls.Add(this.BarcodeNumberText, 2, 2);
-            this.TableViewPanel.Controls.Add(this.BarcodeNumberLabel, 3, 2);
             this.TableViewPanel.Controls.Add(this.StorageSpaceLabel, 1, 2);
             this.TableViewPanel.Controls.Add(this.SaveEditButton, 3, 3);
-            this.TableViewPanel.Location = new System.Drawing.Point(12, 400);
+            this.TableViewPanel.Location = new System.Drawing.Point(10, 379);
             this.TableViewPanel.Name = "TableViewPanel";
             this.TableViewPanel.RowCount = 4;
             this.TableViewPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 24.85356F));
@@ -248,13 +392,6 @@
             this.SKULabel.Size = new System.Drawing.Size(61, 20);
             this.SKULabel.TabIndex = 27;
             // 
-            // ImageLocationLabel
-            // 
-            this.ImageLocationLabel.Location = new System.Drawing.Point(106, 113);
-            this.ImageLocationLabel.Name = "ImageLocationLabel";
-            this.ImageLocationLabel.Size = new System.Drawing.Size(61, 20);
-            this.ImageLocationLabel.TabIndex = 31;
-            // 
             // QuantityText
             // 
             this.QuantityText.Anchor = System.Windows.Forms.AnchorStyles.Right;
@@ -264,23 +401,6 @@
             this.QuantityText.Size = new System.Drawing.Size(49, 13);
             this.QuantityText.TabIndex = 10;
             this.QuantityText.Text = "Quantity:";
-            // 
-            // BarcodeNumberText
-            // 
-            this.BarcodeNumberText.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.BarcodeNumberText.AutoSize = true;
-            this.BarcodeNumberText.Location = new System.Drawing.Point(219, 84);
-            this.BarcodeNumberText.Name = "BarcodeNumberText";
-            this.BarcodeNumberText.Size = new System.Drawing.Size(87, 13);
-            this.BarcodeNumberText.TabIndex = 16;
-            this.BarcodeNumberText.Text = "BarcodeNumber:";
-            // 
-            // BarcodeNumberLabel
-            // 
-            this.BarcodeNumberLabel.Location = new System.Drawing.Point(312, 74);
-            this.BarcodeNumberLabel.Name = "BarcodeNumberLabel";
-            this.BarcodeNumberLabel.Size = new System.Drawing.Size(61, 20);
-            this.BarcodeNumberLabel.TabIndex = 32;
             // 
             // StorageSpaceLabel
             // 
@@ -299,126 +419,59 @@
             this.SaveEditButton.UseVisualStyleBackColor = true;
             this.SaveEditButton.Click += new System.EventHandler(this.SaveEditButton_Click);
             // 
-            // SearchBarPanel
+            // splitContainer1
             // 
-            this.SearchBarPanel.Controls.Add(this.SearchField);
-            this.SearchBarPanel.Controls.Add(this.SearchLabel);
-            this.SearchBarPanel.Location = new System.Drawing.Point(98, 12);
-            this.SearchBarPanel.Name = "SearchBarPanel";
-            this.SearchBarPanel.Size = new System.Drawing.Size(326, 40);
-            this.SearchBarPanel.TabIndex = 29;
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.splitContainer1.IsSplitterFixed = true;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
             // 
-            // ShowProductsMainContainer
+            // splitContainer1.Panel1
             // 
-            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderImageLocation);
-            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderStorageSpace);
-            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderBarcodeNumber);
-            this.ShowProductsMainContainer.Controls.Add(this.SearchBarPanel);
-            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderWeight);
-            this.ShowProductsMainContainer.Controls.Add(this.ShowProductsPanel);
-            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderName);
-            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderSKU);
-            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderQuantity);
-            this.ShowProductsMainContainer.Location = new System.Drawing.Point(424, 30);
-            this.ShowProductsMainContainer.Name = "ShowProductsMainContainer";
-            this.ShowProductsMainContainer.Size = new System.Drawing.Size(840, 585);
-            this.ShowProductsMainContainer.TabIndex = 30;
-            this.ShowProductsMainContainer.Visible = false;
+            this.splitContainer1.Panel1.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.splitContainer1.Panel1.Controls.Add(this.TableViewPanel);
             // 
-            // ColumnHeaderImageLocation
+            // splitContainer1.Panel2
             // 
-            this.ColumnHeaderImageLocation.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.ColumnHeaderImageLocation.AutoSize = true;
-            this.ColumnHeaderImageLocation.Location = new System.Drawing.Point(672, 59);
-            this.ColumnHeaderImageLocation.Name = "ColumnHeaderImageLocation";
-            this.ColumnHeaderImageLocation.Size = new System.Drawing.Size(77, 13);
-            this.ColumnHeaderImageLocation.TabIndex = 37;
-            this.ColumnHeaderImageLocation.Text = "ImageLocation";
+            this.splitContainer1.Panel2.Controls.Add(this.ShowProductsMainContainer);
+            this.splitContainer1.Size = new System.Drawing.Size(1264, 862);
+            this.splitContainer1.SplitterDistance = 421;
+            this.splitContainer1.TabIndex = 31;
             // 
-            // ColumnHeaderStorageSpace
+            // printProductsList
             // 
-            this.ColumnHeaderStorageSpace.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.ColumnHeaderStorageSpace.AutoSize = true;
-            this.ColumnHeaderStorageSpace.Location = new System.Drawing.Point(465, 59);
-            this.ColumnHeaderStorageSpace.Name = "ColumnHeaderStorageSpace";
-            this.ColumnHeaderStorageSpace.Size = new System.Drawing.Size(75, 13);
-            this.ColumnHeaderStorageSpace.TabIndex = 35;
-            this.ColumnHeaderStorageSpace.Text = "StorageSpace";
-            // 
-            // ColumnHeaderBarcodeNumber
-            // 
-            this.ColumnHeaderBarcodeNumber.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.ColumnHeaderBarcodeNumber.AutoSize = true;
-            this.ColumnHeaderBarcodeNumber.Location = new System.Drawing.Point(560, 59);
-            this.ColumnHeaderBarcodeNumber.Name = "ColumnHeaderBarcodeNumber";
-            this.ColumnHeaderBarcodeNumber.Size = new System.Drawing.Size(84, 13);
-            this.ColumnHeaderBarcodeNumber.TabIndex = 36;
-            this.ColumnHeaderBarcodeNumber.Text = "BarcodeNumber";
-            // 
-            // ColumnHeaderWeight
-            // 
-            this.ColumnHeaderWeight.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.ColumnHeaderWeight.AutoSize = true;
-            this.ColumnHeaderWeight.Location = new System.Drawing.Point(369, 59);
-            this.ColumnHeaderWeight.Name = "ColumnHeaderWeight";
-            this.ColumnHeaderWeight.Size = new System.Drawing.Size(41, 13);
-            this.ColumnHeaderWeight.TabIndex = 34;
-            this.ColumnHeaderWeight.Text = "Weight";
-            // 
-            // ColumnHeaderName
-            // 
-            this.ColumnHeaderName.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.ColumnHeaderName.AutoSize = true;
-            this.ColumnHeaderName.Location = new System.Drawing.Point(68, 59);
-            this.ColumnHeaderName.Name = "ColumnHeaderName";
-            this.ColumnHeaderName.Size = new System.Drawing.Size(35, 13);
-            this.ColumnHeaderName.TabIndex = 31;
-            this.ColumnHeaderName.Text = "Name";
-            // 
-            // ColumnHeaderSKU
-            // 
-            this.ColumnHeaderSKU.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.ColumnHeaderSKU.AutoSize = true;
-            this.ColumnHeaderSKU.Location = new System.Drawing.Point(270, 59);
-            this.ColumnHeaderSKU.Name = "ColumnHeaderSKU";
-            this.ColumnHeaderSKU.Size = new System.Drawing.Size(46, 13);
-            this.ColumnHeaderSKU.TabIndex = 32;
-            this.ColumnHeaderSKU.Text = "Quantity";
-            // 
-            // ColumnHeaderQuantity
-            // 
-            this.ColumnHeaderQuantity.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.ColumnHeaderQuantity.AutoSize = true;
-            this.ColumnHeaderQuantity.Location = new System.Drawing.Point(169, 59);
-            this.ColumnHeaderQuantity.Name = "ColumnHeaderQuantity";
-            this.ColumnHeaderQuantity.Size = new System.Drawing.Size(29, 13);
-            this.ColumnHeaderQuantity.TabIndex = 33;
-            this.ColumnHeaderQuantity.Text = "SKU";
+            this.printProductsList.DocumentName = "Products";
+            this.printProductsList.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printProductsList_PrintPage);
             // 
             // MainView
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 782);
-            this.Controls.Add(this.ShowProductsMainContainer);
-            this.Controls.Add(this.TableViewPanel);
+            this.ClientSize = new System.Drawing.Size(1264, 862);
             this.Controls.Add(this.MenuBar);
+            this.Controls.Add(this.splitContainer1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainView";
             this.Text = "Aware";
+            this.Controls.SetChildIndex(this.splitContainer1, 0);
             this.Controls.SetChildIndex(this.MenuBar, 0);
-            this.Controls.SetChildIndex(this.TableViewPanel, 0);
-            this.Controls.SetChildIndex(this.ShowProductsMainContainer, 0);
-            ((System.ComponentModel.ISupportInitialize)(this.TableView)).EndInit();
+            this.Controls.SetChildIndex(this.MainMenuPanel, 0);
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
-            this.ShowProductsPanel.ResumeLayout(false);
-            this.TableViewPanel.ResumeLayout(false);
-            this.TableViewPanel.PerformLayout();
-            this.SearchBarPanel.ResumeLayout(false);
-            this.SearchBarPanel.PerformLayout();
             this.ShowProductsMainContainer.ResumeLayout(false);
             this.ShowProductsMainContainer.PerformLayout();
+            this.ShowProductsPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.TableView)).EndInit();
+            this.SearchBarPanel.ResumeLayout(false);
+            this.SearchBarPanel.PerformLayout();
+            this.TableViewPanel.ResumeLayout(false);
+            this.TableViewPanel.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -426,13 +479,18 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView TableView;
         private System.Windows.Forms.MenuStrip MenuBar;
         private System.Windows.Forms.ToolStripMenuItem FileMenuContainer;
         private System.Windows.Forms.ToolStripMenuItem FileMenuExit;
+        private System.Windows.Forms.Panel ShowProductsMainContainer;
+        private System.Windows.Forms.Label ColumnHeaderStorageSpace;
+        private System.Windows.Forms.Label ColumnHeaderEAN;
+        private System.Windows.Forms.Panel SearchBarPanel;
         private System.Windows.Forms.TextBox SearchField;
         private System.Windows.Forms.Label SearchLabel;
+        private System.Windows.Forms.Label ColumnHeaderWeight;
         private System.Windows.Forms.Panel ShowProductsPanel;
+        private System.Windows.Forms.DataGridView TableView;
         private System.Windows.Forms.TableLayoutPanel TableViewPanel;
         private System.Windows.Forms.TextBox WeightLabel;
         private System.Windows.Forms.Label StorageSpaceText;
@@ -443,20 +501,16 @@
         private System.Windows.Forms.Label ImageLocationText;
         private System.Windows.Forms.Label SKUText;
         private System.Windows.Forms.TextBox SKULabel;
-        private System.Windows.Forms.TextBox ImageLocationLabel;
         private System.Windows.Forms.Label QuantityText;
-        private System.Windows.Forms.Label BarcodeNumberText;
-        private System.Windows.Forms.TextBox BarcodeNumberLabel;
         private System.Windows.Forms.TextBox StorageSpaceLabel;
-        private System.Windows.Forms.Panel SearchBarPanel;
-        private System.Windows.Forms.Panel ShowProductsMainContainer;
-        private System.Windows.Forms.Label ColumnHeaderStorageSpace;
-        private System.Windows.Forms.Label ColumnHeaderName;
-        private System.Windows.Forms.Label ColumnHeaderWeight;
-        private System.Windows.Forms.Label ColumnHeaderImageLocation;
+        private System.Windows.Forms.Button SaveEditButton;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Label HeaderColumnName;
         private System.Windows.Forms.Label ColumnHeaderSKU;
         private System.Windows.Forms.Label ColumnHeaderQuantity;
-        private System.Windows.Forms.Label ColumnHeaderBarcodeNumber;
-        private System.Windows.Forms.Button SaveEditButton;
+        private System.Drawing.Printing.PrintDocument printProductsList;
+        private System.Windows.Forms.Button printButton;
+        private System.Windows.Forms.ComboBox comboBox;
+        private System.Windows.Forms.Label Sort;
     }
 }

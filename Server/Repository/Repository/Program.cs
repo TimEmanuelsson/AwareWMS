@@ -206,7 +206,7 @@ namespace Repository
                             {
                                 string barcodenumber = content.Replace("GET/products/barcodenumber=", "");
                                 string json = "";
-                                Product product = service.GetProductByBarcodeNumber(int.Parse(barcodenumber));
+                                Product product = service.GetProductByEAN(int.Parse(barcodenumber));
                                 JavaScriptSerializer serializer = new JavaScriptSerializer();
                                 json += serializer.Serialize(product);
                                 Send(handler, json);

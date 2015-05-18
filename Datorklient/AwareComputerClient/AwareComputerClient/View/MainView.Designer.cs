@@ -35,17 +35,17 @@
             this.FileMenuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.print = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowProductsMainContainer = new System.Windows.Forms.Panel();
-            this.ShowProductsPanel = new System.Windows.Forms.Panel();
             this.ColumnHeaderStorageSpace = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.ColumnHeaderBarcodeNumber = new System.Windows.Forms.Label();
+            this.ShowProductsPanel = new System.Windows.Forms.Panel();
             this.TableView = new System.Windows.Forms.DataGridView();
-            this.ColumnHeaderWeight = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.SearchBarPanel = new System.Windows.Forms.Panel();
             this.SearchField = new System.Windows.Forms.TextBox();
             this.SearchLabel = new System.Windows.Forms.Label();
+            this.ColumnHeaderBarcodeNumber = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.ColumnHeaderWeight = new System.Windows.Forms.Label();
             this.TableViewPanel = new System.Windows.Forms.TableLayoutPanel();
             this.WeightLabel = new System.Windows.Forms.TextBox();
             this.StorageSpaceText = new System.Windows.Forms.Label();
@@ -113,28 +113,19 @@
             // 
             this.ShowProductsMainContainer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderStorageSpace);
             this.ShowProductsMainContainer.Controls.Add(this.ShowProductsPanel);
+            this.ShowProductsMainContainer.Controls.Add(this.label1);
             this.ShowProductsMainContainer.Controls.Add(this.SearchBarPanel);
+            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderBarcodeNumber);
+            this.ShowProductsMainContainer.Controls.Add(this.label3);
+            this.ShowProductsMainContainer.Controls.Add(this.label2);
+            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderWeight);
             this.ShowProductsMainContainer.Location = new System.Drawing.Point(3, 59);
             this.ShowProductsMainContainer.Name = "ShowProductsMainContainer";
             this.ShowProductsMainContainer.Size = new System.Drawing.Size(747, 758);
             this.ShowProductsMainContainer.TabIndex = 30;
             this.ShowProductsMainContainer.Visible = false;
-            // 
-            // ShowProductsPanel
-            // 
-            this.ShowProductsPanel.AutoScroll = true;
-            this.ShowProductsPanel.Controls.Add(this.ColumnHeaderStorageSpace);
-            this.ShowProductsPanel.Controls.Add(this.label1);
-            this.ShowProductsPanel.Controls.Add(this.ColumnHeaderBarcodeNumber);
-            this.ShowProductsPanel.Controls.Add(this.TableView);
-            this.ShowProductsPanel.Controls.Add(this.ColumnHeaderWeight);
-            this.ShowProductsPanel.Controls.Add(this.label2);
-            this.ShowProductsPanel.Controls.Add(this.label3);
-            this.ShowProductsPanel.Location = new System.Drawing.Point(0, 49);
-            this.ShowProductsPanel.Name = "ShowProductsPanel";
-            this.ShowProductsPanel.Size = new System.Drawing.Size(747, 709);
-            this.ShowProductsPanel.TabIndex = 28;
             // 
             // ColumnHeaderStorageSpace
             // 
@@ -142,35 +133,20 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ColumnHeaderStorageSpace.AutoSize = true;
-            this.ColumnHeaderStorageSpace.Location = new System.Drawing.Point(476, 0);
+            this.ColumnHeaderStorageSpace.Location = new System.Drawing.Point(478, 63);
             this.ColumnHeaderStorageSpace.Name = "ColumnHeaderStorageSpace";
             this.ColumnHeaderStorageSpace.Size = new System.Drawing.Size(75, 13);
             this.ColumnHeaderStorageSpace.TabIndex = 35;
             this.ColumnHeaderStorageSpace.Text = "StorageSpace";
             // 
-            // label1
+            // ShowProductsPanel
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(80, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 34;
-            this.label1.Text = "Name";
-            // 
-            // ColumnHeaderBarcodeNumber
-            // 
-            this.ColumnHeaderBarcodeNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ColumnHeaderBarcodeNumber.AutoSize = true;
-            this.ColumnHeaderBarcodeNumber.Location = new System.Drawing.Point(575, 0);
-            this.ColumnHeaderBarcodeNumber.Name = "ColumnHeaderBarcodeNumber";
-            this.ColumnHeaderBarcodeNumber.Size = new System.Drawing.Size(29, 13);
-            this.ColumnHeaderBarcodeNumber.TabIndex = 36;
-            this.ColumnHeaderBarcodeNumber.Text = "EAN";
+            this.ShowProductsPanel.AutoScroll = true;
+            this.ShowProductsPanel.Controls.Add(this.TableView);
+            this.ShowProductsPanel.Location = new System.Drawing.Point(0, 80);
+            this.ShowProductsPanel.Name = "ShowProductsPanel";
+            this.ShowProductsPanel.Size = new System.Drawing.Size(747, 709);
+            this.ShowProductsPanel.TabIndex = 28;
             // 
             // TableView
             // 
@@ -181,48 +157,24 @@
             this.TableView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.TableView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TableView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.TableView.Location = new System.Drawing.Point(52, 16);
+            this.TableView.Location = new System.Drawing.Point(54, 0);
             this.TableView.MultiSelect = false;
             this.TableView.Name = "TableView";
             this.TableView.Size = new System.Drawing.Size(693, 318);
             this.TableView.TabIndex = 1;
             this.TableView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TableView_CellClick);
             // 
-            // ColumnHeaderWeight
+            // label1
             // 
-            this.ColumnHeaderWeight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ColumnHeaderWeight.AutoSize = true;
-            this.ColumnHeaderWeight.Location = new System.Drawing.Point(373, 0);
-            this.ColumnHeaderWeight.Name = "ColumnHeaderWeight";
-            this.ColumnHeaderWeight.Size = new System.Drawing.Size(41, 13);
-            this.ColumnHeaderWeight.TabIndex = 34;
-            this.ColumnHeaderWeight.Text = "Weight";
-            // 
-            // label2
-            // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(177, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
-            this.label2.TabIndex = 35;
-            this.label2.Text = "SKU";
-            // 
-            // label3
-            // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(277, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 13);
-            this.label3.TabIndex = 36;
-            this.label3.Text = "Quantity";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(76, 63);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 34;
+            this.label1.Text = "Name";
             // 
             // SearchBarPanel
             // 
@@ -249,6 +201,54 @@
             this.SearchLabel.Size = new System.Drawing.Size(41, 13);
             this.SearchLabel.TabIndex = 27;
             this.SearchLabel.Text = "Search";
+            // 
+            // ColumnHeaderBarcodeNumber
+            // 
+            this.ColumnHeaderBarcodeNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ColumnHeaderBarcodeNumber.AutoSize = true;
+            this.ColumnHeaderBarcodeNumber.Location = new System.Drawing.Point(577, 63);
+            this.ColumnHeaderBarcodeNumber.Name = "ColumnHeaderBarcodeNumber";
+            this.ColumnHeaderBarcodeNumber.Size = new System.Drawing.Size(29, 13);
+            this.ColumnHeaderBarcodeNumber.TabIndex = 36;
+            this.ColumnHeaderBarcodeNumber.Text = "EAN";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(279, 63);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(46, 13);
+            this.label3.TabIndex = 36;
+            this.label3.Text = "Quantity";
+            // 
+            // label2
+            // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(179, 63);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(29, 13);
+            this.label2.TabIndex = 35;
+            this.label2.Text = "SKU";
+            // 
+            // ColumnHeaderWeight
+            // 
+            this.ColumnHeaderWeight.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.ColumnHeaderWeight.AutoSize = true;
+            this.ColumnHeaderWeight.Location = new System.Drawing.Point(375, 63);
+            this.ColumnHeaderWeight.Name = "ColumnHeaderWeight";
+            this.ColumnHeaderWeight.Size = new System.Drawing.Size(41, 13);
+            this.ColumnHeaderWeight.TabIndex = 34;
+            this.ColumnHeaderWeight.Text = "Weight";
             // 
             // TableViewPanel
             // 
@@ -427,8 +427,8 @@
             this.MenuBar.ResumeLayout(false);
             this.MenuBar.PerformLayout();
             this.ShowProductsMainContainer.ResumeLayout(false);
+            this.ShowProductsMainContainer.PerformLayout();
             this.ShowProductsPanel.ResumeLayout(false);
-            this.ShowProductsPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TableView)).EndInit();
             this.SearchBarPanel.ResumeLayout(false);
             this.SearchBarPanel.PerformLayout();

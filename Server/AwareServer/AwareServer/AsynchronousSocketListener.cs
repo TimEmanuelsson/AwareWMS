@@ -79,17 +79,17 @@ namespace AwareServer
             StateObject state = (StateObject)ar.AsyncState;
             Socket handler = state.workSocket;
             String content = String.Empty;
-            int bytesRead = 0;
-            try
-            {
+            int bytesRead = handler.EndReceive(ar);
+            //try
+            //{
                 // Read data from the client socket. 
-                bytesRead = handler.EndReceive(ar);
-            }
-            catch (SocketException e)
-            {
-                ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
-                service.InsertException(log);
-            }
+                
+            //}
+            //catch (SocketException e)
+            //{
+            //    ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
+            //    service.InsertException(log);
+            //}
 
 
             if (bytesRead > 0)
@@ -103,7 +103,7 @@ namespace AwareServer
             try
             {
                 InputHandler inputHandler = new InputHandler();
-                byte[] returnStr = inputHandler.GetReturnString(content);
+                byte[] returnStr = inputHandler.GetReturnBytes(content);
                 Send(handler, returnStr);
             }
             catch (Exception e)

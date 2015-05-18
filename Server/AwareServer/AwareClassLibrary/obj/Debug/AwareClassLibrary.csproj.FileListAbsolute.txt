@@ -12,7 +12,6 @@ C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\AwareServer\AwareClassLibrar
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\AwareServer\AwareClassLibrary\bin\Debug\AwareClassLibrary.pdb
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\AwareServer\AwareClassLibrary\obj\Debug\AwareClassLibrary.dll
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\AwareServer\AwareClassLibrary\obj\Debug\AwareClassLibrary.pdb
-C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\AwareServer\AwareClassLibrary\obj\Debug\AwareClassLibrary.csprojResolveAssemblyReference.cache
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\AwareServer\AwareClassLibrary\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Alexandra\Documents\GitHub\AwareWMS\Server\AwareServer\AwareClassLibrary\bin\Debug\Newtonsoft.Json.xml
 P:\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\bin\Debug\Newtonsoft.Json.dll
@@ -21,6 +20,5 @@ H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\bin\Debug\
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\bin\Debug\AwareClassLibrary.pdb
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\bin\Debug\Newtonsoft.Json.dll
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\bin\Debug\Newtonsoft.Json.xml
-H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\obj\Debug\AwareClassLibrary.csprojResolveAssemblyReference.cache
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\obj\Debug\AwareClassLibrary.dll
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\obj\Debug\AwareClassLibrary.pdb

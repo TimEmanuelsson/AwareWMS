@@ -24,9 +24,9 @@ namespace Repository.Model
             return ProductDAL.GetProductById(Id);
         }
 
-        public Product GetProductByBarcodeNumber(int BarcodeNumber)
+        public Product GetProductByEAN(int ean)
         {
-            return ProductDAL.GetProductByBarcodeNumber(BarcodeNumber);
+            return ProductDAL.GetProductByEAN(ean);
         }
 
         public Product GetProductBySKU(int sku)

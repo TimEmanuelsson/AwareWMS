@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="595.28px" height="841.89px" viewBox="0 0 595.28 841.89" enable-background="new 0 0 595.28 841.89" xml:space="preserve">
+<g>
+	<g>
+		<g>
+			<g>
+				<rect x="97.514" y="384.917" width="0.888" height="1.437"/>
+				<rect x="97.514" y="382.777" width="0.888" height="1.437"/>
+				<rect x="97.514" y="380.637" width="0.888" height="1.437"/>
+				<rect x="97.514" y="378.498" width="0.888" height="1.437"/>
+				<rect x="97.514" y="376.358" width="0.888" height="1.437"/>
+				<rect x="97.514" y="374.218" width="0.888" height="1.437"/>
+				<rect x="97.514" y="372.079" width="0.888" height="1.436"/>
+			</g>
+		</g>
+	</g>
+</g>
+<line fill="none" stroke="#020202" stroke-width="0.75" stroke-miterlimit="10" x1="214.454" y1="403.5" x2="214.454" y2="416"/>
+<line stroke="#000000" stroke-miterlimit="10" x1="231.501" y1="138.344" x2="284.022" y2="207.028"/>
+<line stroke="#000000" stroke-miterlimit="10" x1="368.236" y1="139.426" x2="325.95" y2="194.726"/>
+<rect x="162.544" y="110.713" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="92" height="27"/>
+<text transform="matrix(1 0 0 1 170.0806 126.0415)" font-family="'Avenir-Light'" font-size="8">MenuOrderFragment</text>
+<rect x="346.087" y="110.713" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="92" height="27"/>
+<text transform="matrix(1 0 0 1 350.2109 126.0415)" font-family="'Avenir-Light'" font-size="8">MenuStorageFragment</text>
+<g>
+	
+		<rect x="102.581" y="181.086" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="92.001" height="27"/>
+	<text transform="matrix(1 0 0 1 113.6978 197.002)" font-family="'Avenir-Light'" font-size="8">&lt;&lt;MenuListener&gt;&gt;</text>
+</g>
+<text transform="matrix(1 0 0 1 285.0225 162.4614)" font-family="'Avenir-Light'" font-size="8">switches</text>
+<g>
+	
+		<rect x="254.863" y="181.086" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="92.001" height="27"/>
+	<text transform="matrix(1 0 0 1 279.0923 197.002)" font-family="'Avenir-Light'" font-size="8">MainActivity</text>
+</g>
+<polygon stroke="#000000" stroke-miterlimit="10" points="232.642,143.256 235.87,140.757 231.501,138.448 "/>
+<polygon stroke="#000000" stroke-miterlimit="10" points="364.302,141.399 367.689,143.679 368.509,138.806 "/>
+<g>
+	<g>
+		<g>
+			<g>
+				<g>
+					<rect x="250.655" y="194.129" width="2.825" height="0.889"/>
+					<rect x="246.448" y="194.129" width="2.825" height="0.889"/>
+					<rect x="242.242" y="194.129" width="2.825" height="0.889"/>
+					<rect x="238.034" y="194.129" width="2.824" height="0.889"/>
+					<rect x="233.828" y="194.129" width="2.825" height="0.889"/>
+					<rect x="229.62" y="194.129" width="2.824" height="0.889"/>
+					<rect x="225.414" y="194.129" width="2.824" height="0.889"/>
+				</g>
+			</g>
+			<g>
+				<g>
+					<rect x="221.206" y="194.129" width="2.825" height="0.889"/>
+					<rect x="216.999" y="194.129" width="2.825" height="0.889"/>
+					<rect x="212.792" y="194.129" width="2.825" height="0.889"/>
+					<rect x="208.585" y="194.129" width="2.824" height="0.889"/>
+					<rect x="204.378" y="194.129" width="2.825" height="0.889"/>
+					<rect x="200.171" y="194.129" width="2.825" height="0.889"/>
+					<rect x="195.965" y="194.129" width="2.824" height="0.889"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+<polygon fill="#FFFFFF" stroke="#000000" stroke-width="0.5" stroke-miterlimit="10" points="199.657,196.627 199.657,192.544 
+	195.157,194.585 "/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="300.918" y1="208.086" x2="300.811" y2="251.121"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="56.656" y1="251.146" x2="563.188" y2="251.146"/>
+<rect x="18.575" y="275.975" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="79.371" height="23.293"/>
+<text transform="matrix(1 0 0 1 30.1299 289.1987)" font-family="'Avenir-Light'" font-size="6.9018">ProductListActivity</text>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="57.292" y1="251.313" x2="57.292" y2="274.714"/>
+<polygon stroke="#000000" stroke-miterlimit="10" points="59.051,270.697 55.53,270.697 57.292,274.58 "/>
+<g>
+	
+		<rect x="426.263" y="266.015" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="47.103" height="13.823"/>
+	<text transform="matrix(1 0 0 1 435.8232 273.8623)" font-family="'Avenir-Light'" font-size="4.0958">DeliveryActivity</text>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="449.814" y1="251.38" x2="449.814" y2="264.803"/>
+	<polygon stroke="#000000" stroke-miterlimit="10" points="450.86,262.879 448.77,262.879 449.814,265.183 	"/>
+</g>
+<g>
+	
+		<rect x="123.292" y="275.76" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="79.372" height="23.293"/>
+	<text transform="matrix(1 0 0 1 132.1084 288.9834)" font-family="'Avenir-Light'" font-size="6.9018">InventoryFullActivity</text>
+</g>
+<g>
+	
+		<rect x="476.43" y="266.015" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="32.128" height="13.823"/>
+	<text transform="matrix(1 0 0 1 482.2236 273.8623)" font-family="'Avenir-Light'" font-size="4.0958">PickActivity</text>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="492.421" y1="251.38" x2="492.421" y2="264.803"/>
+	<polygon stroke="#000000" stroke-miterlimit="10" points="493.465,262.879 491.374,262.879 492.421,265.183 	"/>
+</g>
+<g>
+	
+		<rect x="511.622" y="266.015" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="32.128" height="13.823"/>
+	<text transform="matrix(1 0 0 1 516.8447 273.8623)" font-family="'Avenir-Light'" font-size="4.0958">PackActivity</text>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="527.848" y1="251.38" x2="527.848" y2="264.803"/>
+	<polygon stroke="#000000" stroke-miterlimit="10" points="528.893,262.879 526.802,262.879 527.848,265.183 	"/>
+</g>
+<text transform="matrix(1 0 0 1 277.709 220.103)" font-family="'Avenir-Light'" font-size="8">starts</text>
+<g>
+	
+		<rect x="546.495" y="265.995" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="36.272" height="13.823"/>
+	<text transform="matrix(1 0 0 1 551.7188 273.8428)" font-family="'Avenir-Light'" font-size="4.0958">ReturnActivity</text>
+	<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="562.721" y1="251.36" x2="562.721" y2="264.783"/>
+	<polygon stroke="#000000" stroke-miterlimit="10" points="563.766,262.859 561.675,262.859 562.721,265.163 	"/>
+</g>
+<rect x="55.13" y="330" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="85.633" height="23.293"/>
+<text transform="matrix(1 0 0 1 59.5488 343.2236)" font-family="'Avenir-Light'" font-size="6.9018">&lt;&lt;ProductListListener&gt;&gt;</text>
+<rect x="60.498" y="386.354" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="74.896" height="23.293"/>
+<text transform="matrix(1 0 0 1 65.9268 399.5771)" font-family="'Avenir-Light'" font-size="6.9018">ProductListFragment</text>
+<rect x="12.744" y="475.274" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="74.896" height="23.294"/>
+<text transform="matrix(1 0 0 1 16.1025 488.498)" font-family="'Avenir-Light'" font-size="6.9018">ProductViewFragment</text>
+<rect x="268.06" y="475.274" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="82.991" height="23.294"/>
+<text transform="matrix(1 0 0 1 273.2217 488.498)" font-family="'Avenir-Light'" font-size="6.9018">InventoryViewFragment</text>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="162.979" y1="251.313" x2="162.979" y2="274.714"/>
+<polygon stroke="#000000" stroke-miterlimit="10" points="164.738,270.697 161.217,270.697 162.979,274.58 "/>
+<rect x="330.031" y="276.336" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="79.372" height="23.293"/>
+<text transform="matrix(1 0 0 1 337.8477 289.5596)" font-family="'Avenir-Light'" font-size="6.9018">InventoryFastActivity</text>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="369.718" y1="251.89" x2="369.718" y2="275.291"/>
+<polygon stroke="#000000" stroke-miterlimit="10" points="371.478,271.273 367.956,271.273 369.718,275.156 "/>
+<rect x="233.501" y="278.288" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="65.756" height="19.39"/>
+<text transform="matrix(1 0 0 1 236.854 289.2949)" font-family="'Avenir-Light'" font-size="5.7454">&lt;&lt;InventoryListener&gt;&gt;</text>
+<g>
+	<g>
+		<g>
+			<g>
+				<rect x="202.664" y="286.974" width="2.766" height="0.888"/>
+				<rect x="206.783" y="286.974" width="2.766" height="0.888"/>
+				<rect x="210.902" y="286.974" width="2.767" height="0.888"/>
+				<rect x="215.023" y="286.974" width="2.766" height="0.888"/>
+				<rect x="219.142" y="286.974" width="2.766" height="0.888"/>
+				<rect x="223.263" y="286.974" width="2.766" height="0.888"/>
+				<rect x="227.381" y="286.974" width="2.766" height="0.888"/>
+			</g>
+		</g>
+	</g>
+</g>
+<polygon fill="#FFFFFF" stroke="#000000" stroke-width="0.5" stroke-miterlimit="10" points="227.394,285.364 227.394,289.448 
+	231.894,287.406 "/>
+<g>
+	<g>
+		<g>
+			<g>
+				<rect x="327.265" y="288.127" width="2.767" height="0.889"/>
+				<rect x="323.146" y="288.127" width="2.766" height="0.889"/>
+				<rect x="319.025" y="288.127" width="2.767" height="0.889"/>
+				<rect x="314.905" y="288.127" width="2.767" height="0.889"/>
+				<rect x="310.786" y="288.127" width="2.767" height="0.889"/>
+				<rect x="306.666" y="288.127" width="2.766" height="0.889"/>
+				<rect x="302.547" y="288.127" width="2.766" height="0.889"/>
+			</g>
+		</g>
+	</g>
+</g>
+<polygon fill="#FFFFFF" stroke="#000000" stroke-width="0.5" stroke-miterlimit="10" points="305.3,290.625 305.3,286.542 
+	300.8,288.583 "/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="34.667" y1="299.269" x2="34.667" y2="472"/>
+<polygon stroke="#000000" stroke-miterlimit="10" points="36.428,469.702 32.906,469.702 34.668,473.585 "/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="368.509" y1="299.629" x2="368.509" y2="320"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="162.978" y1="299.629" x2="162.979" y2="320"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="162.979" y1="320" x2="368.509" y2="320"/>
+<line fill="none" stroke="#000000" stroke-miterlimit="10" x1="313.744" y1="320" x2="313.744" y2="472"/>
+<polygon stroke="#000000" stroke-miterlimit="10" points="315.504,469.059 311.982,469.059 313.744,472.941 "/>
+<g>
+	<g>
+		<g>
+			<g>
+				<rect x="64.21" y="299.629" width="0.888" height="2.766"/>
+				<rect x="64.21" y="303.749" width="0.888" height="2.766"/>
+				<rect x="64.21" y="307.868" width="0.888" height="2.767"/>
+				<rect x="64.21" y="311.989" width="0.888" height="2.766"/>
+				<rect x="64.21" y="316.108" width="0.888" height="2.766"/>
+				<rect x="64.21" y="320.229" width="0.888" height="2.766"/>
+				<rect x="64.21" y="324.347" width="0.888" height="2.766"/>
+			</g>
+		</g>
+	</g>
+</g>
+<polygon fill="#FFFFFF" stroke="#000000" stroke-width="0.5" stroke-miterlimit="10" points="66.708,324.36 62.625,324.36 
+	64.667,328.86 "/>
+<g>
+	<g>
+		<g>
+			<g>
+				<rect x="129.61" y="299.433" width="0.888" height="2.766"/>
+				<rect x="129.61" y="303.553" width="0.888" height="2.766"/>
+				<rect x="129.61" y="307.672" width="0.888" height="2.767"/>
+				<rect x="129.61" y="311.792" width="0.888" height="2.766"/>
+				<rect x="129.61" y="315.912" width="0.888" height="2.766"/>
+				<rect x="129.61" y="320.032" width="0.888" height="2.766"/>
+				<rect x="129.61" y="324.151" width="0.888" height="2.766"/>
+			</g>
+		</g>
+	</g>
+</g>
+<polygon fill="#FFFFFF" stroke="#000000" stroke-width="0.5" stroke-miterlimit="10" points="132.108,324.164 128.025,324.164 
+	130.066,328.664 "/>
+<path fill="none" stroke="#000000" stroke-miterlimit="10" d="M41,299.269C41,352.735,48.72,396,58.261,396"/>
+<polygon stroke="#000000" stroke-miterlimit="10" points="56.942,392.891 54.47,395.398 58.472,396.87 "/>
+<path fill="none" stroke="#000000" stroke-miterlimit="10" d="M154.5,299.433c0,53.856-6.933,97.437-15.5,97.437"/>
+<polygon stroke="#000000" stroke-miterlimit="10" points="141.584,397.544 139.921,394.441 137.331,397.828 "/>
+<rect x="60.498" y="433.951" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="74.896" height="23.293"/>
+<text transform="matrix(1 0 0 1 68.2314 447.1748)" font-family="'Avenir-Light'" font-size="6.9018">ProductListAdapter</text>
+<line fill="none" stroke="#020202" stroke-width="0.75" stroke-miterlimit="10" x1="97.947" y1="409.646" x2="97.947" y2="431"/>
+<polygon stroke="#000000" stroke-miterlimit="10" points="99.707,428.059 96.186,428.059 97.947,431.941 "/>
+<rect x="189.038" y="465.473" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="50.833" height="23.293"/>
+<text transform="matrix(1 0 0 1 196.6094 478.6973)" font-family="'Avenir-Light'" font-size="6.9018">Connection</text>
+<rect x="188.911" y="418.354" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="51.086" height="23.293"/>
+<text transform="matrix(1 0 0 1 195.2773 431.5771)" font-family="'Avenir-Light'" font-size="6.9018">GetProducts</text>
+<line fill="none" stroke="#020202" stroke-width="0.75" stroke-miterlimit="10" x1="214.454" y1="441.646" x2="214.454" y2="463"/>
+<polygon stroke="#000000" stroke-miterlimit="10" points="216.214,460.059 212.693,460.059 214.455,463.941 "/>
+<line fill="none" stroke="#000000" stroke-width="0.75" stroke-miterlimit="10" x1="135.395" y1="403.5" x2="214.454" y2="403.5"/>
+<polygon stroke="#000000" stroke-miterlimit="10" points="216.215,413 212.693,413 214.455,416.883 "/>
+<g>
+	<g>
+		<g>
+			<g>
+				<g>
+					<rect x="97.946" y="371.568" width="2.085" height="0.888"/>
+					<rect x="101.052" y="371.568" width="2.085" height="0.888"/>
+					<rect x="104.158" y="371.568" width="2.085" height="0.888"/>
+					<rect x="107.264" y="371.568" width="2.085" height="0.888"/>
+					<rect x="110.37" y="371.568" width="2.085" height="0.888"/>
+					<rect x="113.476" y="371.568" width="2.085" height="0.888"/>
+					<rect x="116.582" y="371.568" width="2.085" height="0.888"/>
+				</g>
+			</g>
+			<g>
+				<g>
+					<rect x="119.688" y="371.568" width="2.085" height="0.888"/>
+					<rect x="122.793" y="371.568" width="2.085" height="0.888"/>
+					<rect x="125.899" y="371.568" width="2.085" height="0.888"/>
+					<rect x="129.005" y="371.568" width="2.085" height="0.888"/>
+					<rect x="132.11" y="371.568" width="2.086" height="0.888"/>
+					<rect x="135.217" y="371.568" width="2.085" height="0.888"/>
+					<rect x="138.322" y="371.568" width="2.085" height="0.888"/>
+				</g>
+			</g>
+			<g>
+				<g>
+					<rect x="141.429" y="371.568" width="2.085" height="0.888"/>
+					<rect x="144.534" y="371.568" width="2.085" height="0.888"/>
+					<rect x="147.64" y="371.568" width="2.085" height="0.888"/>
+					<rect x="150.746" y="371.568" width="2.085" height="0.888"/>
+					<rect x="153.852" y="371.568" width="2.085" height="0.888"/>
+					<rect x="156.958" y="371.568" width="2.085" height="0.888"/>
+					<rect x="160.063" y="371.568" width="2.085" height="0.888"/>
+				</g>
+			</g>
+			<g>
+				<g>
+					<rect x="163.169" y="371.568" width="2.085" height="0.888"/>
+					<rect x="166.275" y="371.568" width="2.085" height="0.888"/>
+					<rect x="169.381" y="371.568" width="2.085" height="0.888"/>
+					<rect x="172.487" y="371.568" width="2.085" height="0.888"/>
+					<rect x="175.593" y="371.568" width="2.085" height="0.888"/>
+					<rect x="178.699" y="371.568" width="2.085" height="0.888"/>
+					<rect x="181.805" y="371.568" width="2.085" height="0.888"/>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+<polygon fill="#FFFFFF" stroke="#000000" stroke-width="0.5" stroke-miterlimit="10" points="180.175,369.958 180.175,374.042 
+	184.675,372 "/>
+<rect x="185.912" y="360.354" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="87.394" height="23.293"/>
+<text transform="matrix(1 0 0 1 191.6494 373.5771)" font-family="'Avenir-Light'" font-size="6.9018">&lt;&lt;OnTaskCompleted&gt;&gt;</text>
+<text transform="matrix(1 0 0 1 24.5752 40)" font-family="'MyriadPro-Regular'" font-size="24">Klient - Android</text>
+<line fill="none" stroke="#020202" stroke-width="0.75" stroke-miterlimit="10" x1="128.025" y1="409.646" x2="128.025" y2="420.945"/>
+<line fill="none" stroke="#000000" stroke-width="0.75" stroke-miterlimit="10" x1="127.65" y1="420.703" x2="147.375" y2="420.703"/>
+<line fill="none" stroke="#020202" stroke-width="0.75" stroke-miterlimit="10" x1="146.958" y1="420.945" x2="146.958" y2="494.753"/>
+<rect x="127.143" y="498.473" fill="#EFEFEF" stroke="#58595B" stroke-width="0.75" stroke-miterlimit="10" width="39.632" height="23.293"/>
+<text transform="matrix(1 0 0 1 135.0049 511.6973)" font-family="'Avenir-Light'" font-size="6.9018">Product</text>
+<polygon stroke="#000000" stroke-miterlimit="10" points="148.511,492.812 144.989,492.812 146.751,496.694 "/>
+</svg>

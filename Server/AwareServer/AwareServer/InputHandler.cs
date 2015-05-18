@@ -20,7 +20,7 @@ namespace AwareServer
         string ret = "";
         byte[] retByte = new Byte[10024];
 
-        public byte[] GetReturnString(string content)
+        public byte[] GetReturnBytes(string content)
         {   
             try
             {
@@ -68,10 +68,10 @@ namespace AwareServer
                             ret = JsonConvert.SerializeObject(product);
                             retByte = Encoding.UTF8.GetBytes(ret);
                         }
-                        else if (content.IndexOf("GET/products/barcodenumber=") > -1)
+                        else if (content.IndexOf("GET/products/ean=") > -1)
                         {
-                            string barcodenumber = content.Replace("GET/products/barcodenumber=", "");
-                            Product product = service.GetProductByBarcodeNumber(int.Parse(barcodenumber));
+                            string barcodenumber = content.Replace("GET/products/ean=", "");
+                            Product product = service.GetProductByEAN(int.Parse(barcodenumber));
                             ret = JsonConvert.SerializeObject(product);
                             retByte = Encoding.UTF8.GetBytes(ret);
                         }

@@ -33,19 +33,21 @@
             this.MenuBar = new System.Windows.Forms.MenuStrip();
             this.FileMenuContainer = new System.Windows.Forms.ToolStripMenuItem();
             this.FileMenuExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.print = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowProductsMainContainer = new System.Windows.Forms.Panel();
             this.ColumnHeaderStorageSpace = new System.Windows.Forms.Label();
             this.ShowProductsPanel = new System.Windows.Forms.Panel();
             this.TableView = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
+            this.HeaderColumnName = new System.Windows.Forms.Label();
             this.SearchBarPanel = new System.Windows.Forms.Panel();
+            this.Sort = new System.Windows.Forms.Label();
+            this.comboBox = new System.Windows.Forms.ComboBox();
             this.SearchField = new System.Windows.Forms.TextBox();
             this.SearchLabel = new System.Windows.Forms.Label();
-            this.ColumnHeaderBarcodeNumber = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.ColumnHeaderEAN = new System.Windows.Forms.Label();
+            this.ColumnHeaderQuantity = new System.Windows.Forms.Label();
+            this.ColumnHeaderSKU = new System.Windows.Forms.Label();
             this.ColumnHeaderWeight = new System.Windows.Forms.Label();
+            this.printButton = new System.Windows.Forms.Button();
             this.TableViewPanel = new System.Windows.Forms.TableLayoutPanel();
             this.WeightLabel = new System.Windows.Forms.TextBox();
             this.StorageSpaceText = new System.Windows.Forms.Label();
@@ -60,7 +62,7 @@
             this.StorageSpaceLabel = new System.Windows.Forms.TextBox();
             this.SaveEditButton = new System.Windows.Forms.Button();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.printProductsList = new System.Drawing.Printing.PrintDocument();
             this.MenuBar.SuspendLayout();
             this.ShowProductsMainContainer.SuspendLayout();
             this.ShowProductsPanel.SuspendLayout();
@@ -77,8 +79,7 @@
             // 
             this.MenuBar.Font = new System.Drawing.Font("Segoe UI Symbol", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MenuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.FileMenuContainer,
-            this.print});
+            this.FileMenuContainer});
             this.MenuBar.Location = new System.Drawing.Point(0, 0);
             this.MenuBar.Name = "MenuBar";
             this.MenuBar.Size = new System.Drawing.Size(1264, 24);
@@ -102,25 +103,19 @@
             this.FileMenuExit.Text = "Exit";
             this.FileMenuExit.Click += new System.EventHandler(this.FileMenuExit_Click);
             // 
-            // print
-            // 
-            this.print.Name = "print";
-            this.print.Size = new System.Drawing.Size(44, 20);
-            this.print.Text = "Print";
-            this.print.Click += new System.EventHandler(this.print_Click);
-            // 
             // ShowProductsMainContainer
             // 
             this.ShowProductsMainContainer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderStorageSpace);
             this.ShowProductsMainContainer.Controls.Add(this.ShowProductsPanel);
-            this.ShowProductsMainContainer.Controls.Add(this.label1);
+            this.ShowProductsMainContainer.Controls.Add(this.HeaderColumnName);
             this.ShowProductsMainContainer.Controls.Add(this.SearchBarPanel);
-            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderBarcodeNumber);
-            this.ShowProductsMainContainer.Controls.Add(this.label3);
-            this.ShowProductsMainContainer.Controls.Add(this.label2);
+            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderEAN);
+            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderQuantity);
+            this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderSKU);
             this.ShowProductsMainContainer.Controls.Add(this.ColumnHeaderWeight);
+            this.ShowProductsMainContainer.Controls.Add(this.printButton);
             this.ShowProductsMainContainer.Location = new System.Drawing.Point(3, 59);
             this.ShowProductsMainContainer.Name = "ShowProductsMainContainer";
             this.ShowProductsMainContainer.Size = new System.Drawing.Size(747, 758);
@@ -164,26 +159,54 @@
             this.TableView.TabIndex = 1;
             this.TableView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.TableView_CellClick);
             // 
-            // label1
+            // HeaderColumnName
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.HeaderColumnName.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(76, 63);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 34;
-            this.label1.Text = "Name";
+            this.HeaderColumnName.AutoSize = true;
+            this.HeaderColumnName.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.HeaderColumnName.Location = new System.Drawing.Point(76, 63);
+            this.HeaderColumnName.Name = "HeaderColumnName";
+            this.HeaderColumnName.Size = new System.Drawing.Size(35, 13);
+            this.HeaderColumnName.TabIndex = 34;
+            this.HeaderColumnName.Text = "Name";
             // 
             // SearchBarPanel
             // 
+            this.SearchBarPanel.Controls.Add(this.Sort);
+            this.SearchBarPanel.Controls.Add(this.comboBox);
             this.SearchBarPanel.Controls.Add(this.SearchField);
             this.SearchBarPanel.Controls.Add(this.SearchLabel);
-            this.SearchBarPanel.Location = new System.Drawing.Point(182, 3);
+            this.SearchBarPanel.Location = new System.Drawing.Point(54, 3);
             this.SearchBarPanel.Name = "SearchBarPanel";
-            this.SearchBarPanel.Size = new System.Drawing.Size(326, 40);
+            this.SearchBarPanel.Size = new System.Drawing.Size(570, 40);
             this.SearchBarPanel.TabIndex = 29;
+            // 
+            // Sort
+            // 
+            this.Sort.AutoSize = true;
+            this.Sort.Location = new System.Drawing.Point(395, 18);
+            this.Sort.Name = "Sort";
+            this.Sort.Size = new System.Drawing.Size(26, 13);
+            this.Sort.TabIndex = 38;
+            this.Sort.Text = "Sort";
+            // 
+            // comboBox
+            // 
+            this.comboBox.FormattingEnabled = true;
+            this.comboBox.Items.AddRange(new object[] {
+            "Reset",
+            "Name",
+            "SKU",
+            "Quantity",
+            "Weight",
+            "Storagespace"});
+            this.comboBox.Location = new System.Drawing.Point(427, 14);
+            this.comboBox.Name = "comboBox";
+            this.comboBox.Size = new System.Drawing.Size(121, 21);
+            this.comboBox.TabIndex = 37;
+            this.comboBox.SelectedIndexChanged += new System.EventHandler(this.comboBox_SelectedIndexChanged);
             // 
             // SearchField
             // 
@@ -202,41 +225,41 @@
             this.SearchLabel.TabIndex = 27;
             this.SearchLabel.Text = "Search";
             // 
-            // ColumnHeaderBarcodeNumber
+            // ColumnHeaderEAN
             // 
-            this.ColumnHeaderBarcodeNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.ColumnHeaderEAN.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.ColumnHeaderBarcodeNumber.AutoSize = true;
-            this.ColumnHeaderBarcodeNumber.Location = new System.Drawing.Point(577, 63);
-            this.ColumnHeaderBarcodeNumber.Name = "ColumnHeaderBarcodeNumber";
-            this.ColumnHeaderBarcodeNumber.Size = new System.Drawing.Size(29, 13);
-            this.ColumnHeaderBarcodeNumber.TabIndex = 36;
-            this.ColumnHeaderBarcodeNumber.Text = "EAN";
+            this.ColumnHeaderEAN.AutoSize = true;
+            this.ColumnHeaderEAN.Location = new System.Drawing.Point(577, 63);
+            this.ColumnHeaderEAN.Name = "ColumnHeaderEAN";
+            this.ColumnHeaderEAN.Size = new System.Drawing.Size(29, 13);
+            this.ColumnHeaderEAN.TabIndex = 36;
+            this.ColumnHeaderEAN.Text = "EAN";
             // 
-            // label3
+            // ColumnHeaderQuantity
             // 
-            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.ColumnHeaderQuantity.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(279, 63);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(46, 13);
-            this.label3.TabIndex = 36;
-            this.label3.Text = "Quantity";
+            this.ColumnHeaderQuantity.AutoSize = true;
+            this.ColumnHeaderQuantity.Location = new System.Drawing.Point(279, 63);
+            this.ColumnHeaderQuantity.Name = "ColumnHeaderQuantity";
+            this.ColumnHeaderQuantity.Size = new System.Drawing.Size(46, 13);
+            this.ColumnHeaderQuantity.TabIndex = 36;
+            this.ColumnHeaderQuantity.Text = "Quantity";
             // 
-            // label2
+            // ColumnHeaderSKU
             // 
-            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.ColumnHeaderSKU.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(179, 63);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(29, 13);
-            this.label2.TabIndex = 35;
-            this.label2.Text = "SKU";
+            this.ColumnHeaderSKU.AutoSize = true;
+            this.ColumnHeaderSKU.Location = new System.Drawing.Point(179, 63);
+            this.ColumnHeaderSKU.Name = "ColumnHeaderSKU";
+            this.ColumnHeaderSKU.Size = new System.Drawing.Size(29, 13);
+            this.ColumnHeaderSKU.TabIndex = 35;
+            this.ColumnHeaderSKU.Text = "SKU";
             // 
             // ColumnHeaderWeight
             // 
@@ -249,6 +272,16 @@
             this.ColumnHeaderWeight.Size = new System.Drawing.Size(41, 13);
             this.ColumnHeaderWeight.TabIndex = 34;
             this.ColumnHeaderWeight.Text = "Weight";
+            // 
+            // printButton
+            // 
+            this.printButton.Location = new System.Drawing.Point(630, 10);
+            this.printButton.Name = "printButton";
+            this.printButton.Size = new System.Drawing.Size(91, 28);
+            this.printButton.TabIndex = 34;
+            this.printButton.Text = "Print Products";
+            this.printButton.UseVisualStyleBackColor = true;
+            this.printButton.Click += new System.EventHandler(this.printButton_Click);
             // 
             // TableViewPanel
             // 
@@ -407,9 +440,10 @@
             this.splitContainer1.SplitterDistance = 421;
             this.splitContainer1.TabIndex = 31;
             // 
-            // printDocument1
+            // printProductsList
             // 
-            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
+            this.printProductsList.DocumentName = "Products";
+            this.printProductsList.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printProductsList_PrintPage);
             // 
             // MainView
             // 
@@ -450,7 +484,7 @@
         private System.Windows.Forms.ToolStripMenuItem FileMenuExit;
         private System.Windows.Forms.Panel ShowProductsMainContainer;
         private System.Windows.Forms.Label ColumnHeaderStorageSpace;
-        private System.Windows.Forms.Label ColumnHeaderBarcodeNumber;
+        private System.Windows.Forms.Label ColumnHeaderEAN;
         private System.Windows.Forms.Panel SearchBarPanel;
         private System.Windows.Forms.TextBox SearchField;
         private System.Windows.Forms.Label SearchLabel;
@@ -471,10 +505,12 @@
         private System.Windows.Forms.TextBox StorageSpaceLabel;
         private System.Windows.Forms.Button SaveEditButton;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ToolStripMenuItem print;
-        private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.Label HeaderColumnName;
+        private System.Windows.Forms.Label ColumnHeaderSKU;
+        private System.Windows.Forms.Label ColumnHeaderQuantity;
+        private System.Drawing.Printing.PrintDocument printProductsList;
+        private System.Windows.Forms.Button printButton;
+        private System.Windows.Forms.ComboBox comboBox;
+        private System.Windows.Forms.Label Sort;
     }
 }

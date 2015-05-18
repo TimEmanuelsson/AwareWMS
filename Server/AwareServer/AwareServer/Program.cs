@@ -26,8 +26,10 @@ namespace AwareServer
         {
             try
             {
-                //DataFetch dataFetch = new DataFetch();
-                //dataFetch.FetchAndInsert();
+                DataFetch dataFetch = new DataFetch();
+                Thread eCommerceConnectionThread = new Thread(new ThreadStart(dataFetch.Initialize));
+                eCommerceConnectionThread.Start();
+
                 AsynchronousSocketListener.Start();
             }
             catch (Exception e)

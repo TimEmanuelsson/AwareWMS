@@ -207,6 +207,41 @@ namespace Repository.Model.DAL
             }
         }
 
+        public int GetProductsQuantitySum()
+        {
+            using (SqlConnection conn = CreateConnection())
+            {
+                try
+                {
+                    // Create SqlCommand-objekt that execute stored procedure.
+                    SqlCommand cmd = new SqlCommand("dbo.usp_GetProductsQuantitySum", conn);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    
+                    //Open database connection.
+                    conn.Open();
+
+                    int status = (int)cmd.ExecuteScalar();
+                    return status;
+                    //using (SqlDataReader reader = cmd.ExecuteReader())
+                    //{
+                    //    if (reader.HasRows)
+                    //    {
+                    //        return 1;
+                    //    }
+                    //    else
+                    //    {
+                    //        return 0;
+                    //    }
+                    //}
+                }
+                catch
+                {
+                    //Throw Exception.
+                    throw new ApplicationException("An error occurred while trying to retrieve the product.");
+                }
+            }
+        }
+
         public int GetProductCount()
         {
             IEnumerable<Product> products = GetProducts();
@@ -229,8 +264,6 @@ namespace Repository.Model.DAL
 
                     //Open database connection.
                     conn.Open();
-                    //int status = (int)cmd.ExecuteScalar();
-                    //return status;
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
                         if (reader.HasRows)

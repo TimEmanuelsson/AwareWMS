@@ -44,6 +44,11 @@ namespace Repository.Model
             return ProductDAL.GetProductCount();
         }
 
+        public int GetProductsQuantitySum()
+        {
+            return ProductDAL.GetProductsQuantitySum();
+        }
+
         public int CheckIfProductBusy(int productId)
         {
             return ProductDAL.CheckIfProductBusy(productId);

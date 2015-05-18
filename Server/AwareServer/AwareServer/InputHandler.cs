@@ -115,6 +115,11 @@ namespace AwareServer
                             ret = String.Format("{0}", service.GetProductCount().ToString());
                             retByte = Encoding.UTF8.GetBytes(ret);
                         }
+                        else if (content.IndexOf("GET/products/quantitysum") > -1)
+                        {
+                            ret = String.Format("{0}", service.GetProductsQuantitySum().ToString());
+                            retByte = Encoding.UTF8.GetBytes(ret);
+                        }
                         else if (content.IndexOf("GET/products/status/id=") > -1)
                         {
                             string id = content.Replace("GET/products/status/id=", "");

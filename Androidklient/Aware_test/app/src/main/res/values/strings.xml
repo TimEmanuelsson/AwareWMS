@@ -17,51 +17,52 @@
 
         <!-- Order menu -->
         <string name="logo">logo</string>
-        <string name="label_order_to_pick">Att plocka:</string>
-        <string name="label_order_to_pack">Att packa:</string>
-        <string name="btn_order_menu_pick">Plocka</string>
-        <string name="btn_order_menu_pack">Packa</string>
-        <string name="btn_order_menu_returns">Returer</string>
+        <string name="label_order_to_pick">To pick:</string>
+        <string name="label_order_to_pack">To pack:</string>
+        <string name="btn_order_menu_pick">Pick</string>
+        <string name="btn_order_menu_pack">Pack</string>
+        <string name="btn_order_menu_returns">Returns</string>
 
         <!-- Storage menu -->
-        <string name="label_total_products">Artiklar i lager:</string>
-        <string name="label_total_value">Till ett värde av:</string>
-        <string name="btn_storage_menu_products">Artiklar</string>
-        <string name="btn_storage_menu_inventory">Inventering</string>
-        <string name="btn_inventory_menu_fast">Snabb</string>
-        <string name="btn_inventory_menu_cancel">Avbryt</string>
-        <string name="btn_inventory_menu_full">Stor</string>
-        <string name="btn_storage_menu_delivery">Inleveranser</string>
+        <string name="label_total_products">Products in stock:</string>
+        <string name="label_total_value">Total value of:</string>
+        <string name="btn_storage_menu_products">Products</string>
+        <string name="btn_storage_menu_inventory">Inventory</string>
+        <string name="btn_inventory_menu_fast">Fast</string>
+        <string name="btn_inventory_menu_cancel">Cancel</string>
+        <string name="btn_inventory_menu_full">Full</string>
+        <string name="btn_storage_menu_delivery">Delivery</string>
 
             <!-- Products -->
 
                 <!-- ProductList -->
-                <string name="action_search">Sök</string>
-                <string name="icon_sorting">Sortera</string>
-                <string name="label_column_product_storagespace">Plats</string>
-                <string name="label_column_product_last_inventory">Inv.</string>
-                <string name="label_column_product_name">Namn</string>
-                <string name="label_column_product_sku">Art. Nr</string>
-                <string name="label_column_product_balance">Saldo</string>
+                <string name="action_search">Search</string>
+                <string name="icon_sorting">Sort</string>
+                <string name="label_column_product_storagespace">Space</string>
+                <string name="label_column_product_last_inventory">Inv</string>
+                <string name="label_column_product_name">Name</string>
+                <string name="label_column_product_sku">Number</string>
+                <string name="label_column_product_quantity">QTY</string>
 
                 <!-- ProductView -->
-                <string name="btn_product_view_show_edit_menu">Visa redigeringsmeny</string>
-                <string name="btn_product_view_create_EAN">Lägg till streckkod</string>
-                <string name="btn_product_view_change_EAN">Ändra streckkod</string>
-                <string name="toast_ean_already_exists">Streckkoden finns redan!</string>
-                <string name="toast_product_updated">Artikel uppdaterad!</string>
-                <string name="btn_product_view_create_picture">Lägg till bild</string>
-                <string name="btn_product_view_change_picture">Ändra bild</string>
-                <string name="product_picture">Bild för artikel</string>
+                <string name="btn_product_view_show_edit_menu">Show edit menu</string>
+                <string name="btn_product_view_create_EAN">Add Barcode</string>
+                <string name="btn_product_view_change_EAN">Change Barcode</string>
+                <string name="toast_ean_already_exists">Barcode already in use!</string>
+                <string name="toast_product_updated">Product updated!</string>
+                <string name="btn_product_view_create_picture">Add image</string>
+                <string name="btn_product_view_change_picture">Change image</string>
+                <string name="product_picture">Product Image</string>
 
 
             <!-- Inventory -->
-            <string name="decrease">Öka</string>
-            <string name="increase">Minska</string>
-            <string name="btn_inventory_view_inventory_cancel">Avbryt</string>
-            <string name="btn_inventory_view_inventory_show">Gör inventering</string>
-            <string name="btn_inventory_view_inventory_do_inventory">Inventera</string>
-            <string name="inventory_finished">Inventerad!</string>
+            <string name="decrease">Increment</string>
+            <string name="increase">Decrement</string>
+            <string name="btn_inventory_view_inventory_cancel">Cancel</string>
+            <string name="btn_inventory_view_inventory_show">Do Inventory</string>
+            <string name="btn_inventory_view_inventory_save">Save</string>
+            <string name="toast_inventory_finished">Inventory done!</string>
+            <string name="toast_ean_doesnt_exists">Barcode not found!</string>
 
     <!-- Activity names -->
     <string name="title_activity_inventory_fast">InventoryFastActivity</string>

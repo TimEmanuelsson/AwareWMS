@@ -9,13 +9,12 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
-
 import com.example.andreaslengqvist.aware_test.Connection.Connection;
 import com.example.andreaslengqvist.aware_test.R;
 import com.example.andreaslengqvist.aware_test.Storage.Product;
+import com.example.andreaslengqvist.aware_test.Storage.ProductListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,91 +32,175 @@ import java.net.UnknownHostException;
  * to that EAN. Also handles the Inventory for that Product.
  *
  */
-public class InventoryFastActivity extends ActionBarActivity implements InventoryListener {
+public class InventoryFastActivity extends ActionBarActivity implements ProductListener {
 
+    // Static Name variables.
     private static final String EAN_TAG = "EAN_TAG";
 
     private static final String INVENTORY_VIEW_FRAGMENT_TAG = "INVENTORY_VIEW_FRAGMENT_TAG";
     private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
     private static final String INVENTORY_LAYOUT_TAG = "INVENTORY_LAYOUT_TAG";
 
+    // WeakReference variable.
     private static WeakReference<InventoryFastActivity> wrActivity = null;
 
-    private InventoryViewFragment mInventoryViewFragment;
+    // Member variables.
     private Handler mHandler;
     private String mScannedEAN;
     private String mOldJSON;
+    private boolean mEANNotFound;
+    private boolean mWaitingForInventoryUpdate;
 
-    private boolean mWaitingOnUpdate;
 
     @Override
+    /**
+     * Called when this Activity is being created.
+     *
+     * Basically just do thing that needs to be done upon creation.
+     *
+     * @param savedInstanceState saved data from a Configuration change
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_fast);
 
+
+        // If user is NOT using a tablet set the orientation to only allow Portrait-mode.
+        if (!getResources().getBoolean(R.bool.isTablet)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
+
+        // Create a WeakReference to remember this Activity upon a orientation change.
         wrActivity = new WeakReference<>(this);
 
-        // Get which type (Products / Inventory).
+
+        // Get the scanned EAN from the bundle.
         Intent i = getIntent();
         if (i.hasExtra(EAN_TAG)) {
             mScannedEAN = i.getStringExtra(EAN_TAG);
         }
 
-        if (!getResources().getBoolean(R.bool.isTablet)) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
+
+        // Create and start a Handler to run periodically.
         mHandler = new Handler();
         startPeriodically();
     }
 
+
     @Override
+    /**
+     * Called when pressing Back button.
+     * Works like an regular back button and goes back to the previous Activity (MainActivity).
+     */
     public void onBackPressed() {
         super.onBackPressed();
-        stopPeriodically();
         overridePendingTransition(R.anim.pull_in_bottom, R.anim.push_out_top);
     }
 
+
     @Override
+    /**
+     * Called when Activity destroyed.
+     *
+     * Stops the periodically background thread GetProductByEAN.
+     */
     protected void onDestroy() {
         super.onDestroy();
         stopPeriodically();
     }
 
+
     @Override
+    /**
+     * Called when Activity paused. (e.g sleep-mode or user heads to another app)
+     *
+     * Stops the periodically background thread GetProductByEAN.
+     */
     protected void onPause() {
         super.onPause();
         stopPeriodically();
     }
 
+
     @Override
+    /**
+     * Called when Activity resumed. (e.g from sleep-mode or user in again from another app)
+     *
+     * Stops the old periodically background thread GetProductByEAN and starts
+     * a new one.
+     */
     protected void onResume() {
         super.onResume();
         mHandler.removeCallbacks(runPeriodically);
         startPeriodically();
     }
 
+
     @Override
+    /**
+     * This Interface-function is never used.
+     */
+    public void onPutProduct() {
+        // TODO: NOTHING.
+    }
+
+
+    @Override
+    /**
+     * This Interface-function is never used.
+     */
     public void onInsideInventory(boolean inside) {
         // TODO: NOTHING.
     }
 
+
     @Override
-    public void onDoInventory() {
-        mWaitingOnUpdate = true;
+    /**
+     * From InventoryViewFragment - OnCLickListener (Save Inventory)
+     *
+     * Called when user clicked Save in InventoryView.
+     * Sets a waiting variable to use in the AsyncTask.
+     */
+    public void onPutInventory() {
+        mWaitingForInventoryUpdate = true;
     }
 
+
+    /**
+     * From onCreate / onResume
+     *
+     * Called when activity is created or resumed.
+     * Posts runPeriodically to the Handler.
+     */
     public void startPeriodically() {
         mHandler.post(runPeriodically);
     }
 
+
+    /**
+     * From onPaused / onDestroy
+     *
+     * Called when activity is paused or destroyed.
+     * Removes runPeriodically from the callbacks.
+     */
     public void stopPeriodically() {
         mHandler.removeCallbacks(runPeriodically);
     }
 
+
+    /**
+     * From startPeriodically
+     *
+     * Called when the Handler wants to run the periodically AsyncTask GetProductByEAN.
+     * Runs a instance of GetProductByEAN each 1000ms (delayed).
+     */
     private Runnable runPeriodically = new Runnable() {
 
         @Override
         public void run() {
+
+            // Create a new AsyncTask each second.
             new GetProductByEAN().execute();
             mHandler.postDelayed(runPeriodically, 1000);
         }
@@ -125,8 +208,8 @@ public class InventoryFastActivity extends ActionBarActivity implements Inventor
 
 
     /**
-     * AsyncTask which will run in the background and fetch a new version of the Scanned Product.
-     * If the new Product is the same as the old one no changes have been made and NO need to replace the old one.
+     * AsyncTask which will run in the background and fetch a JSON of the Scanned Product.
+     * If the new Product is the same as the old Product no changes have been made and NO need to replace the old Product.
      */
     private class GetProductByEAN extends AsyncTask<Void, Void, Product> {
 
@@ -150,7 +233,7 @@ public class InventoryFastActivity extends ActionBarActivity implements Inventor
                 out.println("GET/products/ean=" + mScannedEAN);
                 out.flush();
 
-                // Get Products by using a InputStreamReader wrapped in a BufferedReader to read JSON as a String.
+                // Get Product by using a InputStreamReader wrapped in a BufferedReader to read JSON as a String.
                 newJSON = new BufferedReader(new InputStreamReader(socket.getInputStream())).readLine();
 
             } catch (UnknownHostException e) {
@@ -169,25 +252,23 @@ public class InventoryFastActivity extends ActionBarActivity implements Inventor
                 }
             }
 
-            // If and old JSON-object exists. (e.g not the first GET)
-            if (mOldJSON != null) {
+            // If the returned JSON is not "null".
+            if (!newJSON.equals("null")) {
 
-                // And the new JSON-object NOT equals to the old, return the new one.
-                if (!newJSON.equals(mOldJSON)) {
-                    mOldJSON = newJSON;
-                    return new Gson().fromJson(newJSON, new TypeToken<Product>() {
-                    }.getType());
-                }
-                // Else, there has not been any changes in the database. Retain the old one.
-                else {
-                    return null;
-                }
+                    // If the new JSON-object NOT equals to the old one, return the new one.
+                    if (!newJSON.equals(mOldJSON)) {
+                        mOldJSON = newJSON;
+                        return new Gson().fromJson(newJSON, new TypeToken<Product>() {
+                        }.getType());
+                    }
+                    // Else, there has not been any changes in the database. Keep the old one.
+                    else { return null; }
             }
 
-            // Else, this is the first GET.
+            // Else the EAN cannot be found in the database.
             else {
-                mOldJSON = newJSON;
-                return new Gson().fromJson(newJSON, new TypeToken<Product>() {}.getType());
+                mEANNotFound = true;
+                return null;
             }
         }
 
@@ -195,30 +276,41 @@ public class InventoryFastActivity extends ActionBarActivity implements Inventor
         protected void onPostExecute(Product result) {
             super.onPostExecute(result);
 
-            if ((wrActivity.get() != null) && (wrActivity.get().isFinishing() != true)) {
+            // Weird solution to solve the bug with Activity lost upon screen rotation.
+            if ((wrActivity.get() != null) && (!wrActivity.get().isFinishing())) {
 
+                // If EAN couldn't be found Toast and destroy Activity and return to the previous one.
+                if(mEANNotFound){
+                    Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_ean_doesnt_exists, Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
+                    toast.show();
+                    onBackPressed();
+                }
+
+                // If EAN was found and a Product was returned.
                 if (result != null) {
 
                     Bundle bundle = new Bundle();
                     bundle.putParcelable(PARCELABLE_PRODUCT_TAG, result);
                     bundle.putBoolean(INVENTORY_LAYOUT_TAG, true);
 
-                    // Create an instance of ProductListFragment and add the bundle.
-                    mInventoryViewFragment = new InventoryViewFragment();
+                    // Create an instance of InventoryViewFragment and add the bundle.
+                    InventoryViewFragment mInventoryViewFragment = new InventoryViewFragment();
                     mInventoryViewFragment.setArguments(bundle);
 
-                    // Get FragmentManager,replace whatever is in the container with a ProductListFragment.
+                    // Get FragmentManager,replace whatever is in the container with a InventoryViewFragment.
                     wrActivity.get().getSupportFragmentManager()
                             .beginTransaction()
                             .replace(R.id.fragment_inventory_view_container, mInventoryViewFragment, INVENTORY_VIEW_FRAGMENT_TAG)
                             .commit();
-                }
 
-                if (mWaitingOnUpdate) {
-                    mWaitingOnUpdate = false;
-                    Toast toast = Toast.makeText(getApplicationContext(), R.string.inventory_finished, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
-                    toast.show();
+                    // If an Inventory has been made.
+                    if (mWaitingForInventoryUpdate) {
+                        mWaitingForInventoryUpdate = false;
+                        Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_inventory_finished, Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
+                        toast.show();
+                    }
                 }
             }
         }

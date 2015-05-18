@@ -8,6 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:padding="10dp">
 
         <ImageView
@@ -103,7 +104,7 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/output_product_balance"
+            android:id="@+id/output_product_quantity"
             android:layout_height="match_parent"
             android:layout_width="0dp"
             android:layout_weight="3"
@@ -131,14 +132,5 @@
             android:text="@string/btn_product_view_create_EAN"
             android:visibility="gone"/>
 
-        <!--<Button-->
-            <!--style="?android:attr/borderlessButtonStyle"-->
-            <!--android:id="@+id/btn_product_view_create_picture"-->
-            <!--android:layout_height="55dp"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="0.5"-->
-            <!--android:layout_marginEnd="10dp"-->
-            <!--android:text="@string/btn_product_view_create_picture"-->
-            <!--android:visibility="gone"/>-->
     </LinearLayout>
 </RelativeLayout>

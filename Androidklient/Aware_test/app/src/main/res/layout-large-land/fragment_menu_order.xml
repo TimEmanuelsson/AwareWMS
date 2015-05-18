@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white">
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="200dp"
+        android:layout_marginLeft="200dp">
+
+        <TextView
+            android:id="@+id/label_order_to_pick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/label_order_to_pick"
+            android:textSize="22sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/output_order_to_pick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/label_order_to_pick"
+            android:layout_centerHorizontal="true"
+            android:clickable="false"
+            android:textSize="22sp"
+            android:text="0"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="200dp"
+        android:layout_marginRight="200dp">
+
+        <TextView
+            android:id="@+id/label_order_to_pack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_order_to_pack"
+            android:layout_centerHorizontal="true"
+            android:textSize="22sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/output_order_to_pack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/label_order_to_pack"
+            android:layout_centerHorizontal="true"
+            android:clickable="false"
+            android:textSize="22sp"
+            android:text="0"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/menu_white">
+
+        <TextView
+            style="@style/ButtonStyleLookalike"
+            android:id="@+id/label_menu_home"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false" />
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/btn_order_menu_pick"
+            android:layout_width="fill_parent"
+            android:layout_height="65dp"
+            android:layout_below="@+id/label_menu_home"
+            android:textSize="24sp"
+            android:text="@string/btn_order_menu_pick" />
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/btn_order_menu_pack"
+            android:layout_width="fill_parent"
+            android:layout_height="65dp"
+            android:layout_below="@+id/btn_order_menu_pick"
+            android:textSize="24sp"
+            android:text="@string/btn_order_menu_pack" />
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/btn_order_menu_returns"
+            android:layout_width="fill_parent"
+            android:layout_height="65dp"
+            android:layout_below="@+id/btn_order_menu_pack"
+            android:layout_marginBottom="10dp"
+            android:textSize="24sp"
+            android:text="@string/btn_order_menu_returns" />
+
+    </RelativeLayout>
+</RelativeLayout>

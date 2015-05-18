@@ -96,6 +96,11 @@ namespace Repository.Model
             OrderDAL.UpdateOrder(order);
         }
 
+        public void UpdateOrderStatus(int orderId, int statusId)
+        {
+            OrderDAL.UpdateOrderStatus(orderId, statusId);
+        }
+
         public void InsertAndUpdateOrder(Order order)
         {
             //Kanske någon validering här!
@@ -135,14 +140,19 @@ namespace Repository.Model
             get { return _orderRowDAL ?? (_orderRowDAL = new OrderRowDAL()); }
         }
 
-        public IEnumerable<OrderRow> GetOrderRow()
+        public OrderRow GetOrderRowById(int id)
         {
-            return OrderRowDAL.GetOrderRow();
+            return OrderRowDAL.GetOrderRowById(id);
         }
 
-        public OrderRow GetOrderRowById(int Id)
+        public IEnumerable<OrderRow> GetOrderRows()
         {
-            return OrderRowDAL.GetOrderRowById(Id);
+            return OrderRowDAL.GetOrderRows();
+        }
+
+        public IEnumerable<OrderRow> GetOrderRowsByOrderId(int Id)
+        {
+            return OrderRowDAL.GetOrderRowsByOrderId(Id);
         }
 
         #endregion
@@ -159,6 +169,12 @@ namespace Repository.Model
         public OrderStatus GetOrderStatusById(int Id)
         {
             return OrderStatusDAL.GetOrderStatusById(Id);
+        }
+
+        public OrderStatus GetOrderStatusByOrderId(int id)
+        {
+            int statusId = OrderStatusDAL.GetOrderStatusByOrderId(id);
+            return GetOrderStatusById(statusId);
         }
 
         #endregion

@@ -12,6 +12,10 @@ import android.widget.SeekBar;
 /**
  * Created by andreaslengqvist on 15-04-30.
  *
+ * Extended SeekBar to be used for displaying a Vertical SeekBar instead of the horizontal one.
+ *
+ * http://stackoverflow.com/questions/3333658/how-to-make-a-vertical-seekbar-in-android
+ *
  */
 public class VerticalSeekBar extends SeekBar {
 
@@ -39,13 +43,14 @@ public class VerticalSeekBar extends SeekBar {
 
     protected void onDraw(Canvas c) {
         c.rotate(-90);
-        c.translate(-getHeight(),0);
+        c.translate(-getHeight(), 0);
 
         super.onDraw(c);
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
         if (!isEnabled()) {
             return false;
         }
@@ -54,10 +59,7 @@ public class VerticalSeekBar extends SeekBar {
             case MotionEvent.ACTION_DOWN:
             case MotionEvent.ACTION_MOVE:
             case MotionEvent.ACTION_UP:
-                int i=0;
-                i=getMax() - (int) (getMax() * event.getY() / getHeight());
-                setProgress(i);
-                Log.i("Progress", getProgress() + "");
+                setProgress(getMax() - (int) (getMax() * event.getY() / getHeight()));
                 onSizeChanged(getWidth(), getHeight(), 0, 0);
                 break;
 
@@ -67,4 +69,9 @@ public class VerticalSeekBar extends SeekBar {
         return true;
     }
 
+    @Override
+    public synchronized void setProgress(int progress) {
+        super.setProgress(progress);
+        onSizeChanged(getWidth(), getHeight(), 0, 0);
+    }
 }

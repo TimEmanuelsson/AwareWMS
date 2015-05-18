@@ -5,21 +5,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.andreaslengqvist.aware_test.Connection.Connection;
 import com.example.andreaslengqvist.aware_test.R;
-import com.example.andreaslengqvist.aware_test.Storage.Inventory.InventoryViewFragment;
-import com.example.andreaslengqvist.aware_test.Storage.Product;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,14 +20,16 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 
+
 /**
  * Created by andreaslengqvist on 15-04-07.
+ *
+ * MenuStorageFragment handles menu choices in the StorageMenu.
  *
  */
 public class MenuStorageFragment extends Fragment {
 
-    private View mView;
-    private MenuListener mCallback;
+    // Layout variables.
     private TextView output_total_products;
     private Button btn_storage_menu_products;
     private Button btn_storage_menu_inventory;
@@ -43,6 +37,16 @@ public class MenuStorageFragment extends Fragment {
     private Button btn_inventory_menu_full;
     private Button btn_inventory_menu_cancel;
 
+    // Member variables.
+    private View mView;
+    private MenuListener mCallback;
+
+
+    /**
+     * From onCreate
+     *
+     * Basically initialize all elements from the XML-layout (res/layout/fragment_menu_storage.xml).
+     */
     private void initializeVariables() {
         output_total_products = (TextView) mView.findViewById(R.id.output_total_products);
 
@@ -53,12 +57,16 @@ public class MenuStorageFragment extends Fragment {
         btn_inventory_menu_cancel = (Button) mView.findViewById(R.id.btn_inventory_menu_cancel);
     }
 
+
+    /**
+     * Called when this Fragment is being created.
+     *
+     * This makes sure that the container activity has implemented
+     * the callback interface. If not, it throws an exception
+     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
         try {
             mCallback = (MenuListener) activity;
         } catch (ClassCastException e) {
@@ -69,18 +77,38 @@ public class MenuStorageFragment extends Fragment {
 
 
     @Override
+    /**
+     * Called when this Fragments View is being created.
+     *
+     * Basically just do thing that needs to be done upon creation of the View.
+     *
+     * @param inflater that can be used to inflate any views in the fragment
+     * @param container this can be used to generate the LayoutParams of the view
+     * @param savedInstanceState saved data from a Configuration change
+     *
+     * @return mView inflated with the correct layout
+     */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_menu_storage, container, false);
         return mView;
     }
 
+
     @Override
+    /**
+     * Called when this Fragments Activity finished its creation.
+     *
+     * Basically just do thing that needs to be done upon creation of the Fragment.
+     *
+     * @param savedInstanceState saved data from a Configuration change
+     */
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initializeVariables();
 
-        new GetTotalBalance().execute();
 
+        // Get the Menu-Data once. In this case show the total number of products.
+        new GetTotalProducts().execute();
 
 
         // Menu choice - "Products".
@@ -139,11 +167,11 @@ public class MenuStorageFragment extends Fragment {
         });
     }
 
+
     /**
-     * AsyncTask which will run in the background and fetch a new version of the Scanned Product.
-     * If the new Product is the same as the old one no changes have been made and NO need to replace the old one.
+     * AsyncTask which will run in the background and fetch the total number of Products.
      */
-    private class GetTotalBalance extends AsyncTask<Void, Void, String> {
+    private class GetTotalProducts extends AsyncTask<Void, Void, String> {
 
         private Socket socket;
         private String newJSON;
@@ -192,10 +220,9 @@ public class MenuStorageFragment extends Fragment {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-                if (result != null) {
-                    output_total_products.setText(result);
-                }
-
+            if (result != null) {
+                output_total_products.setText(result);
+            }
         }
     }
 }

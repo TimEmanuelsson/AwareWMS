@@ -8,6 +8,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Repository.Model;
 using AwareClassLibrary;
+using System.IO;
+using System.Drawing;
 
 namespace AwareServer
 {
@@ -76,32 +78,21 @@ namespace AwareServer
 
         public static void ReadCallback(IAsyncResult ar)
         {
-            StateObject state = (StateObject)ar.AsyncState;
-            Socket handler = state.workSocket;
-            String content = String.Empty;
-            int bytesRead = handler.EndReceive(ar);
-            //try
-            //{
-                // Read data from the client socket. 
-                
-            //}
-            //catch (SocketException e)
-            //{
-            //    ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
-            //    service.InsertException(log);
-            //}
-
-
-            if (bytesRead > 0)
-            {
-                state.sb.Append(Encoding.UTF8.GetString(
-                    state.buffer, 0, bytesRead));
-
-                content = state.sb.ToString();
-            }
-
             try
             {
+                StateObject state = (StateObject)ar.AsyncState;
+                Socket handler = state.workSocket;
+                String content = String.Empty;
+                int bytesRead = handler.EndReceive(ar);
+        
+                if (bytesRead > 0)
+                {
+                    state.sb.Append(Encoding.UTF8.GetString(
+                        state.buffer, 0, bytesRead));
+
+                    content = state.sb.ToString();
+                }
+
                 InputHandler inputHandler = new InputHandler();
                 byte[] returnStr = inputHandler.GetReturnBytes(content);
                 Send(handler, returnStr);

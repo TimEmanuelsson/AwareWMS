@@ -220,19 +220,8 @@ namespace Repository.Model.DAL
                     //Open database connection.
                     conn.Open();
 
-                    int status = (int)cmd.ExecuteScalar();
-                    return status;
-                    //using (SqlDataReader reader = cmd.ExecuteReader())
-                    //{
-                    //    if (reader.HasRows)
-                    //    {
-                    //        return 1;
-                    //    }
-                    //    else
-                    //    {
-                    //        return 0;
-                    //    }
-                    //}
+                    int sum = (int)cmd.ExecuteScalar();
+                    return sum;
                 }
                 catch
                 {

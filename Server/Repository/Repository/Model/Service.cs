@@ -205,5 +205,21 @@ namespace Repository.Model
         }
 
         #endregion
+
+        #region Authentication methods
+
+        private AuthenticationDAL _authenticationDAL;
+
+        private AuthenticationDAL AuthenticationDAL
+        {
+            get { return _authenticationDAL ?? (_authenticationDAL = new AuthenticationDAL()); }
+        }
+
+        public bool Authenticate(string password)
+        {
+            return AuthenticationDAL.Authenticate(password);
+        }
+
+        #endregion
     }
 }

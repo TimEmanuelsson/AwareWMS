@@ -25,7 +25,7 @@ namespace AwareComputerClient.View
             InitializeComponent();
 
         }
-        private AsynchronousClient async;
+        private AsynchronousClient async = new AsynchronousClient();
         private List<Product> products;
         private List<Product> unsortedList;
         private BindingList<Product> bindinglist;
@@ -36,41 +36,41 @@ namespace AwareComputerClient.View
         private int cellRowIndex = 0;
 
         private PrintDialog printDialog = new PrintDialog();
-     
+
+        
         
         private void ShowProducts_Click()
         {
-            //async = new AsynchronousClient();
-            TableViewPanel.Visible = true;
-            ShowProductsMainContainer.Visible = true;
-            async.StartClient("GET/products");
-            string response = async.Response;
-            TableView.Visible = true;
+            
+                TableViewPanel.Visible = true;
+                ShowProductsMainContainer.Visible = true;
+                TableView.Visible = true;
+                TableView.AutoSize = true;
+                SearchField.Focus();
+               
 
-            TableView.AutoSize = true;
-            TableView.ColumnHeadersVisible = false;
-            checkForChanged = new Timer();
-            checkForChanged.Interval = 1000;
-            checkForChanged.Tick += new EventHandler(updateList);
-            checkForChanged.Start();
+                if (savedJsonString == null && response == null)
+                {
+                    if (checkForChanged == null) { 
+                        checkForChanged = new Timer();
+                        checkForChanged.Interval = 1000;
+                        checkForChanged.Tick += new EventHandler(updateList);
+                        checkForChanged.Start();
+                    }
+                        async.StartClient("GET/products");
+                        response = async.Response;
+                        savedJsonString = response;
+                        products = JsonConvert.DeserializeObject<List<Product>>(response);
+                        unsortedList = products = JsonConvert.DeserializeObject<List<Product>>(response);
 
 
-            if (savedJsonString == null)
-            {
-                async.StartClient("GET/products");
-                response = async.Response;
-                savedJsonString = response;
-                products = JsonConvert.DeserializeObject<List<Product>>(response);
-                unsortedList = products = JsonConvert.DeserializeObject<List<Product>>(response);
+                        bindinglist = new BindingList<Product>(products);
+                        var source = new BindingSource(bindinglist, null);
 
-                bindinglist = new BindingList<Product>(products);
-                var source = new BindingSource(bindinglist, null);
-
-                TableView.DataSource = source;
-                refreshDataSource();
-
-            }
-
+                        TableView.DataSource = source;
+                        refreshDataSource();
+                }
+            
         }
 
         private void updateList(object sender, EventArgs e)
@@ -225,9 +225,6 @@ namespace AwareComputerClient.View
             TableView.Columns.Remove(stocktakingCol);
         }
         #endregion
-
-
-
 
         private void comboBox_SelectedIndexChanged(object sender, EventArgs e)
         {

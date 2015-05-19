@@ -151,6 +151,7 @@
             this.TableView.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
             this.TableView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.TableView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TableView.ColumnHeadersVisible = false;
             this.TableView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.TableView.Location = new System.Drawing.Point(54, 0);
             this.TableView.MultiSelect = false;
@@ -194,6 +195,7 @@
             // 
             // comboBox
             // 
+            this.comboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox.FormattingEnabled = true;
             this.comboBox.Items.AddRange(new object[] {
             "Reset",
@@ -213,7 +215,7 @@
             this.SearchField.Location = new System.Drawing.Point(74, 15);
             this.SearchField.Name = "SearchField";
             this.SearchField.Size = new System.Drawing.Size(193, 20);
-            this.SearchField.TabIndex = 26;
+            this.SearchField.TabIndex = 1;
             this.SearchField.TextChanged += new System.EventHandler(this.SearchField_TextChanged);
             // 
             // SearchLabel
@@ -275,7 +277,7 @@
             // 
             // printButton
             // 
-            this.printButton.Location = new System.Drawing.Point(630, 10);
+            this.printButton.Location = new System.Drawing.Point(630, 12);
             this.printButton.Name = "printButton";
             this.printButton.Size = new System.Drawing.Size(91, 28);
             this.printButton.TabIndex = 34;

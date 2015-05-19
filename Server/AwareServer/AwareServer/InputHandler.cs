@@ -19,236 +19,255 @@ namespace AwareServer
         ExceptionLog exceptionLog = null;
         string ret = "";
         byte[] retByte = new Byte[10024];
+        char[] split = { '=' };
 
         public byte[] GetReturnBytes(string content)
         {   
             try
             {
-                #region Get
-                if (content.IndexOf("GET") > -1)
+                if (content.IndexOf("pw") > -1)
                 {
-                    if (content.IndexOf("GET/orders") > -1)
+                    string[] splitString = content.Split(split);
+                    int i = -1;
+                    foreach (string str in splitString)
                     {
-                        if (content.IndexOf("GET/orders/id=") > -1)
-                        {
-                            string id = content.Replace("GET/orders/id=", "");
-                            id = id.Replace("\n", "");
-                            Order order = service.GetOrderById(int.Parse(id));
-                            ret = JsonConvert.SerializeObject(order);
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                        }
-                        else if (content.IndexOf("GET/orders/rows/id=") > -1)
-                        {
-                            string id = content.Replace("GET/orders/rows/id=", "");
-                            id = id.Replace("\n", "");
-                            IEnumerable<OrderRow> orderRows = service.GetOrderRowsByOrderId(int.Parse(id));
-                            ret = JsonConvert.SerializeObject(orderRows);
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                        }
-                        else if (content.IndexOf("GET/orders/status/id=") > -1)
-                        {
-                            string id = content.Replace("GET/orders/status/id=", "");
-                            id = id.Replace("\n", "");
-                            OrderStatus status = service.GetOrderStatusByOrderId(int.Parse(id));
-                            ret = JsonConvert.SerializeObject(status);
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                        }
-                        else if (content.IndexOf("GET/orderstatus/id=") > -1)
-                        {
-                            string id = content.Replace("GET/orderstatus/id=", "");
-                            id = id.Replace("\n", "");
-                            OrderStatus status = service.GetOrderStatusById(int.Parse(id));
-                            ret = JsonConvert.SerializeObject(status);
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                        }
-                        else if (content.IndexOf("GET/orders") > -1)
-                        {
-                            IEnumerable<Order> orders = service.GetOrders();
-                            ret = JsonConvert.SerializeObject(orders);
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                        }
-                        else
-                        {
-                            ret = "Input string is not correctly formatted.";
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                            throw new System.ArgumentException("Input string is not correctly formatted.");
-                        }
+                        i++;
                     }
-
-                    else if (content.IndexOf("GET/orderrows/id=") > -1)
+                    if (service.Authenticate(splitString[i]))
                     {
-                        string id = content.Replace("GET/orderrows/id=", "");
-                        id = id.Replace("\n", "");
-                        OrderRow row = service.GetOrderRowById(int.Parse(id));
-                        ret = JsonConvert.SerializeObject(row);
-                        retByte = Encoding.UTF8.GetBytes(ret);
-                    }
-
-                    else if (content.IndexOf("GET/products") > -1)
-                    {
-                        if (content.IndexOf("GET/products/id=") > -1)
+                        string passwordString = String.Format("/pw={0}", splitString[i]);
+                        content = content.Replace(passwordString, "");
+                        #region Get
+                        if (content.IndexOf("GET") > -1)
                         {
-                            string id = content.Replace("GET/products/id=", "");
-                            id = id.Replace("\n", "");
-                            Product product = service.GetProductById(int.Parse(id));
-                            ret = JsonConvert.SerializeObject(product);
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                        }
-                        else if (content.IndexOf("GET/products/sku=") > -1)
-                        {
-                            string sku = content.Replace("GET/products/sku=", "");
-                            sku = sku.Replace("\n", "");
-                            Product product = service.GetProductBySKU(int.Parse(sku));
-                            ret = JsonConvert.SerializeObject(product);
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                        }
-                        else if (content.IndexOf("GET/products/ean=") > -1)
-                        {
-                            string ean = content.Replace("GET/products/ean=", "");
-                            ean = ean.Replace("\n", "");
-                            Product product = service.GetProductByEAN(int.Parse(ean));
-                            ret = JsonConvert.SerializeObject(product);
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                        }
-                        else if (content.IndexOf("GET/products/count") > -1)
-                        {
-                            ret = String.Format("{0}", service.GetProductCount().ToString());
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                        }
-                        else if (content.IndexOf("GET/products/quantitysum") > -1)
-                        {
-                            ret = String.Format("{0}", service.GetProductsQuantitySum().ToString());
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                        }
-                        else if (content.IndexOf("GET/products/status/id=") > -1)
-                        {
-                            string id = content.Replace("GET/products/status/id=", "");
-                            id = id.Replace("\n", "");
-                            int status = service.CheckIfProductBusy(int.Parse(id));
-                            if (status == 0)
+                            if (content.IndexOf("GET/orders") > -1)
                             {
-                                ret = String.Format("Idle");
+                                if (content.IndexOf("GET/orders/id=") > -1)
+                                {
+                                    string id = content.Replace("GET/orders/id=", "");
+                                    id = id.Replace("\n", "");
+                                    Order order = service.GetOrderById(int.Parse(id));
+                                    ret = JsonConvert.SerializeObject(order);
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                }
+                                else if (content.IndexOf("GET/orders/rows/id=") > -1)
+                                {
+                                    string id = content.Replace("GET/orders/rows/id=", "");
+                                    id = id.Replace("\n", "");
+                                    IEnumerable<OrderRow> orderRows = service.GetOrderRowsByOrderId(int.Parse(id));
+                                    ret = JsonConvert.SerializeObject(orderRows);
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                }
+                                else if (content.IndexOf("GET/orders/status/id=") > -1)
+                                {
+                                    string id = content.Replace("GET/orders/status/id=", "");
+                                    id = id.Replace("\n", "");
+                                    OrderStatus status = service.GetOrderStatusByOrderId(int.Parse(id));
+                                    ret = JsonConvert.SerializeObject(status);
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                }
+                                else if (content.IndexOf("GET/orderstatus/id=") > -1)
+                                {
+                                    string id = content.Replace("GET/orderstatus/id=", "");
+                                    id = id.Replace("\n", "");
+                                    OrderStatus status = service.GetOrderStatusById(int.Parse(id));
+                                    ret = JsonConvert.SerializeObject(status);
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                }
+                                else if (content.IndexOf("GET/orders") > -1)
+                                {
+                                    IEnumerable<Order> orders = service.GetOrders();
+                                    ret = JsonConvert.SerializeObject(orders);
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                }
+                                else
+                                {
+                                    ret = "Input string is not correctly formatted.";
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                    throw new System.ArgumentException("Input string is not correctly formatted.");
+                                }
                             }
-                            if (status > 0)
+
+                            else if (content.IndexOf("GET/orderrows/id=") > -1)
                             {
-                                ret = String.Format("Busy");
+                                string id = content.Replace("GET/orderrows/id=", "");
+                                id = id.Replace("\n", "");
+                                OrderRow row = service.GetOrderRowById(int.Parse(id));
+                                ret = JsonConvert.SerializeObject(row);
+                                retByte = Encoding.UTF8.GetBytes(ret);
                             }
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                        }
-                        else if (content.IndexOf("GET/products/image=") > -1)
-                        {
-                            string imageString = content.Replace("GET/products/image=", "");
-                            imageString = imageString.Replace("\n", "");
-                            string imgUrl = imageString;
-                            Bitmap tImage = new Bitmap(imgUrl);
-                            retByte = imageToByte(tImage, tImage.RawFormat);
-                        }
-                        else if (content.Equals("GET/products"))
-                        {
-                            IEnumerable<Product> products = service.GetProducts();
-                            ret = JsonConvert.SerializeObject(products);
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                        }
 
+                            else if (content.IndexOf("GET/products") > -1)
+                            {
+                                if (content.IndexOf("GET/products/id=") > -1)
+                                {
+                                    string id = content.Replace("GET/products/id=", "");
+                                    id = id.Replace("\n", "");
+                                    Product product = service.GetProductById(int.Parse(id));
+                                    ret = JsonConvert.SerializeObject(product);
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                }
+                                else if (content.IndexOf("GET/products/sku=") > -1)
+                                {
+                                    string sku = content.Replace("GET/products/sku=", "");
+                                    sku = sku.Replace("\n", "");
+                                    Product product = service.GetProductBySKU(int.Parse(sku));
+                                    ret = JsonConvert.SerializeObject(product);
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                }
+                                else if (content.IndexOf("GET/products/ean=") > -1)
+                                {
+                                    string ean = content.Replace("GET/products/ean=", "");
+                                    ean = ean.Replace("\n", "");
+                                    Product product = service.GetProductByEAN(int.Parse(ean));
+                                    ret = JsonConvert.SerializeObject(product);
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                }
+                                else if (content.IndexOf("GET/products/count") > -1)
+                                {
+                                    ret = String.Format("{0}", service.GetProductCount().ToString());
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                }
+                                else if (content.IndexOf("GET/products/quantitysum") > -1)
+                                {
+                                    ret = String.Format("{0}", service.GetProductsQuantitySum().ToString());
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                }
+                                else if (content.IndexOf("GET/products/status/id=") > -1)
+                                {
+                                    string id = content.Replace("GET/products/status/id=", "");
+                                    id = id.Replace("\n", "");
+                                    int status = service.CheckIfProductBusy(int.Parse(id));
+                                    if (status == 0)
+                                    {
+                                        ret = String.Format("Idle");
+                                    }
+                                    if (status > 0)
+                                    {
+                                        ret = String.Format("Busy");
+                                    }
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                }
+                                else if (content.IndexOf("GET/products/image=") > -1)
+                                {
+                                    string imageString = content.Replace("GET/products/image=", "");
+                                    imageString = imageString.Replace("\n", "");
+                                    string imgUrl = imageString;
+                                    Bitmap tImage = new Bitmap(imgUrl);
+                                    retByte = imageToByte(tImage, tImage.RawFormat);
+                                }
+                                else if (content.Equals("GET/products"))
+                                {
+                                    IEnumerable<Product> products = service.GetProducts();
+                                    ret = JsonConvert.SerializeObject(products);
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                }
+
+                                else
+                                {
+                                    ret = "Input string is not correctly formatted.";
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                    throw new System.ArgumentException("Input string is not correctly formatted.");
+                                }
+                            }
+
+                            // Customers
+                            else if (content.IndexOf("GET/customers") > -1)
+                            {
+                                if (content.IndexOf("GET/customers/id=") > -1)
+                                {
+                                    string id = content.Replace("GET/customers/id=", "");
+                                    Customer customer = service.GetCustomerById(int.Parse(id));
+                                    ret += JsonConvert.SerializeObject(customer);
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                }
+                                //else if (content.IndexOf("name") > -1)
+                                //{
+                                //    char[] splitChar = { '_' };
+                                //    string name = content.Replace("GET/customers/name=", "");
+                                //    string[] nameSplit = name.Split(splitChar);
+                                //    string firstname = nameSplit[0];
+                                //    string lastname = nameSplit[1];
+                                //    GetCustomerByName(firstname, lastname, handler);
+                                //}
+                                else
+                                {
+                                    ret = "Input string is not correctly formatted.";
+                                    retByte = Encoding.UTF8.GetBytes(ret);
+                                    throw new System.ArgumentException("Input string is not correctly formatted.");
+                                }
+                            }
+                            else
+                            {
+                                ret = "Input string is not correctly formatted.";
+                                retByte = Encoding.UTF8.GetBytes(ret);
+                                throw new System.ArgumentException("Input string is not correctly formatted.");
+                            }
+                        }
+                        #endregion
+                        #region Put
+                        // PUT
+                        else if (content.IndexOf("PUT") > -1)
+                        {
+                            string json = "";
+
+                            if (content.IndexOf("products") > -1)
+                            {
+                                if (content.IndexOf("inventory") > -1)
+                                {
+                                    json = content.Replace("PUT/products/inventory/json=", "");
+                                    Product result = JsonConvert.DeserializeObject<Product>(json);
+                                    service.ProductInventory(result);
+                                }
+                                else
+                                {
+                                    json = content.Replace("PUT/products/json=", "");
+                                    Product result = JsonConvert.DeserializeObject<Product>(json);
+                                    service.UpdateProduct(result);
+                                }
+                            }
+
+                            else if (content.IndexOf("orders") > -1)
+                            {
+                                if (content.IndexOf("status") > -1)
+                                {
+                                    string status = content.Replace("PUT/orders/id=", "");
+                                    char[] splitStr = { '/' };
+                                    string[] values = status.Split(splitStr);
+                                    int orderId = int.Parse(values[0]);
+                                    status = values[1].Replace("status=", "");
+                                    int statusId = int.Parse(status);
+                                    service.UpdateOrderStatus(orderId, statusId);
+
+                                }
+                                else
+                                {
+                                    json = content.Replace("PUT/orders/json=", "");
+                                    Order result = JsonConvert.DeserializeObject<Order>(json);
+                                    service.UpdateOrder(result);
+                                }
+                            }
+
+                            else
+                            {
+                                ret = "Input string is not correctly formatted.";
+                                retByte = Encoding.UTF8.GetBytes(ret);
+                                throw new System.ArgumentException("Input string is not correctly formatted.");
+                            }
+                        }
                         else
                         {
                             ret = "Input string is not correctly formatted.";
                             retByte = Encoding.UTF8.GetBytes(ret);
                             throw new System.ArgumentException("Input string is not correctly formatted.");
                         }
-                    }
-
-                    // Customers
-                    else if (content.IndexOf("GET/customers") > -1)
-                    {
-                        if (content.IndexOf("GET/customers/id=") > -1)
-                        {
-                            string id = content.Replace("GET/customers/id=", "");
-                            Customer customer = service.GetCustomerById(int.Parse(id));
-                            ret += JsonConvert.SerializeObject(customer);
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                        }
-                        //else if (content.IndexOf("name") > -1)
-                        //{
-                        //    char[] splitChar = { '_' };
-                        //    string name = content.Replace("GET/customers/name=", "");
-                        //    string[] nameSplit = name.Split(splitChar);
-                        //    string firstname = nameSplit[0];
-                        //    string lastname = nameSplit[1];
-                        //    GetCustomerByName(firstname, lastname, handler);
-                        //}
-                        else
-                        {
-                            ret = "Input string is not correctly formatted.";
-                            retByte = Encoding.UTF8.GetBytes(ret);
-                            throw new System.ArgumentException("Input string is not correctly formatted.");
-                        }
+                        #endregion
                     }
                     else
                     {
-                        ret = "Input string is not correctly formatted.";
-                        retByte = Encoding.UTF8.GetBytes(ret);
-                        throw new System.ArgumentException("Input string is not correctly formatted.");
+                        throw new InvalidDataException("Wrong password!");
                     }
                 }
-                #endregion
-                #region Put
-                // PUT
-                else if (content.IndexOf("PUT") > -1)
-                {
-                    string json = "";
-
-                    if (content.IndexOf("products") > -1)
-                    {
-                        if (content.IndexOf("inventory") > -1)
-                        {
-                            json = content.Replace("PUT/products/inventory/json=", "");
-                            Product result = JsonConvert.DeserializeObject<Product>(json);
-                            service.ProductInventory(result);
-                        }
-                        else
-                        {
-                            json = content.Replace("PUT/products/json=", "");
-                            Product result = JsonConvert.DeserializeObject<Product>(json);
-                            service.UpdateProduct(result);
-                        }
-                    }
-
-                    else if (content.IndexOf("orders") > -1)
-                    {
-                        if(content.IndexOf("status") > -1)
-                        {
-                            string status = content.Replace("PUT/orders/id=", "");
-                            char[] split = { '/' };
-                            string[] values = status.Split(split);
-                            int orderId = int.Parse(values[0]);
-                            status = values[1].Replace("status=", "");
-                            int statusId = int.Parse(status);
-                            service.UpdateOrderStatus(orderId, statusId);
-
-                        }
-                        else
-                        {
-                        json = content.Replace("PUT/orders/json=", "");
-                        Order result = JsonConvert.DeserializeObject<Order>(json);
-                        service.UpdateOrder(result);
-                        }
-                    }
-
-                    else
-                    {
-                        ret = "Input string is not correctly formatted.";
-                        retByte = Encoding.UTF8.GetBytes(ret);
-                        throw new System.ArgumentException("Input string is not correctly formatted.");
-                    }
-                }
-                else
-                {
-                    ret = "Input string is not correctly formatted.";
-                    retByte = Encoding.UTF8.GetBytes(ret);
-                    throw new System.ArgumentException("Input string is not correctly formatted.");
-                }
-                #endregion
             }
 
             catch (Exception e)

@@ -72,6 +72,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AwareDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="Model\DAL\AuthenticationDAL.cs" />
     <Compile Include="Model\DAL\CustomerDAL.cs" />
     <Compile Include="Model\DAL\OrderDAL.cs" />
     <Compile Include="Model\DAL\OrderRowDAL.cs" />

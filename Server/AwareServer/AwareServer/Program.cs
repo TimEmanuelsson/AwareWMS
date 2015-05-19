@@ -26,9 +26,9 @@ namespace AwareServer
         {
             try
             {
-                //DataFetch dataFetch = new DataFetch();
-                //Thread eCommerceConnectionThread = new Thread(new ThreadStart(dataFetch.Initialize));
-                //eCommerceConnectionThread.Start();
+                DataFetch dataFetch = new DataFetch();
+                Thread eCommerceConnectionThread = new Thread(new ThreadStart(dataFetch.Initialize));
+                eCommerceConnectionThread.Start();
 
                 AsynchronousSocketListener.Start();
             }

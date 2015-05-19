@@ -55,27 +55,6 @@ namespace Repository.Model.DAL
             // Return the hexadecimal string. 
             return sBuilder.ToString();
         }
-
-        // Verify a hash against a string. 
-        static bool VerifyMd5Hash(MD5 md5Hash, string input, string hash)
-        {
-            // Hash the input. 
-            string hashOfInput = GetMd5Hash(md5Hash, input);
-
-            // Create a StringComparer an compare the hashes.
-            StringComparer comparer = StringComparer.OrdinalIgnoreCase;
-
-            if (0 == comparer.Compare(hashOfInput, hash))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-
         #endregion
 
         #region CRUD Functions
@@ -89,13 +68,8 @@ namespace Repository.Model.DAL
                     // Create SqlCommand-objekt that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_Authenticate", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    string hash = "";
-                    using (MD5 md5Hash = MD5.Create())
-                    {
-                        hash = GetMd5Hash(md5Hash, password);
-                    }
 
-                    cmd.Parameters.AddWithValue("@Password", hash);
+                    cmd.Parameters.AddWithValue("@Password", password);
 
                     //Open database connection
                     conn.Open();

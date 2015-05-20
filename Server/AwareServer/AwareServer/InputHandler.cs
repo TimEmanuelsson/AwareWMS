@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Repository.Model;
 using System.Windows.Media.Imaging;
 using System.IO;
+using System.Security.Cryptography;
 
 namespace AwareServer
 {
@@ -268,6 +269,10 @@ namespace AwareServer
                         throw new InvalidDataException("Wrong password!");
                     }
                 }
+                else
+                {
+                    throw new System.ArgumentException("Input string is missing the password parameter.");
+                }
             }
 
             catch (Exception e)
@@ -284,6 +289,20 @@ namespace AwareServer
             MemoryStream ms = new MemoryStream();
             imageIn.Save(ms, format);
             return ms.ToArray();
+        }
+
+        static string GetMd5Hash(MD5 md5Hash, string input)
+        {
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+
+            StringBuilder sBuilder = new StringBuilder();
+
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+
+            return sBuilder.ToString();
         }
     }
 }

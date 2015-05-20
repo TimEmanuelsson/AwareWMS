@@ -146,6 +146,18 @@ namespace MagentoConnection
             return productsAndImagePaths;
         }
 
+        public void UpdateProductInventory(Product product)
+        {
+            connection.RefreshConnection();
+
+            catalogProductReturnEntity productEntity = connection.GetProductBySKU(product.SKU);
+
+            catalogInventoryStockItemUpdateEntity inventoryUpdate = new catalogInventoryStockItemUpdateEntity();
+            inventoryUpdate.qty = product.Quantity.ToString();
+
+            connection.UpdateProductInventory(productEntity.product_id, inventoryUpdate);
+        }
+
         public void LeftoverCode()
         {
             /*

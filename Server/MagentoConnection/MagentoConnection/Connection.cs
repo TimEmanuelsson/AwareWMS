@@ -67,6 +67,12 @@ namespace MagentoConnection
             return detailedProduct;
         }
 
+        public catalogProductReturnEntity GetProductBySKU(string sku)
+        {
+            catalogProductReturnEntity detailedProduct = this.client.catalogProductInfo(session, sku, null, null, "SKU");
+            return detailedProduct;
+        }
+
         #endregion
 
         #region Inventory
@@ -84,6 +90,11 @@ namespace MagentoConnection
             List<catalogInventoryStockItemEntity> inventory = inventoryArray.ToList();
 
             return inventory;
+        }
+
+        public void UpdateProductInventory(string productId, catalogInventoryStockItemUpdateEntity inventoryUpdateEntity)
+        {
+            this.client.catalogInventoryStockItemUpdate(this.session, productId, inventoryUpdateEntity);
         }
 
         #endregion

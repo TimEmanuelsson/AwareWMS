@@ -110,14 +110,14 @@ namespace AwareServer
                                 else if (content.IndexOf("GET/products/sku=") > -1)
                                 {
                                     string sku = content.Replace("GET/products/sku=", "");
-                                    Product product = service.GetProductBySKU(int.Parse(sku));
+                                    Product product = service.GetProductBySKU(sku);
                                     ret = JsonConvert.SerializeObject(product);
                                     retByte = Encoding.UTF8.GetBytes(ret);
                                 }
                                 else if (content.IndexOf("GET/products/ean=") > -1)
                                 {
                                     string ean = content.Replace("GET/products/ean=", "");
-                                    Product product = service.GetProductByEAN(int.Parse(ean));
+                                    Product product = service.GetProductByEAN(ean);
                                     ret = JsonConvert.SerializeObject(product);
                                     retByte = Encoding.UTF8.GetBytes(ret);
                                 }

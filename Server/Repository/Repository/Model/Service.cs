@@ -24,12 +24,12 @@ namespace Repository.Model
             return ProductDAL.GetProductById(Id);
         }
 
-        public Product GetProductByEAN(int ean)
+        public Product GetProductByEAN(string ean)
         {
             return ProductDAL.GetProductByEAN(ean);
         }
 
-        public Product GetProductBySKU(int sku)
+        public Product GetProductBySKU(string sku)
         {
             return ProductDAL.GetProductBySKU(sku);
         }

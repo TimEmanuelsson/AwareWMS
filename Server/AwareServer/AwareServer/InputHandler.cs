@@ -111,7 +111,7 @@ namespace AwareServer
                                 {
                                     string sku = content.Replace("GET/products/sku=", "");
                                     sku = sku.Replace("\n", "");
-                                    Product product = service.GetProductBySKU(int.Parse(sku));
+                                    Product product = service.GetProductBySKU(sku);
                                     ret = JsonConvert.SerializeObject(product);
                                     retByte = Encoding.UTF8.GetBytes(ret);
                                 }
@@ -119,7 +119,7 @@ namespace AwareServer
                                 {
                                     string ean = content.Replace("GET/products/ean=", "");
                                     ean = ean.Replace("\n", "");
-                                    Product product = service.GetProductByEAN(int.Parse(ean));
+                                    Product product = service.GetProductByEAN(ean);
                                     ret = JsonConvert.SerializeObject(product);
                                     retByte = Encoding.UTF8.GetBytes(ret);
                                 }

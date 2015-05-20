@@ -23,6 +23,8 @@ namespace MagentoConnection
         }
         public List<Product> GetAllProductsWithInventory()
         {
+            connection.RefreshConnection();
+
             List<catalogProductEntity> magentoProducts = connection.GetAllProducts();
 
             List<catalogProductReturnEntity> detailedProducts = connection.GetAllDetailedProducts(magentoProducts);
@@ -36,6 +38,8 @@ namespace MagentoConnection
 
         public Product DownloadProductImage(Product product)
         {
+            connection.RefreshConnection();
+
             WebClient webClient = new WebClient();
             string rootPath = Environment.CurrentDirectory;
             string imageFolderPath = String.Format("{0}{1}", rootPath, "\\Product Images\\"); // Make a complete filepath.
@@ -84,6 +88,8 @@ namespace MagentoConnection
 
         public List<Product> DownloadAllProductImages()
         {
+            connection.RefreshConnection();
+
             List<Product> productsAndImagePaths = new List<Product>();
 
             List<catalogProductEntity> magentoProducts = connection.GetAllProducts();

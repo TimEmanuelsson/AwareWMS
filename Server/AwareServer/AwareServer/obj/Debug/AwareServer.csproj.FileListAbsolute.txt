@@ -63,3 +63,6 @@ H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\Reposi
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\AwareClassLibrary.pdb
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\Newtonsoft.Json.xml
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareServer\obj\Debug\AwareServer.csprojResolveAssemblyReference.cache
+E:\Skolarbete\AwareWMS\Server\AwareServer\AwareServer\bin\Debug\AwareServer.exe.config
+E:\Skolarbete\AwareWMS\Server\AwareServer\AwareServer\obj\Debug\AwareServer.exe
+E:\Skolarbete\AwareWMS\Server\AwareServer\AwareServer\obj\Debug\AwareServer.pdb

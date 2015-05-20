@@ -102,7 +102,7 @@ namespace Repository.Model.DAL
             }
         }
 
-        public Product GetProductByEAN(string ean)
+        public Product GetProductByEAN(int ean)
         {
             using (SqlConnection conn = CreateConnection())
             {
@@ -154,7 +154,7 @@ namespace Repository.Model.DAL
             }
         }
 
-        public Product GetProductBySKU(string sku)
+        public Product GetProductBySKU(int sku)
         {
             using (SqlConnection conn = CreateConnection())
             {

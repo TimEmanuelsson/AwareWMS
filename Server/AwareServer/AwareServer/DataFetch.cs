@@ -56,7 +56,7 @@ namespace AwareServer
                 {
                     if (localProducts.Exists(p => p.SKU == product.SKU))
                     {
-                        products.First(p => p.SKU == product.SKU).Merge(localProducts.First(p => p.SKU == product.SKU));
+                      //  products.First(p => p.SKU == product.SKU).Merge(localProducts.First(p => p.SKU == product.SKU));
                     }
                 }
 

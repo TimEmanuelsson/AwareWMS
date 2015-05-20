@@ -30,10 +30,14 @@ namespace AwareServer
                 {
                     string[] splitString = content.Split(split);
                     int i = -1;
+
                     foreach (string str in splitString)
                     {
                         i++;
                     }
+
+                    splitString[i] = splitString[i].Replace("\n", "");
+
                     if (service.Authenticate(splitString[i]))
                     {
                         string passwordString = String.Format("/pw={0}", splitString[i]);

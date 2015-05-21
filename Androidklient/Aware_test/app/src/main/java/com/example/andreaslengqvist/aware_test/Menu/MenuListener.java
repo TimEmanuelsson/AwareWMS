@@ -11,4 +11,5 @@ public interface MenuListener {
     void onMenuProducts();
     void onMenuInventoryFast();
     void onMenuInventoryFull();
+    void onServerConnected();
 }

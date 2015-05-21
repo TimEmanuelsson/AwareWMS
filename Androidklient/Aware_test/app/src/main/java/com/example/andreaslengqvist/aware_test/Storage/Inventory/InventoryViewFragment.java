@@ -1,13 +1,14 @@
 package com.example.andreaslengqvist.aware_test.Storage.Inventory;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,16 +18,15 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import com.example.andreaslengqvist.aware_test.Connection.Connection;
 import com.example.andreaslengqvist.aware_test.R;
 import com.example.andreaslengqvist.aware_test.Storage.Product;
 import com.example.andreaslengqvist.aware_test.Storage.ProductListener;
 import com.google.gson.Gson;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 
 
@@ -42,8 +42,16 @@ public class InventoryViewFragment extends Fragment {
     private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
     private static final String INVENTORY_LAYOUT_TAG = "INVENTORY_LAYOUT_TAG";
 
+    // Shared Preference Static variables.
+    public static final String APP_PREFERENCES = "APP_PREFERENCES" ;
+    public static final String SERVER_IP = "SERVER_IP";
+    public static final String SERVER_PORT = "SERVER_PORT";
+    public static final String SERVER_PW = "SERVER_PW";
+    public static final String TABLET_HANDEDNESS = "TABLET_HANDEDNESS";
+    public static final String MAX_QTY = "MAX_QTY";
+
     // Range variables.
-    private static final int MAX_QUANTITY = 1000;
+    private int MAX_QUANTITY;
     private static final int MIN_QUANTITY= 0;
 
     // Layout variables.
@@ -68,6 +76,13 @@ public class InventoryViewFragment extends Fragment {
     private boolean mAutoIncrement = false;
     private boolean mAutoDecrement = false;
 
+    // Shared Preference variables.
+    private SharedPreferences sharedpreferences;
+    private String mServerIp;
+    private String mServerPort;
+    private String mServerPw;
+
+
 
     /**
      * From onCreate
@@ -77,6 +92,13 @@ public class InventoryViewFragment extends Fragment {
      */
     private void initializeVariables() {
 
+        // Set saved preferences.
+        mServerIp = sharedpreferences.getString(SERVER_IP, "");
+        mServerPort = sharedpreferences.getString(SERVER_PORT, "");
+        mServerPw = sharedpreferences.getString(SERVER_PW, "");
+        MAX_QUANTITY = sharedpreferences.getInt(MAX_QTY, 0);
+
+        // Set GUI-components.
         btn_inventory_view_inventory_show = (Button) mView.findViewById(R.id.btn_inventory_view_inventory_show);
         btn_inventory_view_inventory_cancel = (Button) mView.findViewById(R.id.btn_inventory_view_inventory_cancel);
         btn_inventory_view_inventory_save = (Button) mView.findViewById(R.id.btn_inventory_view_inventory_save);
@@ -129,11 +151,18 @@ public class InventoryViewFragment extends Fragment {
         mProduct = bundle.getParcelable(PARCELABLE_PRODUCT_TAG);
         boolean inventoryLayout = bundle.getBoolean(INVENTORY_LAYOUT_TAG);
 
+        sharedpreferences = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        Boolean righthanded = sharedpreferences.getBoolean(TABLET_HANDEDNESS, true);
+
         // If coming from InventoryFast or InventoryFull.
         if(inventoryLayout) {
             mView = inflater.inflate(R.layout.fragment_inventory_fast_view, container, false);
         } else {
-            mView = inflater.inflate(R.layout.fragment_inventory_full_view, container, false);
+            if(righthanded) {
+                mView = inflater.inflate(R.layout.fragment_inventory_full_view_right, container, false);
+            } else {
+                mView = inflater.inflate(R.layout.fragment_inventory_full_view_left, container, false);
+            }
         }
         return mView;
     }
@@ -315,8 +344,7 @@ public class InventoryViewFragment extends Fragment {
         setSeekBar(mCurrentQuantity);
 
         // Image.
-        new ImageDownloader(img_product_picture).execute(
-                "https://psmedia.playstation.com/is/image/psmedia/the-last-of-us-remastered-two-column-01-ps4-us-28jul14?$TwoColumn_Image$");
+        new GetProductImage(img_product_picture).execute(mProduct.getImageLocation());
     }
 
 
@@ -406,29 +434,56 @@ public class InventoryViewFragment extends Fragment {
     }
 
 
+
     /**
-     * Helper class which loads the image into the ImageView in a background thread.
+     * AsyncTask which will run in the background and fetch a Product Image.
      */
-    private class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
+    private class GetProductImage extends AsyncTask<String, Void, Bitmap> {
+
         ImageView bmImage;
 
-        public ImageDownloader(ImageView bmImage) {
+        public GetProductImage(ImageView bmImage) {
             this.bmImage = bmImage;
         }
 
+
+        @Override
         protected Bitmap doInBackground(String... urls) {
             String url = urls[0];
-            Bitmap mIcon = null;
+            Bitmap mImage = null;
+
             try {
-                InputStream in = new java.net.URL(url).openStream();
-                mIcon = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
+
+                // Establish a Socket-Connection.
+                Socket socket = new Socket();
+                socket.connect(new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), 5000);
+
+                // If socket has established a connection to the server.
+                if (socket.isConnected()) {
+
+                    // Create a PrintWriter to write to the Server with a GET.
+                    PrintWriter out = new PrintWriter(socket.getOutputStream());
+
+                    // Write a GET-method to the Server.
+                    out.println("GET/products/image=" + url + "/pw=" + mServerPw);
+                    out.flush();
+
+                    // Decode ByteArray from InputStream to Bitmap.
+                    mImage = BitmapFactory.decodeStream(socket.getInputStream());
+
+                    // Close the connection.
+                    socket.close();
+                }
+                return mImage;
+
+            } catch (IOException e) {
+                return null;
             }
-            return mIcon;
         }
 
+        @Override
         protected void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
             mView.findViewById(R.id.img_product_picture);
             bmImage.setImageBitmap(result);
         }
@@ -438,51 +493,46 @@ public class InventoryViewFragment extends Fragment {
     /**
      * AsyncTask which will run in the background and PUT inventory on a Product to the Servers Database.
      */
-    private class PutInventory extends AsyncTask<Void, String, Boolean> {
-
-        private Socket socket;
-
+    private class PutInventory extends AsyncTask<Void, Void, Boolean> {
 
         @Override
         protected Boolean doInBackground(Void... arg0) {
 
             try {
 
-                // Establish a Socket Connection.
-                Connection OC = new Connection();
-                socket = OC.establish();
+                // Establish a Socket-Connection.
+                Socket socket = new Socket();
+                socket.connect(new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), 1000);
 
-                // Create a PrintWriter to PUT (inventory) product.
-                PrintWriter out = new PrintWriter(socket.getOutputStream());
+                // If socket has established a connection to the server.
+                if (socket.isConnected()) {
 
-                // Write a PUT-method to the Server.
-                out.println("PUT/products/inventory/json=" + mJSONProduct);
-                out.flush();
 
-            } catch (UnknownHostException e) {
+                    // Create a PrintWriter to PUT (inventory) product.
+                    PrintWriter out = new PrintWriter(socket.getOutputStream());
 
-                Log.d("UnknownHostException: ", e.toString());
-                return false;
-            } catch (IOException e) {
+                    // Write a PUT-method to the Server.
+                    out.println("PUT/products/inventory/json=" + mJSONProduct + "/pw=" + mServerPw);
+                    out.flush();
 
-                Log.d("IOException: ", e.toString());
-                return false;
-            } finally {
-                try {
+                    // Close the connection.
                     socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
+                return true;
+
+            } catch (IOException e) {
+                return false;
             }
-            return true;
         }
 
         @Override
         protected void onPostExecute(Boolean finished) {
             super.onPostExecute(finished);
 
-            // Call the Activity through the interface that an Inventory have been made.
-            mCallback.onPutInventory();
+            if(finished) {
+                // Call the Activity through the interface that an Inventory have been made.
+                mCallback.onPutInventory();
+            }
         }
     }
 }

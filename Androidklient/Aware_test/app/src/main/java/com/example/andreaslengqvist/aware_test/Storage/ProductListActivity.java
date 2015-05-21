@@ -2,6 +2,7 @@ package com.example.andreaslengqvist.aware_test.Storage;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -53,6 +54,9 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     private static final String SEARCH_OPENED = "SEARCH_OPENED";
     private static final String SEARCH_QUERY = "SEARCH_QUERY";
 
+    public static final String APP_PREFERENCES = "APP_PREFERENCES" ;
+    public static final String TABLET_HANDEDNESS = "TABLET_HANDEDNESS";
+
     // Layout variables.
     private ProductListFragment mProductListFragment;
     private FrameLayout mListContainer;
@@ -78,6 +82,8 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     private boolean mSearchOpened;
     private String mSearchQuery;
 
+    SharedPreferences sharedpreferences;
+
 
     /**
      * From onCreate
@@ -100,7 +106,15 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_products);
+
+        sharedpreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        Boolean righthanded = sharedpreferences.getBoolean(TABLET_HANDEDNESS, true);
+
+        if(righthanded) {
+            setContentView(R.layout.activity_products_right);
+        } else {
+            setContentView(R.layout.activity_products_left);
+        }
         initializeVariables();
 
 
@@ -287,6 +301,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     protected void onResume() {
         super.onResume();
         mProductListFragment.stopPeriodically();
+        mProductListFragment.doServerConnectionLostOnce = true;
         mProductListFragment.startPeriodically();
     }
 
@@ -544,6 +559,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
 
         // If the SearchBar should be closed.
         if(close) {
+
             mProductListFragment.setSearchedProduct();
             mSearchEt.setText(null);
             mPager.setCurrentItem(mProductListFragment.getSearchedProduct());
@@ -592,10 +608,10 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
                             String.valueOf(product.getEAN()))
             ).toLowerCase();
 
-            for (String word : queryByWords) {
+            // There is a match only if all of the words are contained.
+            int numberOfMatches = queryByWords.length;
 
-                // There is a match only if all of the words are contained.
-                int numberOfMatches = queryByWords.length;
+            for (String word : queryByWords) {
 
                 // All query words have to be contained,
                 // otherwise the release is filtered out.

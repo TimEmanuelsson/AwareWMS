@@ -1,6 +1,8 @@
 package com.example.andreaslengqvist.aware_test.Menu;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -10,8 +12,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.View;
 
 import com.example.andreaslengqvist.aware_test.Helpers.SlidingTabLayout;
+import com.example.andreaslengqvist.aware_test.Settings.SettingsActivity;
 import com.example.andreaslengqvist.aware_test.Storage.Inventory.InventoryFastActivity;
 import com.example.andreaslengqvist.aware_test.Storage.ProductListActivity;
 import com.example.andreaslengqvist.aware_test.R;
@@ -32,13 +37,21 @@ public class MainActivity extends FragmentActivity implements MenuListener {
     private static final int NUM_PAGES = 2;
 
     // Static Name variables.
+    private static final String MENU_TAG = "MENU_TAG";
+    public static final String SERVER_ERROR = "SERVER_ERROR";
+
+    // Shared Preference Static variables.
+    public static final String APP_PREFERENCES = "APP_PREFERENCES" ;
+    public static final String SERVER_IP = "SERVER_IP";
+    public static final String SERVER_PORT = "SERVER_PORT";
+
     private static final String INTENT_KEY = "INTENT_KEY";
     private static final String ACTIVITY_INVENTORY_FULL = "ACTIVITY_INVENTORY_FULL";
     private static final String ACTIVITY_PRODUCTS = "ACTIVITY_PRODUCTS";
     private static final String EAN_TAG = "EAN_TAG";
 
-    private SlidingTabLayout mSlidingTabLayout;
-
+    // Member variable.
+    private Boolean mServerConnected = false;
 
 
     @Override
@@ -60,25 +73,99 @@ public class MainActivity extends FragmentActivity implements MenuListener {
         }
 
 
+        findViewById(R.id.btn_main_menu_settings).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent settingsActivity = new Intent(getApplicationContext(), SettingsActivity.class);
+
+                if (!mServerConnected) {
+                    settingsActivity.putExtra(SERVER_ERROR, "NOT CONNECTED");
+                } else {
+                    settingsActivity.putExtra(SERVER_ERROR, "CONNECTED");
+                }
+                startActivity(settingsActivity);
+
+                // Animation slide in / out.
+                overridePendingTransition(R.anim.pull_in_right, R.anim.push_out_left);
+            }
+        });
+
+
+        if(checkServerCredentials()) {
+
+            setViewPager();
+
+        }
+    }
+
+
+    @Override
+    /**
+     * Called when coming back to the Activity.
+     * 
+     * Checks Server Credentials and sets the ViewPager and which tries to connect to the server again.
+     */
+    protected void onRestart() {
+        super.onRestart();
+        mServerConnected = false;
+        if(checkServerCredentials()) {
+            setViewPager();
+        }
+    }
+
+
+    private void setViewPager() {
+
         // Instantiate a ViewPager and a PagerAdapter.
         ViewPager mPager = (ViewPager) findViewById(R.id.menu_pager);
         PagerAdapter mPagerAdapter = new MenuPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
+        // Set SlideIndicator.
+        SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
 
-        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+        // Fill whole width of screen.
         mSlidingTabLayout.setDistributeEvenly(true);
-        mSlidingTabLayout.setViewPager(mPager);
+        mSlidingTabLayout.setViewPager(mPager, MENU_TAG);
 
-
+        // Set color of tab.
         mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
 
             @Override
             public int getIndicatorColor(int position) {
-                return getResources().getColor(R.color.gray);    //define any color in xml resources and set it here, I have used white
+                return getResources().getColor(R.color.gray);
             }
         });
+    }
 
+
+    private Boolean checkServerCredentials() {
+
+        // Set saved preferences.
+        SharedPreferences sharedpreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        String mServerIp = sharedpreferences.getString(SERVER_IP, "");
+        String mServerPort = sharedpreferences.getString(SERVER_PORT, "");
+
+        if(mServerIp.isEmpty() && mServerPort.isEmpty()) {
+            Intent settingsActivity = new Intent(getApplicationContext(), SettingsActivity.class);
+            settingsActivity.putExtra(SERVER_ERROR, "ENTER SERVER CREDENTIALS");
+            startActivity(settingsActivity);
+            return false;
+        }
+        else if(mServerIp.isEmpty()) {
+            Intent settingsActivity = new Intent(getApplicationContext(), SettingsActivity.class);
+            settingsActivity.putExtra(SERVER_ERROR, "ENTER A IP");
+            startActivity(settingsActivity);
+            return false;
+        }
+        else if(mServerPort.isEmpty()) {
+            Intent settingsActivity = new Intent(getApplicationContext(), SettingsActivity.class);
+            settingsActivity.putExtra(SERVER_ERROR, "ENTER A PORT");
+            startActivity(settingsActivity);
+            return false;
+        } else {
+            return true;
+        }
     }
 
 
@@ -160,6 +247,11 @@ public class MainActivity extends FragmentActivity implements MenuListener {
 
         // Animation slide in / out.
         overridePendingTransition(R.anim.pull_in_top, R.anim.push_out_bottom);
+    }
+
+
+    public void onServerConnected() {
+        mServerConnected = true;
     }
 
 

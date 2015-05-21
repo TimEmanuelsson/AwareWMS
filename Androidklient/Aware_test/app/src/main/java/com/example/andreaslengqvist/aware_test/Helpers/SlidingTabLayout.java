@@ -31,6 +31,8 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.andreaslengqvist.aware_test.R;
+
 /**
  * To be used with ViewPager to provide a tab indicator component which give constant feedback as to
  * the user's scroll progress.
@@ -61,11 +63,16 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
     }
 
+    private static final String MENU_TAG = "MENU_TAG";
+    private static final String SETTINGS_TAG = "SETTINGS_TAG";
+
     private static final int TITLE_OFFSET_DIPS = 24;
     private static final int TAB_VIEW_PADDING_DIPS = 16;
     private static final int TAB_VIEW_TEXT_SIZE_SP = 18;
 
     private int mTitleOffset;
+
+    private String mTag;
 
     private int mTabViewLayoutId;
     private int mTabViewTextViewId;
@@ -148,8 +155,10 @@ public class SlidingTabLayout extends HorizontalScrollView {
      * Sets the associated view pager. Note that the assumption here is that the pager content
      * (number of tabs and tab titles) does not change after this call has been made.
      */
-    public void setViewPager(ViewPager viewPager) {
+    public void setViewPager(ViewPager viewPager, String tag) {
         mTabStrip.removeAllViews();
+
+        mTag = tag;
 
         mViewPager = viewPager;
         if (viewPager != null) {
@@ -211,13 +220,26 @@ public class SlidingTabLayout extends HorizontalScrollView {
                 lp.weight = 1;
             }
 
-            if(i == 0) {
-                tabTitleView.setText("Storage");
+            if(mTag.equals(MENU_TAG)) {
+                if(i == 0) {
+                    tabTitleView.setText(R.string.tab_storage);
+                }
+
+                if(i == 1) {
+                    tabTitleView.setText(R.string.tab_order);
+                }
             }
 
-            if(i == 1) {
-                tabTitleView.setText("Order");
+            if(mTag.equals(SETTINGS_TAG)) {
+                if(i == 0) {
+                    tabTitleView.setText(R.string.tab_server);
+                }
+
+                if(i == 1) {
+                    tabTitleView.setText(R.string.tab_general);
+                }
             }
+
 
             tabView.setOnClickListener(tabClickListener);
             String desc = mContentDescriptions.get(i, null);

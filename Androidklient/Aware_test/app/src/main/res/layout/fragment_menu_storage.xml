@@ -23,23 +23,22 @@
         android:clickable="false"/>
 
     <TextView
-        android:id="@+id/label_total_value"
+        android:id="@+id/label_total_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:layout_below="@+id/output_total_products"
-        android:text="@string/label_total_value"
+        android:text="@string/label_total_quantity"
         android:textColor="@color/black"/>
 
     <TextView
-        android:id="@+id/output_total_value"
+        android:id="@+id/output_total_quantity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/label_total_value"
-        android:clickable="false"
-        android:text="1 000 000 kr"/>
+        android:layout_below="@+id/label_total_quantity"
+        android:clickable="false"/>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -60,6 +59,7 @@
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_below="@+id/label_menu_home"
+            android:enabled="false"
             android:text="@string/btn_storage_menu_products" />
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -74,6 +74,7 @@
                 android:id="@+id/btn_storage_menu_inventory"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
+                android:enabled="false"
                 android:text="@string/btn_storage_menu_inventory" />
 
             <Button
@@ -115,6 +116,7 @@
             android:layout_height="50dp"
             android:layout_below="@+id/layout_inventory_menu"
             android:layout_marginBottom="5dp"
+            android:enabled="false"
             android:text="@string/btn_storage_menu_delivery" />
 
     </RelativeLayout>

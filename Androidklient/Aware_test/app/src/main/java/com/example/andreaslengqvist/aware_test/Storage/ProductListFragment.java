@@ -1,13 +1,14 @@
 package com.example.andreaslengqvist.aware_test.Storage;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +16,9 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import com.example.andreaslengqvist.aware_test.Connection.Connection;
+import com.example.andreaslengqvist.aware_test.Helpers.FragmentIntentIntegrator;
 import com.example.andreaslengqvist.aware_test.R;
+import com.example.andreaslengqvist.aware_test.Settings.SettingsActivity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -25,8 +27,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -45,6 +48,15 @@ public class ProductListFragment extends Fragment {
 
     // Static Name variables.
     private static final String INTENT_KEY = "INTENT_KEY";
+    private static final String ACTIVITY_INVENTORY_FULL = "ACTIVITY_INVENTORY_FULL";
+
+    // Shared Preference Static variables.
+    public static final String APP_PREFERENCES = "APP_PREFERENCES" ;
+    public static final String SERVER_IP = "SERVER_IP";
+    public static final String SERVER_PORT = "SERVER_PORT";
+    public static final String SERVER_PW = "SERVER_PW";
+    public static final String DAYS_UNDER = "DAYS_UNDER";
+    public static final String DAYS_OVER = "DAYS_OVER";
 
     // Layout variables.
     private ListView list_products;
@@ -67,9 +79,11 @@ public class ProductListFragment extends Fragment {
     private ProductListListener mCallback;
     private ArrayList<Product> mProducts;
     private Product mSelectedProduct;
+    public boolean doServerConnectionLostOnce = true;
     public boolean mWaitingForProductUpdate;
     public boolean mWaitingForInventoryUpdate;
     public boolean mInsideSearch;
+    private GetProducts gp;
 
     // Sorting variables.
     private Comparator<Product> currentSort;
@@ -78,6 +92,12 @@ public class ProductListFragment extends Fragment {
     // Current JSON.
     private String oldJSON;
 
+    // Shared Preference variables.
+    private SharedPreferences sharedpreferences;
+    private String mServerIp;
+    private String mServerPort;
+    private String mServerPw;
+
 
     /**
      * From onCreate
@@ -85,6 +105,13 @@ public class ProductListFragment extends Fragment {
      * Basically initialize all elements from the XML-layout (res/layout/activity_products.xml).
      */
     private void initializeVariables() {
+
+        // Set saved preferences.
+        mServerIp = sharedpreferences.getString(SERVER_IP, "");
+        mServerPort = sharedpreferences.getString(SERVER_PORT, "");
+        mServerPw = sharedpreferences.getString(SERVER_PW, "");
+
+        // Set GUI-components.
         list_products = (ListView) mView.findViewById(R.id.list_products);
         list_products.setEmptyView(mView.findViewById(R.id.progress_loading_list));
 
@@ -151,6 +178,7 @@ public class ProductListFragment extends Fragment {
      */
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_products_list, container, false);
+        sharedpreferences = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         return mView;
     }
 
@@ -168,6 +196,7 @@ public class ProductListFragment extends Fragment {
         initializeVariables();
 
 
+
         // If coming from new state. (e.g NOT screen rotation)
         // Start Handler to get Products periodically on background thread (AsyncTask).
         if (savedInstanceState == null) {
@@ -176,7 +205,20 @@ public class ProductListFragment extends Fragment {
             String mTypeOfActivity = bundle.getString(INTENT_KEY);
 
             mProducts = new ArrayList<>();
-            mAdapter = new ProductListAdapter(getActivity(), mTypeOfActivity);
+
+            if(mTypeOfActivity.equals(ACTIVITY_INVENTORY_FULL)) {
+                mAdapter = new ProductListAdapter(
+                        getActivity(),
+                        mTypeOfActivity,
+                        sharedpreferences.getInt(DAYS_UNDER, 0),
+                        sharedpreferences.getInt(DAYS_OVER, 0));
+            } else {
+                mAdapter = new ProductListAdapter(
+                        getActivity(),
+                        mTypeOfActivity,
+                        0,
+                        0);
+            }
 
             mHandler = new Handler();
             startPeriodically();
@@ -561,16 +603,30 @@ public class ProductListFragment extends Fragment {
      * From startPeriodically
      *
      * Called when the Handler wants to run the periodically AsyncTask GetProducts.
-     * Runs a instance of GetProducts each 1000ms (delayed).
+     * Runs a instance of GetProducts each 2000ms (delayed).
      */
     private Runnable runPeriodically = new Runnable() {
 
         @Override
         public void run() {
-            new GetProducts().execute();
-        mHandler.postDelayed(runPeriodically, 1000);
+            gp = new GetProducts();
+            gp.execute();
+            mHandler.postDelayed(runPeriodically, 1000);
         }
     };
+
+
+    @Override
+    /**
+     * Called when Activity paused. (e.g sleep-mode, user heads to another app, etc.)
+     *
+     * Cancels all running AsyncTasks.
+     */
+    public void onPause() {
+        super.onPause();
+        if(gp != null && gp.getStatus() == AsyncTask.Status.RUNNING)
+            gp.cancel(true);
+    }
 
 
     /**
@@ -579,90 +635,98 @@ public class ProductListFragment extends Fragment {
      */
     private class GetProducts extends AsyncTask<Void, Void, ArrayList<Product>> {
 
-        private Socket socket;
         private String newJSON;
+        private Boolean connectionLost;
 
 
         @Override
         protected ArrayList<Product> doInBackground(Void... arg0) {
 
             try {
+                connectionLost = false;
 
                 // Establish a Socket-Connection.
-                Connection OC = new Connection();
-                socket = OC.establish();
+                Socket socket = new Socket();
+                socket.connect( new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), 1000);
 
-                // Create a PrintWriter to write to the Server with a GET.
-                PrintWriter out = new PrintWriter(socket.getOutputStream());
+                // If socket has established a connection to the server.
+                if (socket.isConnected()) {
 
-                // Write a GET-method to the Server.
-                out.println("GET/products");
-                out.flush();
 
-                // Get Products by using a InputStreamReader wrapped in a BufferedReader to read JSON as a String.
-                newJSON = new BufferedReader(new InputStreamReader(socket.getInputStream())).readLine();
+                    // Create a PrintWriter to write to the Server with a GET.
+                    PrintWriter out = new PrintWriter(socket.getOutputStream());
 
-            } catch (UnknownHostException e) {
+                    // Write a GET-method to the Server.
+                    out.println("GET/products/pw=" + mServerPw);
+                    out.flush();
 
-                e.printStackTrace();
-            } catch (IOException e) {
+                    // Get Products by using a InputStreamReader wrapped in a BufferedReader to read JSON as a String.
+                    newJSON = new BufferedReader(new InputStreamReader(socket.getInputStream())).readLine();
 
-                Log.d("Error: ", e.toString());
-            } finally {
-                try {
-
+                    // Close the connection.
                     socket.close();
-                } catch (IOException e) {
-
-                    e.printStackTrace();
                 }
-            }
 
-            // If the new JSON-object NOT equals to the old, return the new one.
-            if (!newJSON.equals(oldJSON)) {
-                oldJSON = newJSON;
-                return new Gson().fromJson(newJSON, new TypeToken<List<Product>>() {}.getType());
+                // If the new JSON-object NOT equals to the old, return the new one.
+                if (!newJSON.equals(oldJSON)) {
+                    oldJSON = newJSON;
+                    return new Gson().fromJson(newJSON, new TypeToken<List<Product>>() {}.getType());
+                }
+                // Else, there has not been any changes in the database. Retain the old one.
+                else { return null; }
+
+            } catch (IOException e) {
+                connectionLost = true;
+                return null;
             }
-            // Else, there has not been any changes in the database. Retain the old one.
-            else { return null; }
         }
 
         @Override
         protected void onPostExecute(ArrayList<Product> result) {
             super.onPostExecute(result);
 
-            // If there is an result. (e.g JSON-object has changed.)
-            // Replace the old list with the new list.
-            if(result != null) {
 
+            if(connectionLost){
+                if(doServerConnectionLostOnce) {
+                    doServerConnectionLostOnce = false;
+                    Intent settingsActivity = new Intent(getActivity().getApplicationContext(), SettingsActivity.class);
+                    settingsActivity.putExtra("SERVER_ERROR", "NO SERVER FOUND");
+                    startActivity(settingsActivity);
+                }
+            } else {
 
-                // If a sorting is made. Sort it.
-                if (currentSort != null) {
-                    Collections.sort(result, currentSort);
+                // If there is an result. (e.g JSON-object has changed.)
+                // Replace the old list with the new list.
+                if (result != null) {
+
+                    // If a sorting is made. Sort it.
+                    if (currentSort != null) {
+                        Collections.sort(result, currentSort);
+                    }
+
+                    // If inside the SearchBar. Update the searched list.
+                    if (mInsideSearch) {
+                        mCallback.onProductsUpdated(result);
+                    }
+
+                    // Else unlock the ListView and set the new list of products.
+                    else {
+                        unlockList();
+                        setList(result);
+                    }
                 }
 
-                // If inside the SearchBar. Update the searched list.
-                if(mInsideSearch) {
-                    mCallback.onProductsUpdated(result);
+                // If an ProductUpdate has been made.
+                if (mWaitingForProductUpdate) {
+                    mWaitingForProductUpdate = false;
+                    mCallback.onProductUpdateFinished(false);
                 }
 
-                // Else unlock the ListView and set the new list of products.
-                else {
-                    unlockList();
-                    setList(result);
+                // If an Inventory has been made.
+                if (mWaitingForInventoryUpdate) {
+                    mWaitingForInventoryUpdate = false;
+                    mCallback.onProductUpdateFinished(true);
                 }
-            }
-
-            // If an ProductUpdate has been made.
-            if(mWaitingForProductUpdate) {
-                mWaitingForProductUpdate = false;
-                mCallback.onProductUpdateFinished(false);
-            }
-
-            // If an Inventory has been made.
-            if(mWaitingForInventoryUpdate) {
-                mWaitingForInventoryUpdate = false;
-                mCallback.onProductUpdateFinished(true);
             }
         }
     }

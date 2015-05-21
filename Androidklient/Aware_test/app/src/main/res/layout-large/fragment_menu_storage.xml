@@ -5,49 +5,73 @@
     android:layout_height="fill_parent"
     android:background="@color/white">
 
-    <TextView
-        android:id="@+id/label_total_products"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="140dp"
-        android:text="@string/label_total_products"
-        android:textSize="22sp"
-        android:textColor="@color/black"/>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_status_bar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layout_button_menu"
+        android:padding="10dp">
 
-    <TextView
-        android:id="@+id/output_total_products"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/label_total_products"
-        android:clickable="false"
-        android:textSize="22sp"/>
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:indeterminate="true" />
 
-    <TextView
-        android:id="@+id/label_total_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:layout_below="@+id/output_total_products"
-        android:text="@string/label_total_value"
-        android:textSize="22sp"
-        android:textColor="@color/black"/>
-
-    <TextView
-        android:id="@+id/output_total_value"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/label_total_value"
-        android:clickable="false"
-        android:textSize="22sp"
-        android:text="1 000 000 kr"/>
+    </RelativeLayout>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_storage_info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/layout_button_menu"
+        android:padding="10dp"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/label_total_products"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="140dp"
+            android:text="@string/label_total_products"
+            android:textSize="22sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/output_total_products"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/label_total_products"
+            android:clickable="false"
+            android:textSize="22sp"/>
+
+        <TextView
+            android:id="@+id/label_total_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:layout_below="@+id/output_total_products"
+            android:text="@string/label_total_quantity"
+            android:textSize="22sp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/output_total_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/label_total_quantity"
+            android:clickable="false"
+            android:textSize="22sp"/>
+        </RelativeLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_button_menu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -66,6 +90,8 @@
             android:layout_width="fill_parent"
             android:layout_height="75dp"
             android:layout_below="@+id/label_menu_home"
+            android:layout_marginTop="10dp"
+            android:enabled="false"
             android:text="@string/btn_storage_menu_products"
             android:textSize="24sp" />
 
@@ -81,6 +107,7 @@
                 android:id="@+id/btn_storage_menu_inventory"
                 android:layout_width="fill_parent"
                 android:layout_height="75dp"
+                android:enabled="false"
                 android:text="@string/btn_storage_menu_inventory"
                 android:textSize="24sp" />
 
@@ -124,8 +151,9 @@
             android:layout_width="fill_parent"
             android:layout_height="75dp"
             android:layout_below="@+id/layout_inventory_menu"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/btn_storage_menu_delivery"
+            android:enabled="false"
             android:textSize="24sp" />
 
     </RelativeLayout>

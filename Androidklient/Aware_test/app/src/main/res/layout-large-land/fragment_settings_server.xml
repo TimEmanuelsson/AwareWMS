@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_server"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/label_server_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="@string/label_server_status"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/output_server_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/label_server_status"
+        android:layout_marginTop="10dp"
+        android:text="NOT CONNECTED"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:baselineAligned="true"
+        android:orientation="horizontal"
+        android:layout_below="@+id/output_server_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp">
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/label_general_ip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/label_server_ip"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/output_server_ip"
+                android:digits="0123456789."
+                android:inputType="text"
+                android:maxLength="35"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/label_general_ip"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:focusable="false"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.25"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/label_general_port"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/label_server_port"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/output_server_port"
+                android:inputType="number"
+                android:maxLength="5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/label_general_port"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:focusable="false"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/label_general_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="@string/label_server_password"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/output_server_password"
+                android:inputType="textPassword"
+                android:maxLength="35"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/label_general_password"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:focusable="false"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layout_save_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/menu_white">
+
+        <TextView
+            style="@style/ButtonStyleLookalike"
+            android:id="@+id/label_menu_home"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false" />
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:id="@+id/btn_reconnect"
+            android:layout_width="fill_parent"
+            android:layout_height="75dp"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/label_menu_home"
+            android:textSize="24sp"
+            android:text="@string/btn_test_server" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

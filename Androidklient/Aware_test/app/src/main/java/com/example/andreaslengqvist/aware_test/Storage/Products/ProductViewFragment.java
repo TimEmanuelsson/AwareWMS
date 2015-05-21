@@ -1,14 +1,15 @@
 package com.example.andreaslengqvist.aware_test.Storage.Products;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,19 +19,18 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.example.andreaslengqvist.aware_test.Storage.FragmentIntentIntegrator;
+import com.example.andreaslengqvist.aware_test.Helpers.FragmentIntentIntegrator;
 import com.example.andreaslengqvist.aware_test.Storage.ProductListener;
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.example.andreaslengqvist.aware_test.Connection.Connection;
 import com.example.andreaslengqvist.aware_test.R;
 import com.example.andreaslengqvist.aware_test.Storage.Product;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentResult;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 
@@ -46,6 +46,12 @@ public class ProductViewFragment extends Fragment {
     // Static Name variables.
     private static final String PARCELABLE_PRODUCT_LIST_TAG = "PARCELABLE_PRODUCT_LIST_TAG";
     private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
+
+    // Shared Preference Static variables.
+    public static final String APP_PREFERENCES = "APP_PREFERENCES" ;
+    public static final String SERVER_IP = "SERVER_IP";
+    public static final String SERVER_PORT = "SERVER_PORT";
+    public static final String SERVER_PW = "SERVER_PW";
 
     // Layout variables.
     private RelativeLayout btn_product_view_show_edit_menu;
@@ -65,6 +71,11 @@ public class ProductViewFragment extends Fragment {
     private boolean mInsideEditMenu;
     private String mJSONProduct;
 
+    // Shared Preference variables.
+    private String mServerIp;
+    private String mServerPort;
+    private String mServerPw;
+
 
     /**
      * From onCreate
@@ -73,6 +84,13 @@ public class ProductViewFragment extends Fragment {
      */
     private void initializeVariables() {
 
+        // Get saved preferences.
+        SharedPreferences sharedpreferences = getActivity().getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        mServerIp = sharedpreferences.getString(SERVER_IP, "");
+        mServerPort = sharedpreferences.getString(SERVER_PORT, "");
+        mServerPw = sharedpreferences.getString(SERVER_PW, "");
+
+        // Set GUI-components.
         output_product_position = (TextView) mView.findViewById(R.id.output_product_position);
         output_product_name = (TextView) mView.findViewById(R.id.output_product_name);
         output_product_number = (TextView) mView.findViewById(R.id.output_product_number);
@@ -236,7 +254,7 @@ public class ProductViewFragment extends Fragment {
         output_product_quantity.setText(Integer.toString(mProduct.getQuantity()));
 
         // Image.
-        new ImageDownloader(img_product_picture).execute("https://psmedia.playstation.com/is/image/psmedia/the-last-of-us-remastered-two-column-01-ps4-us-28jul14?$TwoColumn_Image$");
+        new GetProductImage(img_product_picture).execute(mProduct.getImageLocation());
 
         // If Product has EAN. Change "Add EAN"-Button to "Edit EAN"-Button.
         if(!mProduct.getEAN().equals("0")) {
@@ -246,28 +264,54 @@ public class ProductViewFragment extends Fragment {
 
 
     /**
-     * Helper class which loads the image into the ImageView in a background thread.
+     * AsyncTask which will run in the background and fetch a Product Image.
      */
-    class ImageDownloader extends AsyncTask<String, Void, Bitmap> {
+    private class GetProductImage extends AsyncTask<String, Void, Bitmap> {
+
         ImageView bmImage;
 
-        public ImageDownloader(ImageView bmImage) {
+        public GetProductImage(ImageView bmImage) {
             this.bmImage = bmImage;
         }
 
+
+        @Override
         protected Bitmap doInBackground(String... urls) {
             String url = urls[0];
-            Bitmap mIcon = null;
+            Bitmap mImage = null;
+
             try {
-                InputStream in = new java.net.URL(url).openStream();
-                mIcon = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
+
+                // Establish a Socket-Connection.
+                Socket socket = new Socket();
+                socket.connect(new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), 5000);
+
+                // If socket has established a connection to the server.
+                if (socket.isConnected()) {
+
+                    // Create a PrintWriter to write to the Server with a GET.
+                    PrintWriter out = new PrintWriter(socket.getOutputStream());
+
+                    // Write a GET-method to the Server.
+                    out.println("GET/products/image=" + url + "/pw=" + mServerPw);
+                    out.flush();
+
+                    // Decode ByteArray from InputStream to Bitmap.
+                    mImage = BitmapFactory.decodeStream(socket.getInputStream());
+
+                    // Close the connection.
+                    socket.close();
+                }
+                return mImage;
+
+            } catch (IOException e) {
+                return null;
             }
-            return mIcon;
         }
 
+        @Override
         protected void onPostExecute(Bitmap result) {
+            super.onPostExecute(result);
             mView.findViewById(R.id.img_product_picture);
             bmImage.setImageBitmap(result);
         }
@@ -279,50 +323,43 @@ public class ProductViewFragment extends Fragment {
      */
     private class PutProduct extends AsyncTask<Void, String, Boolean> {
 
-        private Socket socket;
-
-
         @Override
         protected Boolean doInBackground(Void... arg0) {
 
             try {
 
-                // Establish a Socket Connection.
-                Connection OC = new Connection();
-                socket = OC.establish();
+                // Establish a Socket-Connection.
+                Socket socket = new Socket();
+                socket.connect(new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), 1000);
 
-                // Create a PrintWriter to PUT updated product.
-                PrintWriter out = new PrintWriter(socket.getOutputStream());
+                // If socket has established a connection to the server.
+                if (socket.isConnected()) {
 
-                // Write a PUT-method to the Server.
-                out.println("PUT/products/json=" + mJSONProduct);
-                out.flush();
+                    // Create a PrintWriter to PUT updated product.
+                    PrintWriter out = new PrintWriter(socket.getOutputStream());
 
-            } catch (UnknownHostException e) {
+                    // Write a PUT-method to the Server.
+                    out.println("PUT/products/json=" + mJSONProduct + "/pw=" + mServerPw);
+                    out.flush();
 
-                Log.d("UnknownHostException: ", e.toString());
-                return false;
-            } catch (IOException e) {
-
-                Log.d("IOException: ", e.toString());
-                return false;
-            } finally {
-                try {
+                    // Close the connection.
                     socket.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
-            }
+                return true;
 
-            return true;
+            } catch (IOException e) {
+                return false;
+            }
         }
 
         @Override
         protected void onPostExecute(Boolean finished) {
             super.onPostExecute(finished);
 
-            // Call the Activity through the interface that an Update have been made.
-            mCallback.onPutProduct();
+            if(finished) {
+                // Call the Activity through the Interface that an Update have been made.
+                mCallback.onPutProduct();
+            }
         }
     }
 }

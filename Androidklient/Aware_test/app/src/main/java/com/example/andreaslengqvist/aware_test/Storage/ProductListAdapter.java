@@ -1,6 +1,7 @@
 package com.example.andreaslengqvist.aware_test.Storage;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,8 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
     // Member variables.
     private int mSelectedPosition = -1;
     private String mTypeOfActivity;
+    private int DAYS_UNDER;
+    private int DAYS_OVER;
 
 
     /**
@@ -42,9 +45,11 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
      * @param context context from the Activity
      * @param mTypeOfActivity which type of Activity is started
      */
-    public ProductListAdapter(Context context, String mTypeOfActivity) {
+    public ProductListAdapter(Context context, String mTypeOfActivity, Integer daysUnder, Integer daysOver) {
         super(context, 0);
         this.mTypeOfActivity = mTypeOfActivity;
+        this.DAYS_UNDER = daysUnder;
+        this.DAYS_OVER = daysOver;
     }
 
 
@@ -93,12 +98,12 @@ public class ProductListAdapter extends ArrayAdapter<Product> {
             int lastInventory = product.getLastInventory();
 
             // If Last Inventory was done under MIN days ago.
-            if (lastInventory < 5) {
+            if (lastInventory < DAYS_UNDER) {
                 convertView.setBackgroundResource(R.drawable.inventory_green_key);
             }
 
             // If Last Inventory was done over MAX days ago.
-            if (lastInventory > 100) {
+            if (lastInventory > DAYS_OVER) {
                 convertView.setBackgroundResource(R.drawable.inventory_red_key);
             }
 

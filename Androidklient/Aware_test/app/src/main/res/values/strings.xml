@@ -9,23 +9,43 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="blacktrans">#99000000</color>
+    <color name="graytrans">#99B2B2B2</color>
     <color name="gray">#B2B2B2</color>
     <color name="menu_white">#F5F5F5</color>
     <color name="yellow">#FFE191</color>
     <color name="green">#E8ECE3</color>
     <color name="red">#DAAEAE</color>
+    <color name="menu_green">#7A9D3A</color>
+    <color name="menu_red">#DE564C</color>
 
-        <!-- Order menu -->
-        <string name="logo">logo</string>
-        <string name="label_order_to_pick">To pick:</string>
-        <string name="label_order_to_pack">To pack:</string>
-        <string name="btn_order_menu_pick">Pick</string>
-        <string name="btn_order_menu_pack">Pack</string>
-        <string name="btn_order_menu_returns">Returns</string>
+    <!-- Settings menu -->
+    <string name="btn_main_menu_settings">Show settings</string>
+    <string name="label_preferences">Preferences</string>
+    <string name="tab_general">General</string>
+    <string name="tab_server">Server</string>
+
+        <!-- Settings General -->
+        <string name="label_general_handedness">Set Handedness</string>
+        <string name="label_general_handedness_left">Left-handed</string>
+        <string name="label_general_handedness_right">Right-handed</string>
+        <string name="label_general_last_inventory_indicators">Set days since Last Inventory</string>
+        <string name="label_general_last_inventory_indicators_under">UNDER</string>
+        <string name="label_general_last_inventory_indicators_over">OVER</string>
+        <string name="label_general_max_inventory_quantity">Set MAX QTY in Inventory</string>
+
+        <!-- Settings Server -->
+        <string name="label_server_status">Server status</string>
+        <string name="label_server_ip">Server IP</string>
+        <string name="label_server_port">Server Port</string>
+        <string name="label_server_password">Server Password</string>
+        <string name="btn_test_server">Reconnect</string>
+        <string name="status_connected">Connected to server.</string>
+        <string name="status_not_connected">Cant connect to server.</string>
 
         <!-- Storage menu -->
+        <string name="tab_storage">Storage</string>
         <string name="label_total_products">Products in stock:</string>
-        <string name="label_total_value">Total value of:</string>
+        <string name="label_total_quantity">With a total quantity of:</string>
         <string name="btn_storage_menu_products">Products</string>
         <string name="btn_storage_menu_inventory">Inventory</string>
         <string name="btn_inventory_menu_fast">Fast</string>
@@ -49,7 +69,7 @@
                 <string name="btn_product_view_create_EAN">Add Barcode</string>
                 <string name="btn_product_view_change_EAN">Change Barcode</string>
                 <string name="toast_ean_already_exists">Barcode already in use!</string>
-                <string name="toast_product_updated">Product updated!</string>
+                <string name="toast_product_updated">Product updated</string>
                 <string name="btn_product_view_create_picture">Add image</string>
                 <string name="btn_product_view_change_picture">Change image</string>
                 <string name="product_picture">Product Image</string>
@@ -61,8 +81,17 @@
             <string name="btn_inventory_view_inventory_cancel">Cancel</string>
             <string name="btn_inventory_view_inventory_show">Do Inventory</string>
             <string name="btn_inventory_view_inventory_save">Save</string>
-            <string name="toast_inventory_finished">Inventory done!</string>
+            <string name="toast_inventory_finished">Inventory saved</string>
             <string name="toast_ean_doesnt_exists">Barcode not found!</string>
+
+    <!-- Order menu -->
+    <string name="logo">logo</string>
+    <string name="tab_order">Order</string>
+    <string name="label_order_to_pick">To pick:</string>
+    <string name="label_order_to_pack">To pack:</string>
+    <string name="btn_order_menu_pick">Pick</string>
+    <string name="btn_order_menu_pack">Pack</string>
+    <string name="btn_order_menu_returns">Returns</string>
 
     <!-- Activity names -->
     <string name="title_activity_inventory_fast">InventoryFastActivity</string>
@@ -72,6 +101,7 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_inventory_full">InventoryFullActivity</string>
+    <string name="title_activity_settings">Preferences</string>
 
 <!-- TODO: Remove or change this placeholder text -->
 

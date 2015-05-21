@@ -3,85 +3,94 @@
     android:layout_height="match_parent"
     android:background="@color/white">
 
-    <TextView
-        android:id="@+id/output_product_position"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_above="@+id/output_product_name"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="40dp"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="RAD 5"/>
+        android:weightSum="10">
+
 
     <TextView
-        android:id="@+id/output_product_name"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_above="@+id/output_product_number"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="ARTIKELNAMN"/>
-
-    <TextView
-        android:id="@+id/output_product_number"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_above="@+id/img_product_picture"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:text="ARTIKELNUMMER"/>
+            android:id="@+id/output_product_position"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:text="RAD 5"/>
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/progress_loading_picture"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center" >
+            android:layout_weight="4">
 
-            <ProgressBar
-                android:layout_width="wrap_content"
+
+            <TextView
+                android:id="@+id/output_product_name"
                 android:layout_height="wrap_content"
-                android:indeterminate="true" />
+                android:layout_width="match_parent"
+                android:layout_above="@+id/output_product_number"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="ARTIKELNAMN" />
+
+            <TextView
+                android:id="@+id/output_product_number"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_above="@+id/img_product_picture"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:text="ARTIKELNUMMER" />
+
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/progress_loading_picture"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center" >
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true" />
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/img_product_picture"
+                android:contentDescription="@string/product_picture"
+                android:layout_width="fill_parent"
+                android:layout_height="170dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"/>
 
         </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/img_product_picture"
-        android:contentDescription="@string/product_picture"
-        android:layout_width="fill_parent"
-        android:layout_height="170dp"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true"/>
+        <TextView
+            android:id="@+id/output_product_quantity"
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:text="5000" />
 
-    <TextView
-        android:id="@+id/output_product_quantity"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/img_product_picture"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:gravity="center"
-        android:maxLength="5"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:text="5000"/>
-
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/layout_inventory_bar"
@@ -92,8 +101,8 @@
 
         <RelativeLayout
             android:id="@+id/btn_decrease_balance"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true">
@@ -113,14 +122,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp">
+            android:layout_marginStart="100dp"
+            android:layout_marginEnd="100dp"
+            android:padding="30dp">
         </SeekBar>
 
         <RelativeLayout
             android:id="@+id/btn_increase_balance"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true">
@@ -136,6 +146,7 @@
         </RelativeLayout>
 
     </RelativeLayout>
+
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/layout_button_menu"

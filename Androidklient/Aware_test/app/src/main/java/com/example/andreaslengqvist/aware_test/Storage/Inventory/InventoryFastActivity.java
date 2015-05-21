@@ -1,16 +1,17 @@
 package com.example.andreaslengqvist.aware_test.Storage.Inventory;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
-import com.example.andreaslengqvist.aware_test.Connection.Connection;
 import com.example.andreaslengqvist.aware_test.R;
+import com.example.andreaslengqvist.aware_test.Settings.SettingsActivity;
 import com.example.andreaslengqvist.aware_test.Storage.Product;
 import com.example.andreaslengqvist.aware_test.Storage.ProductListener;
 import com.google.gson.Gson;
@@ -20,8 +21,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 
 
@@ -41,6 +43,12 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
     private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
     private static final String INVENTORY_LAYOUT_TAG = "INVENTORY_LAYOUT_TAG";
 
+    // Shared Preference Static variables.
+    public static final String APP_PREFERENCES = "APP_PREFERENCES" ;
+    public static final String SERVER_IP = "SERVER_IP";
+    public static final String SERVER_PORT = "SERVER_PORT";
+    public static final String SERVER_PW = "SERVER_PW";
+
     // WeakReference variable.
     private static WeakReference<InventoryFastActivity> wrActivity = null;
 
@@ -49,7 +57,16 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
     private String mScannedEAN;
     private String mOldJSON;
     private boolean mEANNotFound;
+    private boolean doServerConnectionLostOnce = true;
     private boolean mWaitingForInventoryUpdate;
+    private GetProductByEAN gpbe;
+
+    // Shared Preference variables.
+    private SharedPreferences sharedpreferences;
+    private String mServerIp;
+    private String mServerPort;
+    private String mServerPw;
+
 
 
     @Override
@@ -63,6 +80,12 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_fast);
+
+        // Set saved preferences.
+        sharedpreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        mServerIp = sharedpreferences.getString(SERVER_IP, "");
+        mServerPort = sharedpreferences.getString(SERVER_PORT, "");
+        mServerPw = sharedpreferences.getString(SERVER_PW, "");
 
 
         // If user is NOT using a tablet set the orientation to only allow Portrait-mode.
@@ -119,6 +142,9 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
      */
     protected void onPause() {
         super.onPause();
+        if (gpbe != null && gpbe.getStatus() == AsyncTask.Status.RUNNING) {
+            gpbe.cancel(true);
+        }
         stopPeriodically();
     }
 
@@ -133,6 +159,7 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
     protected void onResume() {
         super.onResume();
         mHandler.removeCallbacks(runPeriodically);
+        doServerConnectionLostOnce = true;
         startPeriodically();
     }
 
@@ -201,8 +228,9 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
         public void run() {
 
             // Create a new AsyncTask each second.
-            new GetProductByEAN().execute();
-            mHandler.postDelayed(runPeriodically, 1000);
+            gpbe = new GetProductByEAN();
+            gpbe.execute();
+            mHandler.postDelayed(runPeriodically, 2000);
         }
     };
 
@@ -213,8 +241,8 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
      */
     private class GetProductByEAN extends AsyncTask<Void, Void, Product> {
 
-        private Socket socket;
         private String newJSON;
+        private Boolean connectionLost = false;
 
 
         @Override
@@ -223,37 +251,28 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
             try {
 
                 // Establish a Socket-Connection.
-                Connection OC = new Connection();
-                socket = OC.establish();
+                Socket socket = new Socket();
+                socket.connect( new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), 10000);
 
-                // Create a PrintWriter to write to the Server with a GET.
-                PrintWriter out = new PrintWriter(socket.getOutputStream());
+                // If socket has established a connection to the server.
+                if (socket.isConnected()) {
 
-                // Write a GET-method to the Server.
-                out.println("GET/products/ean=" + mScannedEAN);
-                out.flush();
+                    // Create a PrintWriter to write to the Server with a GET.
+                    PrintWriter out = new PrintWriter(socket.getOutputStream());
 
-                // Get Product by using a InputStreamReader wrapped in a BufferedReader to read JSON as a String.
-                newJSON = new BufferedReader(new InputStreamReader(socket.getInputStream())).readLine();
+                    // Write a GET-method to the Server.
+                    out.println("GET/products/ean=" + mScannedEAN + "/pw=" + mServerPw);
+                    out.flush();
 
-            } catch (UnknownHostException e) {
+                    // Get Product by using a InputStreamReader wrapped in a BufferedReader to read JSON as a String.
+                    newJSON = new BufferedReader(new InputStreamReader(socket.getInputStream())).readLine();
 
-                e.printStackTrace();
-            } catch (IOException e) {
-
-                Log.d("Error: ", e.toString());
-            } finally {
-                try {
-
+                    // Close the connection.
                     socket.close();
-                } catch (IOException e) {
-
-                    e.printStackTrace();
                 }
-            }
 
-            // If the returned JSON is not "null".
-            if (!newJSON.equals("null")) {
+                // If the returned JSON is not "null".
+                if (!newJSON.equals("null")) {
 
                     // If the new JSON-object NOT equals to the old one, return the new one.
                     if (!newJSON.equals(mOldJSON)) {
@@ -263,11 +282,16 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
                     }
                     // Else, there has not been any changes in the database. Keep the old one.
                     else { return null; }
-            }
+                }
 
-            // Else the EAN cannot be found in the database.
-            else {
-                mEANNotFound = true;
+                // Else the EAN cannot be found in the database.
+                else {
+                    mEANNotFound = true;
+                    return null;
+                }
+
+            } catch (IOException e) {
+                connectionLost = true;
                 return null;
             }
         }
@@ -276,40 +300,51 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
         protected void onPostExecute(Product result) {
             super.onPostExecute(result);
 
-            // Weird solution to solve the bug with Activity lost upon screen rotation.
-            if ((wrActivity.get() != null) && (!wrActivity.get().isFinishing())) {
-
-                // If EAN couldn't be found Toast and destroy Activity and return to the previous one.
-                if(mEANNotFound){
-                    Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_ean_doesnt_exists, Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
-                    toast.show();
-                    onBackPressed();
+            // If connection to the server is lost.
+            if (connectionLost) {
+                if(doServerConnectionLostOnce) {
+                    doServerConnectionLostOnce = false;
+                    Intent settingsActivity = new Intent(getApplicationContext(), SettingsActivity.class);
+                    settingsActivity.putExtra("SERVER_ERROR", "NO SERVER FOUND");
+                    startActivity(settingsActivity);
                 }
+            } else {
 
-                // If EAN was found and a Product was returned.
-                if (result != null) {
+                // Weird solution to solve the bug with Activity lost upon screen rotation.
+                if ((wrActivity.get() != null) && (!wrActivity.get().isFinishing())) {
 
-                    Bundle bundle = new Bundle();
-                    bundle.putParcelable(PARCELABLE_PRODUCT_TAG, result);
-                    bundle.putBoolean(INVENTORY_LAYOUT_TAG, true);
-
-                    // Create an instance of InventoryViewFragment and add the bundle.
-                    InventoryViewFragment mInventoryViewFragment = new InventoryViewFragment();
-                    mInventoryViewFragment.setArguments(bundle);
-
-                    // Get FragmentManager,replace whatever is in the container with a InventoryViewFragment.
-                    wrActivity.get().getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_inventory_view_container, mInventoryViewFragment, INVENTORY_VIEW_FRAGMENT_TAG)
-                            .commit();
-
-                    // If an Inventory has been made.
-                    if (mWaitingForInventoryUpdate) {
-                        mWaitingForInventoryUpdate = false;
-                        Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_inventory_finished, Toast.LENGTH_LONG);
+                    // If EAN couldn't be found Toast and destroy Activity and return to the previous one.
+                    if (mEANNotFound) {
+                        Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_ean_doesnt_exists, Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
                         toast.show();
+                        onBackPressed();
+                    }
+
+                    // If EAN was found and a Product was returned.
+                    if (result != null) {
+
+                        Bundle bundle = new Bundle();
+                        bundle.putParcelable(PARCELABLE_PRODUCT_TAG, result);
+                        bundle.putBoolean(INVENTORY_LAYOUT_TAG, true);
+
+                        // Create an instance of InventoryViewFragment and add the bundle.
+                        InventoryViewFragment mInventoryViewFragment = new InventoryViewFragment();
+                        mInventoryViewFragment.setArguments(bundle);
+
+                        // Get FragmentManager,replace whatever is in the container with a InventoryViewFragment.
+                        wrActivity.get().getSupportFragmentManager()
+                                .beginTransaction()
+                                .replace(R.id.fragment_inventory_view_container, mInventoryViewFragment, INVENTORY_VIEW_FRAGMENT_TAG)
+                                .commit();
+
+                        // If an Inventory has been made.
+                        if (mWaitingForInventoryUpdate) {
+                            mWaitingForInventoryUpdate = false;
+                            Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_inventory_finished, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
+                            toast.show();
+                        }
                     }
                 }
             }

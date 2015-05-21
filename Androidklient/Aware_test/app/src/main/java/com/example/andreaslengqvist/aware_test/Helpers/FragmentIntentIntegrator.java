@@ -1,4 +1,4 @@
-package com.example.andreaslengqvist.aware_test.Storage;
+package com.example.andreaslengqvist.aware_test.Helpers;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;

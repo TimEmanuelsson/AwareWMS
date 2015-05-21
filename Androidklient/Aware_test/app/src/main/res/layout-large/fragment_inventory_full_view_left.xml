@@ -113,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/decrease_symbol_small"/>
+                android:src="@drawable/decrease_selector"/>
 
         </RelativeLayout>
 
@@ -141,7 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/increase_symbol_small"/>
+                android:src="@drawable/increase_selector"/>
 
         </RelativeLayout>
 

@@ -43,49 +43,66 @@ namespace AwareServer
 
         public void FetchAndInsert(Object source, ElapsedEventArgs eventArgs)
         {
+            if (state == State.Free)
+            {
+                try
+                {
+                    Debug.WriteLine("Hämtar produkter. Tid: {0}", eventArgs.SignalTime);
+                    state = State.Busy;
+                    List<Product> products = magentoHelper.GetAllProductsWithInventory();
+                    List<Product> productsWithImages = magentoHelper.DownloadAllProductImages();
+                    List<Product> localProducts = service.GetProducts() as List<Product>;
+
+                    InventoryCheck(products, localProducts);
+
+                    // Merge the products from magento with the ones that we store locally.
+                    foreach (Product product in products)
+                    {
+                        if (localProducts.Exists(p => p.SKU == product.SKU))
+                        {
+                            products.First(p => p.SKU == product.SKU).Merge(localProducts.First(p => p.SKU == product.SKU));
+                        }
+                    }
+
+                    foreach (Product product in productsWithImages)
+                    {
+                        if (localProducts.Exists(p => p.ProductId == product.ProductId))
+                        {
+                            products.First(p => p.ProductId == product.ProductId).ImageLocation = product.ImageLocation;
+                        }
+                    }
+
+                    service.InsertAndUpdateProductList(products);
+                    state = State.Free;
+                }
+                catch (Exception e)
+                {
+                    state = State.Free;
+                    ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
+                    service.InsertException(log);
+                }
+            }
+        }
+
+        public void InventoryCheck(List<Product> magentoProducts, List<Product> localProducts)
+        {
             try
             {
-                Debug.WriteLine("Hämtar produkter. Tid: {0}", eventArgs.SignalTime);
-                state = State.Busy;
-                List<Product> products = magentoHelper.GetAllProductsWithInventory();
-                List<Product> productsWithImages = magentoHelper.DownloadAllProductImages();
-                List<Product> localProducts = service.GetProducts() as List<Product>;
-
-                // Merge the products from magento with the ones that we store locally.
-                foreach (Product product in products)
+                foreach (Product magentoProduct in magentoProducts)
                 {
-                    if (localProducts.Exists(p => p.SKU == product.SKU))
+                    Product localProduct = localProducts.First(p => p.SKU == magentoProduct.SKU);
+                    if (localProduct.Quantity != magentoProduct.Quantity)
                     {
-                        products.First(p => p.SKU == product.SKU).Merge(localProducts.First(p => p.SKU == product.SKU));
+                        magentoProduct.Quantity = localProduct.Quantity;
+                        magentoHelper.UpdateProductInventory(magentoProduct);
                     }
                 }
-
-                foreach (Product product in productsWithImages)
-                {
-                    products.First(p => p.ProductId == product.ProductId).ImageLocation = product.ImageLocation;
-                }
-
-                service.InsertAndUpdateProductList(products);
-                state = State.Free;
             }
+
             catch (Exception e)
             {
                 ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
                 service.InsertException(log);
-            }
-        }
-
-        public void InventoryCheck(List<Product> magentoProducts)
-        {
-            List<Product> localProducts = service.GetProducts() as List<Product>;
-            foreach (Product magentoProduct in magentoProducts)
-            {
-                Product localProduct = localProducts.First(p => p.SKU == magentoProduct.SKU);
-                if (localProduct.Quantity != magentoProduct.Quantity)
-                {
-                    magentoProduct.Quantity = localProduct.Quantity;
-                    magentoHelper.UpdateProductInventory(magentoProduct);
-                }
             }
         }
     }

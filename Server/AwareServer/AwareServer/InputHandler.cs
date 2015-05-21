@@ -18,7 +18,6 @@ namespace AwareServer
     class InputHandler
     {
         public Service service = new Service();
-        public MagentoHelper magentoHelper = new MagentoHelper();
         ExceptionLog exceptionLog = null;
         string ret = "";
         byte[] retByte = new Byte[10024];
@@ -216,7 +215,6 @@ namespace AwareServer
                                     json = content.Replace("PUT/products/inventory/json=", "");
                                     Product result = JsonConvert.DeserializeObject<Product>(json);
                                     service.ProductInventory(result);
-                                    magentoHelper.UpdateProductInventory(result);
                                 }
                                 else
                                 {

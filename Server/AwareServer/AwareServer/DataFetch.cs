@@ -74,6 +74,20 @@ namespace AwareServer
                 service.InsertException(log);
             }
         }
+
+        public void InventoryCheck(List<Product> magentoProducts)
+        {
+            List<Product> localProducts = service.GetProducts() as List<Product>;
+            foreach (Product magentoProduct in magentoProducts)
+            {
+                Product localProduct = localProducts.First(p => p.SKU == magentoProduct.SKU);
+                if (localProduct.Quantity != magentoProduct.Quantity)
+                {
+                    magentoProduct.Quantity = localProduct.Quantity;
+                    magentoHelper.UpdateProductInventory(magentoProduct);
+                }
+            }
+        }
     }
 
     enum State

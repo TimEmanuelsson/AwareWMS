@@ -90,11 +90,14 @@ namespace AwareServer
             {
                 foreach (Product magentoProduct in magentoProducts)
                 {
-                    Product localProduct = localProducts.First(p => p.SKU == magentoProduct.SKU);
-                    if (localProduct.Quantity != magentoProduct.Quantity)
+                    if (localProducts.Exists(p => p.SKU == magentoProduct.SKU))
                     {
-                        magentoProduct.Quantity = localProduct.Quantity;
-                        magentoHelper.UpdateProductInventory(magentoProduct);
+                        Product localProduct = localProducts.First(p => p.SKU == magentoProduct.SKU);
+                        if (localProduct.Quantity != magentoProduct.Quantity)
+                        {
+                            magentoProduct.Quantity = localProduct.Quantity;
+                            magentoHelper.UpdateProductInventory(magentoProduct);
+                        }
                     }
                 }
             }

@@ -1,13 +1,11 @@
 package com.example.andreaslengqvist.aware_test.Settings;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,7 +14,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.example.andreaslengqvist.aware_test.R;
 import java.io.UnsupportedEncodingException;
 
@@ -147,7 +144,6 @@ public class SettingsServerFragment extends Fragment {
         output_server_ip.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                view.setFocusable(true);
                 view.setFocusableInTouchMode(true);
                 return false;
             }
@@ -158,7 +154,6 @@ public class SettingsServerFragment extends Fragment {
         output_server_port.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                view.setFocusable(true);
                 view.setFocusableInTouchMode(true);
                 return false;
             }
@@ -170,7 +165,6 @@ public class SettingsServerFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 output_server_password.addTextChangedListener(new PasswordWatcher());
-                view.setFocusable(true);
                 view.setFocusableInTouchMode(true);
                 return false;
             }
@@ -209,10 +203,11 @@ public class SettingsServerFragment extends Fragment {
             if(ip.equals("")) {
                 btn_reconnect.setEnabled(false);
                 output_server_status.setTextColor(getResources().getColor(R.color.menu_red));
-                output_server_status.setText("ENTER A IP");
+                output_server_status.setText("NO IP ENTERED");
             } else {
-                output_server_status.setText("TRY RECONNECT");
                 btn_reconnect.setEnabled(true);
+                output_server_status.setTextColor(getResources().getColor(R.color.menu_green));
+                output_server_status.setText("TRY RECONNECT");
             }
 
             SharedPreferences.Editor mEditor = sharedpreferences.edit();
@@ -246,10 +241,11 @@ public class SettingsServerFragment extends Fragment {
             if(port.equals("")) {
                 btn_reconnect.setEnabled(false);
                 output_server_status.setTextColor(getResources().getColor(R.color.menu_red));
-                output_server_status.setText("ENTER A PORT");
+                output_server_status.setText("NO PORT ENTERED");
             } else {
-                output_server_status.setText("TRY RECONNECT");
                 btn_reconnect.setEnabled(true);
+                output_server_status.setTextColor(getResources().getColor(R.color.menu_green));
+                output_server_status.setText("TRY RECONNECT");
             }
 
             SharedPreferences.Editor mEditor = sharedpreferences.edit();

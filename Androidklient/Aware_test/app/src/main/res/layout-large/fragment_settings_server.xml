@@ -23,16 +23,15 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/label_server_status"
         android:layout_marginTop="10dp"
-        android:text="NOT CONNECTED"
         android:textSize="20sp"
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/label_general_ip"
+        android:id="@+id/label_server_ip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="100dp"
         android:layout_below="@+id/output_server_status"
         android:text="@string/label_server_ip"
         android:textSize="20sp"
@@ -40,20 +39,22 @@
 
     <EditText
         android:id="@+id/output_server_ip"
+        android:inputType="number|numberDecimal"
         android:digits="0123456789."
-        android:inputType="text"
         android:maxLength="35"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/label_general_ip"
+        android:layout_below="@+id/label_server_ip"
+        android:gravity="center"
+        android:singleLine="true"
+        android:nextFocusDown="@id/output_server_port"
+        android:hint="@string/hint_server_ip"
         android:textSize="24sp"
-        android:textStyle="bold"
         android:focusable="false"/>
 
-
     <TextView
-        android:id="@+id/label_general_port"
+        android:id="@+id/label_server_port"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -70,13 +71,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/label_general_port"
+        android:layout_below="@+id/label_server_port"
+        android:nextFocusDown="@id/output_server_password"
+        android:singleLine="true"
+        android:gravity="center"
+        android:hint="@string/hint_server_port"
         android:textSize="24sp"
-        android:textStyle="bold"
         android:focusable="false"/>
 
     <TextView
-        android:id="@+id/label_general_password"
+        android:id="@+id/label_server_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -93,9 +97,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/label_general_password"
+        android:layout_below="@+id/label_server_password"
+        android:singleLine="true"
+        android:gravity="center"
+        android:hint="@string/hint_server_password"
         android:textSize="24sp"
-        android:textStyle="bold"
         android:focusable="false"/>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

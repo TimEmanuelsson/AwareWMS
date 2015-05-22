@@ -107,6 +107,7 @@ public class MainActivity extends FragmentActivity implements MenuListener {
      */
     protected void onRestart() {
         super.onRestart();
+        Log.d("ADASD", "AASAAAAA");
         mServerConnected = false;
         if(checkServerCredentials()) {
             setViewPager();
@@ -154,7 +155,7 @@ public class MainActivity extends FragmentActivity implements MenuListener {
         }
         else if(mServerIp.isEmpty()) {
             Intent settingsActivity = new Intent(getApplicationContext(), SettingsActivity.class);
-            settingsActivity.putExtra(SERVER_ERROR, "ENTER A IP");
+            settingsActivity.putExtra(SERVER_ERROR, "ENTER AN IP");
             startActivity(settingsActivity);
             return false;
         }

@@ -42,6 +42,7 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
     private static final String INVENTORY_VIEW_FRAGMENT_TAG = "INVENTORY_VIEW_FRAGMENT_TAG";
     private static final String PARCELABLE_PRODUCT_TAG = "PARCELABLE_PRODUCT_TAG";
     private static final String INVENTORY_LAYOUT_TAG = "INVENTORY_LAYOUT_TAG";
+    public static final String UPDATE_FREQ = "UPDATE_FREQ";
 
     // Shared Preference Static variables.
     public static final String APP_PREFERENCES = "APP_PREFERENCES" ;
@@ -62,11 +63,10 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
     private GetProductByEAN gpbe;
 
     // Shared Preference variables.
-    private SharedPreferences sharedpreferences;
     private String mServerIp;
     private String mServerPort;
     private String mServerPw;
-
+    private Integer mUpdateFreq;
 
 
     @Override
@@ -82,10 +82,11 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
         setContentView(R.layout.activity_inventory_fast);
 
         // Set saved preferences.
-        sharedpreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         mServerIp = sharedpreferences.getString(SERVER_IP, "");
         mServerPort = sharedpreferences.getString(SERVER_PORT, "");
         mServerPw = sharedpreferences.getString(SERVER_PW, "");
+        mUpdateFreq = sharedpreferences.getInt(UPDATE_FREQ, 10000);
 
 
         // If user is NOT using a tablet set the orientation to only allow Portrait-mode.
@@ -252,7 +253,7 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
 
                 // Establish a Socket-Connection.
                 Socket socket = new Socket();
-                socket.connect( new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), 10000);
+                socket.connect( new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), mUpdateFreq);
 
                 // If socket has established a connection to the server.
                 if (socket.isConnected()) {

@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ public class InventoryViewFragment extends Fragment {
     public static final String SERVER_PW = "SERVER_PW";
     public static final String TABLET_HANDEDNESS = "TABLET_HANDEDNESS";
     public static final String MAX_QTY = "MAX_QTY";
+    public static final String UPDATE_FREQ = "UPDATE_FREQ";
 
     // Range variables.
     private int MAX_QUANTITY;
@@ -65,6 +67,7 @@ public class InventoryViewFragment extends Fragment {
     private ImageView img_product_picture;
     private SeekBar seekBar_product_quantity;
     private RelativeLayout layout_inventory_bar;
+    private RelativeLayout progress_loading_picture;
 
     // Member variables.
     private ProductListener mCallback;
@@ -81,6 +84,7 @@ public class InventoryViewFragment extends Fragment {
     private String mServerIp;
     private String mServerPort;
     private String mServerPw;
+    private Integer mUpdateFreq;
 
 
 
@@ -96,7 +100,8 @@ public class InventoryViewFragment extends Fragment {
         mServerIp = sharedpreferences.getString(SERVER_IP, "");
         mServerPort = sharedpreferences.getString(SERVER_PORT, "");
         mServerPw = sharedpreferences.getString(SERVER_PW, "");
-        MAX_QUANTITY = sharedpreferences.getInt(MAX_QTY, 0);
+        MAX_QUANTITY = sharedpreferences.getInt(MAX_QTY, 1000);
+        mUpdateFreq = sharedpreferences.getInt(UPDATE_FREQ, 10000);
 
         // Set GUI-components.
         btn_inventory_view_inventory_show = (Button) mView.findViewById(R.id.btn_inventory_view_inventory_show);
@@ -111,6 +116,7 @@ public class InventoryViewFragment extends Fragment {
 
         seekBar_product_quantity = (SeekBar) mView.findViewById(R.id.seekBar_product_quantity);
         layout_inventory_bar = (RelativeLayout) mView.findViewById(R.id.layout_inventory_bar);
+        progress_loading_picture = (RelativeLayout) mView.findViewById(R.id.progress_loading_picture);
     }
 
 
@@ -344,6 +350,7 @@ public class InventoryViewFragment extends Fragment {
         setSeekBar(mCurrentQuantity);
 
         // Image.
+        progress_loading_picture.setVisibility(View.VISIBLE);
         new GetProductImage(img_product_picture).execute(mProduct.getImageLocation());
     }
 
@@ -456,7 +463,7 @@ public class InventoryViewFragment extends Fragment {
 
                 // Establish a Socket-Connection.
                 Socket socket = new Socket();
-                socket.connect(new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), 5000);
+                socket.connect(new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), mUpdateFreq);
 
                 // If socket has established a connection to the server.
                 if (socket.isConnected()) {
@@ -484,6 +491,7 @@ public class InventoryViewFragment extends Fragment {
         @Override
         protected void onPostExecute(Bitmap result) {
             super.onPostExecute(result);
+            progress_loading_picture.setVisibility(View.INVISIBLE);
             mView.findViewById(R.id.img_product_picture);
             bmImage.setImageBitmap(result);
         }
@@ -502,7 +510,7 @@ public class InventoryViewFragment extends Fragment {
 
                 // Establish a Socket-Connection.
                 Socket socket = new Socket();
-                socket.connect(new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), 1000);
+                socket.connect(new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), mUpdateFreq);
 
                 // If socket has established a connection to the server.
                 if (socket.isConnected()) {

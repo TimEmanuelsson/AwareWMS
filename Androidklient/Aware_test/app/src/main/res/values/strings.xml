@@ -25,22 +25,30 @@
     <string name="tab_server">Server</string>
 
         <!-- Settings General -->
+        <string name="label_general_update_freq">Set Update Frequency (ms)</string>
+        <string name="hint_general_update_freq">Enter time in milliseconds</string>
         <string name="label_general_handedness">Set Handedness</string>
         <string name="label_general_handedness_left">Left-handed</string>
         <string name="label_general_handedness_right">Right-handed</string>
         <string name="label_general_last_inventory_indicators">Set days since Last Inventory</string>
         <string name="label_general_last_inventory_indicators_under">UNDER</string>
+        <string name="hint_general_last_inventory_indicators_under">Enter days under</string>
         <string name="label_general_last_inventory_indicators_over">OVER</string>
-        <string name="label_general_max_inventory_quantity">Set MAX QTY in Inventory</string>
+        <string name="hint_general_last_inventory_indicators_over">Enter days over</string>
+        <string name="label_general_max_inventory_quantity">Set Max Quantity</string>
+        <string name="hint_general_max_inventory_quantity">Enter Max Qty</string>
 
-        <!-- Settings Server -->
+
+    <!-- Settings Server -->
         <string name="label_server_status">Server status</string>
+        <string name="hint_server_ip">Enter IP address</string>
         <string name="label_server_ip">Server IP</string>
         <string name="label_server_port">Server Port</string>
+        <string name="hint_server_port">Enter Port</string>
         <string name="label_server_password">Server Password</string>
+        <string name="hint_server_password">Enter Password</string>
         <string name="btn_test_server">Reconnect</string>
         <string name="status_connected">Connected to server.</string>
-        <string name="status_not_connected">Cant connect to server.</string>
 
         <!-- Storage menu -->
         <string name="tab_storage">Storage</string>
@@ -58,6 +66,7 @@
                 <!-- ProductList -->
                 <string name="action_search">Search</string>
                 <string name="icon_sorting">Sort</string>
+                <string name="empty_list">No product was found</string>
                 <string name="label_column_product_storagespace">Space</string>
                 <string name="label_column_product_last_inventory">Inv</string>
                 <string name="label_column_product_name">Name</string>

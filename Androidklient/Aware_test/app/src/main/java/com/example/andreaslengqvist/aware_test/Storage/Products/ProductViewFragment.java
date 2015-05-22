@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +53,7 @@ public class ProductViewFragment extends Fragment {
     public static final String SERVER_IP = "SERVER_IP";
     public static final String SERVER_PORT = "SERVER_PORT";
     public static final String SERVER_PW = "SERVER_PW";
+    public static final String UPDATE_FREQ = "UPDATE_FREQ";
 
     // Layout variables.
     private RelativeLayout btn_product_view_show_edit_menu;
@@ -62,6 +64,7 @@ public class ProductViewFragment extends Fragment {
     private TextView output_product_quantity;
     private ImageView icon_product_view_show_edit_menu;
     private ImageView img_product_picture;
+    private RelativeLayout progress_loading_picture;
 
     // Member variables.
     private ProductListener mCallback;
@@ -75,6 +78,7 @@ public class ProductViewFragment extends Fragment {
     private String mServerIp;
     private String mServerPort;
     private String mServerPw;
+    private Integer mUpdateFreq;
 
 
     /**
@@ -89,6 +93,7 @@ public class ProductViewFragment extends Fragment {
         mServerIp = sharedpreferences.getString(SERVER_IP, "");
         mServerPort = sharedpreferences.getString(SERVER_PORT, "");
         mServerPw = sharedpreferences.getString(SERVER_PW, "");
+        mUpdateFreq = sharedpreferences.getInt(UPDATE_FREQ, 10000);
 
         // Set GUI-components.
         output_product_position = (TextView) mView.findViewById(R.id.output_product_position);
@@ -100,6 +105,7 @@ public class ProductViewFragment extends Fragment {
         btn_product_view_show_edit_menu = (RelativeLayout) mView.findViewById(R.id.btn_product_view_show_edit_menu);
         icon_product_view_show_edit_menu = (ImageView) mView.findViewById(R.id.icon_product_view_show_edit_menu);
         btn_product_view_create_EAN = (Button) mView.findViewById(R.id.btn_product_view_create_EAN);
+        progress_loading_picture = (RelativeLayout) mView.findViewById(R.id.progress_loading_picture);
     }
 
 
@@ -254,6 +260,7 @@ public class ProductViewFragment extends Fragment {
         output_product_quantity.setText(Integer.toString(mProduct.getQuantity()));
 
         // Image.
+        progress_loading_picture.setVisibility(View.VISIBLE);
         new GetProductImage(img_product_picture).execute(mProduct.getImageLocation());
 
         // If Product has EAN. Change "Add EAN"-Button to "Edit EAN"-Button.
@@ -284,7 +291,7 @@ public class ProductViewFragment extends Fragment {
 
                 // Establish a Socket-Connection.
                 Socket socket = new Socket();
-                socket.connect(new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), 5000);
+                socket.connect(new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), mUpdateFreq);
 
                 // If socket has established a connection to the server.
                 if (socket.isConnected()) {
@@ -312,6 +319,7 @@ public class ProductViewFragment extends Fragment {
         @Override
         protected void onPostExecute(Bitmap result) {
             super.onPostExecute(result);
+            progress_loading_picture.setVisibility(View.INVISIBLE);
             mView.findViewById(R.id.img_product_picture);
             bmImage.setImageBitmap(result);
         }
@@ -330,7 +338,7 @@ public class ProductViewFragment extends Fragment {
 
                 // Establish a Socket-Connection.
                 Socket socket = new Socket();
-                socket.connect(new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), 1000);
+                socket.connect(new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), mUpdateFreq);
 
                 // If socket has established a connection to the server.
                 if (socket.isConnected()) {

@@ -243,6 +243,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      *
      * When using a handheld device and when inside ProductView / InventoryView the back
      * button works like an Show-function for the hidden ProductListFragment.
+     * Same thing if the SearchBar is opened.
      *
      * Other, it works like an regular back button and goes back to the previous Activity (MainActivity).
      */
@@ -259,6 +260,9 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
             getSupportActionBar().setDisplayShowCustomEnabled(true);
             mPager.setVisibility(View.GONE);
             mProductListFragment.deselectList();
+        }
+        else if (mSearchOpened) {
+            cancelSearchBar(true);
         }
         else {
             super.onBackPressed();

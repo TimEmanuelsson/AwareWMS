@@ -13,7 +13,6 @@
         android:layout_marginStart="100dp"
         android:hint="@string/action_search"
         android:textColorHint="@color/gray"
-        android:gravity="center"
         android:singleLine="true"
         android:inputType="text"
         android:textColor="@color/black"/>

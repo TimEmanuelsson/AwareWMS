@@ -491,9 +491,11 @@ public class InventoryViewFragment extends Fragment {
         @Override
         protected void onPostExecute(Bitmap result) {
             super.onPostExecute(result);
-            progress_loading_picture.setVisibility(View.INVISIBLE);
-            mView.findViewById(R.id.img_product_picture);
-            bmImage.setImageBitmap(result);
+            if(result != null) {
+                progress_loading_picture.setVisibility(View.INVISIBLE);
+                mView.findViewById(R.id.img_product_picture);
+                bmImage.setImageBitmap(result);
+            }
         }
     }
 

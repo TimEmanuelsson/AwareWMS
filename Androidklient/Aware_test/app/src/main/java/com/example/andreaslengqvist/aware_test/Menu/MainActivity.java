@@ -98,16 +98,32 @@ public class MainActivity extends FragmentActivity implements MenuListener {
         }
     }
 
+//
+//    @Override
+//    /**
+//     * Called when coming back to the Activity.
+//     *
+//     * Checks Server Credentials and sets the ViewPager and which tries to connect to the server again.
+//     */
+//    protected void onRestart() {
+//        super.onRestart();
+//        Log.d("ADASD", "RESTART");
+//        mServerConnected = false;
+//        if(checkServerCredentials()) {
+//            setViewPager();
+//        }
+//    }
+
 
     @Override
     /**
      * Called when coming back to the Activity.
-     * 
+     *
      * Checks Server Credentials and sets the ViewPager and which tries to connect to the server again.
      */
-    protected void onRestart() {
-        super.onRestart();
-        Log.d("ADASD", "AASAAAAA");
+    protected void onResume() {
+        super.onResume();
+        Log.d("ADASD", "RESUME");
         mServerConnected = false;
         if(checkServerCredentials()) {
             setViewPager();

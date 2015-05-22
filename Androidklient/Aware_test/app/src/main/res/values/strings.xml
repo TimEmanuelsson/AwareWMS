@@ -91,7 +91,7 @@
             <string name="btn_inventory_view_inventory_show">Do Inventory</string>
             <string name="btn_inventory_view_inventory_save">Save</string>
             <string name="toast_inventory_finished">Inventory saved</string>
-            <string name="toast_ean_doesnt_exists">Barcode not found!</string>
+            <string name="toast_no_product_found">No product was found</string>
 
     <!-- Order menu -->
     <string name="logo">logo</string>

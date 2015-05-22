@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.widget.Toast;
 import com.example.andreaslengqvist.aware_test.R;
 import com.example.andreaslengqvist.aware_test.Settings.SettingsActivity;
@@ -81,6 +82,12 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory_fast);
 
+
+        // Set Home in ActionBar.
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.aware_logo_tiny);
+
+
         // Set saved preferences.
         SharedPreferences sharedpreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
         mServerIp = sharedpreferences.getString(SERVER_IP, "");
@@ -109,6 +116,29 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
         // Create and start a Handler to run periodically.
         mHandler = new Handler();
         startPeriodically();
+    }
+
+
+    @Override
+    /**
+     * Called when a item in the ActionBar is clicked.
+     *
+     * Checks which item the users clicked and either returns to Home
+     *
+     * @param item MenuItem
+     *
+     * @return boolean true
+     */
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
@@ -316,7 +346,7 @@ public class InventoryFastActivity extends ActionBarActivity implements ProductL
 
                     // If EAN couldn't be found Toast and destroy Activity and return to the previous one.
                     if (mEANNotFound) {
-                        Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_ean_doesnt_exists, Toast.LENGTH_LONG);
+                        Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_no_product_found, Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
                         toast.show();
                         onBackPressed();

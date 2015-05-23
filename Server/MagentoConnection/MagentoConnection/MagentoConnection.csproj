@@ -251,9 +251,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Product Images\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\AwareServer\AwareClassLibrary\AwareClassLibrary.csproj">
       <Project>{8df3b647-3c5e-4576-80eb-d3f5cf18ab7f}</Project>

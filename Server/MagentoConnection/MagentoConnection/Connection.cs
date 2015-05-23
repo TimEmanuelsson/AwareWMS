@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MagentoConnection.Magento;
+using System.Diagnostics;
+using System.Threading;
 
 namespace MagentoConnection
 {
@@ -48,13 +50,20 @@ namespace MagentoConnection
         public async Task<List<catalogProductReturnEntity>> GetDetailedProducts(List<catalogProductEntity> products)
         {
             List<catalogProductReturnEntity> detailedProducts = new List<catalogProductReturnEntity>();
+            List<Task<catalogProductReturnEntity>> tasks = new List<Task<catalogProductReturnEntity>>();
+            SemaphoreSlim maxThread = new SemaphoreSlim(20);
 
-            foreach(catalogProductEntity product in products)
+            foreach (catalogProductEntity product in products)
             {
-                Task<catalogProductReturnEntity> detailedProductTask = GetProductById(product.product_id);
-                catalogProductReturnEntity detailedProduct = await detailedProductTask;
-
-                detailedProducts.Add(detailedProduct);
+                maxThread.Wait();
+                Task.Factory.StartNew(() =>
+                {
+                    Debug.WriteLine("Fetching details for product {0}", product.product_id);
+                    catalogProductReturnEntity detailedProduct = GetProductById(product.product_id).Result;
+                    detailedProducts.Add(detailedProduct);
+                }
+                    , TaskCreationOptions.LongRunning)
+                .ContinueWith((task) => maxThread.Release());
             }
 
             return detailedProducts;
@@ -62,9 +71,20 @@ namespace MagentoConnection
 
         public async Task<catalogProductReturnEntity> GetProductById(string productId)
         {
-            Task<catalogProductReturnEntity> detailedProductTask = this.client.catalogProductInfoAsync(session, productId, null, null, null);
-            catalogProductReturnEntity detailedProduct = await detailedProductTask;
-            return detailedProduct;
+            try
+            {
+                Task<catalogProductReturnEntity> detailedProductTask = this.client.catalogProductInfoAsync(session, productId, null, null, null);
+                catalogProductReturnEntity detailedProduct = await detailedProductTask;
+                return detailedProduct;
+            }
+            catch (TimeoutException)
+            {
+                return GetProductById(productId).Result; // Really crappy error handling here, but if we time out we just call the function again. Very shitty. Sorry.
+            }
+            catch (AggregateException)
+            {
+                return GetProductById(productId).Result; // Really crappy error handling here, but if we time out we just call the function again. Very shitty. Sorry.
+            }
         }
 
         public catalogProductReturnEntity GetProductBySKU(string sku)

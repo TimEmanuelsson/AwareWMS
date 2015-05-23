@@ -28,6 +28,7 @@ namespace AwareServer
             {
                 DataFetch dataFetch = new DataFetch();
                 Thread eCommerceConnectionThread = new Thread(new ThreadStart(dataFetch.Initialize));
+                eCommerceConnectionThread.Name = "MagentoThread";
                 eCommerceConnectionThread.Start();
 
                 AsynchronousSocketListener.Start();

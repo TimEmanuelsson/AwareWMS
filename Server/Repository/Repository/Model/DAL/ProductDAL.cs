@@ -426,7 +426,7 @@ namespace Repository.Model.DAL
                     cmd.Parameters.Add("@Quantity", SqlDbType.Int, 6).Value = product.Quantity;
                     cmd.Parameters.Add("@Weight", SqlDbType.Decimal, 10).Value = product.Weight;
                     cmd.Parameters.Add("@Space", SqlDbType.VarChar, 10).Value = product.StorageSpace;
-                    cmd.Parameters.Add("@EAN", SqlDbType.VarChar, 30).Value = product.EAN;
+                    cmd.Parameters.Add("@Ean", SqlDbType.VarChar, 30).Value = product.EAN;
                     cmd.Parameters.Add("@Image", SqlDbType.VarChar, 128).Value = product.ImageLocation;
 
                     //Open database connection.

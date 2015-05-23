@@ -29,6 +29,24 @@ namespace MagentoConnection
             return products;
         }
 
+        public static List<Product> AdaptToProducts(List<catalogProductEntity> magentoProducts,
+            List<catalogInventoryStockItemEntity> inventory)
+        {
+            List<Product> products = new List<Product>();
+
+            foreach (catalogProductEntity magentoProduct in magentoProducts)
+            {
+                int quantity = new int();
+                int.TryParse(inventory.First(
+                    catalogInventoryStockItemEntity => catalogInventoryStockItemEntity.product_id == magentoProduct.product_id).qty,
+                    NumberStyles.Float, CultureInfo.InvariantCulture, out quantity);
+                Product product = AdaptToProduct(magentoProduct, quantity);
+                products.Add(product);
+            }
+
+            return products;
+        }
+
         public static Product AdaptToProduct(catalogProductReturnEntity magentoProduct, int quantity)
         {
             int productId = new int();
@@ -38,6 +56,15 @@ namespace MagentoConnection
             decimal.TryParse(magentoProduct.weight, NumberStyles.Float, CultureInfo.InvariantCulture, out weight);
 
             Product product = new Product(productId, magentoProduct.name, magentoProduct.sku, quantity, weight, "", "", "");
+            return product;
+        }
+
+        public static Product AdaptToProduct(catalogProductEntity magentoProduct, int quantity)
+        {
+            int productId = new int();
+            int.TryParse(magentoProduct.product_id, out productId);
+
+            Product product = new Product(productId, magentoProduct.name, magentoProduct.sku, quantity, 0m, "", "", "");
             return product;
         }
     }

@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +40,7 @@ public class MenuStorageFragment extends Fragment {
     public static final String SERVER_IP = "SERVER_IP";
     public static final String SERVER_PORT = "SERVER_PORT";
     public static final String SERVER_PW = "SERVER_PW";
+    public static final String UPDATE_FREQ = "UPDATE_FREQ";
 
     // Layout variables.
     private TextView output_total_products;
@@ -60,6 +60,7 @@ public class MenuStorageFragment extends Fragment {
     private String mServerIp;
     private String mServerPort;
     private String mServerPw;
+    private Integer mUpdateFreq;
 
 
     /**
@@ -74,6 +75,7 @@ public class MenuStorageFragment extends Fragment {
         mServerIp = sharedpreferences.getString(SERVER_IP, "");
         mServerPort = sharedpreferences.getString(SERVER_PORT, "");
         mServerPw = sharedpreferences.getString(SERVER_PW, "");
+        mUpdateFreq = sharedpreferences.getInt(UPDATE_FREQ, 10000);
 
         // Set GUI-components.
         output_total_products = (TextView) mView.findViewById(R.id.output_total_products);
@@ -237,7 +239,7 @@ public class MenuStorageFragment extends Fragment {
 
                 // Establish a Socket-Connection.
                 Socket socket = new Socket();
-                socket.connect( new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), 10000);
+                socket.connect( new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), mUpdateFreq);
 
                 // If socket has established a connection to the server.
                 if (socket.isConnected()) {
@@ -304,7 +306,7 @@ public class MenuStorageFragment extends Fragment {
 
                 // Establish a Socket-Connection.
                 Socket socket = new Socket();
-                socket.connect( new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), 10000);
+                socket.connect( new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), mUpdateFreq);
 
                 // If socket has established a connection to the server.
                 if (socket.isConnected()) {

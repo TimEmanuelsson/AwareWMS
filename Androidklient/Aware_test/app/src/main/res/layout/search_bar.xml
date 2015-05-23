@@ -9,9 +9,12 @@
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
+        android:hint="@string/action_search"
+        android:textColorHint="@color/gray"
+        android:singleLine="true"
+        android:inputType="text"
         android:textColor="@color/black"/>
 
 </LinearLayout>

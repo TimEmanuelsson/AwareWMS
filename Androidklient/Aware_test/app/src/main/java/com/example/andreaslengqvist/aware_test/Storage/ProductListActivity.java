@@ -81,7 +81,6 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     private EditText mSearchEt;
     private boolean mSearchOpened;
     private String mSearchQuery;
-
     SharedPreferences sharedpreferences;
 
 
@@ -107,14 +106,24 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        sharedpreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
-        Boolean righthanded = sharedpreferences.getBoolean(TABLET_HANDEDNESS, true);
 
-        if(righthanded) {
+        // Set Home in ActionBar.
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.aware_logo_tiny);
+
+
+        // Get Shared Preferences.
+        sharedpreferences = getSharedPreferences(APP_PREFERENCES, Context.MODE_PRIVATE);
+
+
+        // Check Handedness.
+        if(sharedpreferences.getBoolean(TABLET_HANDEDNESS, true)) {
             setContentView(R.layout.activity_products_right);
         } else {
             setContentView(R.layout.activity_products_left);
         }
+
+
         initializeVariables();
 
 
@@ -210,30 +219,36 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     /**
      * Called when a item in the ActionBar is clicked.
      *
-     * Checks which item the users clicked and either Show / Hide SearchBar or Searches on EAN.
+     * Checks which item the users clicked and either returns home / Show / Hide SearchBar or Searches on EAN.
      *
      * @param item MenuItem
      *
      * @return boolean true
      */
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
 
-        // Open / Close the SearchBar.
-        if (id == R.id.action_search) {
-            if (mSearchOpened) {
-                cancelSearchBar(true);
-            } else {
-                openSearchBar(mSearchQuery);
-            }
-            return true;
-        }
+        switch (item.getItemId()) {
 
-        // Search on EAN. (Barcode)
-        if (id == R.id.action_search_ean) {
-            mProductListFragment.searchOnEAN();
+            case android.R.id.home:
+                mInsideProduct = false;
+                mSearchOpened = false;
+                onBackPressed();
+                return true;
+
+            case R.id.action_search:
+                if (mSearchOpened) {
+                    cancelSearchBar(true);
+                } else {
+                    openSearchBar(mSearchQuery);
+                }
+                return true;
+
+            case R.id.action_search_ean:
+                mProductListFragment.searchOnEAN();
+
+            default:
+                return super.onOptionsItemSelected(item);
         }
-            return super.onOptionsItemSelected(item);
     }
 
 
@@ -243,6 +258,7 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
      *
      * When using a handheld device and when inside ProductView / InventoryView the back
      * button works like an Show-function for the hidden ProductListFragment.
+     * Same thing if the SearchBar is opened.
      *
      * Other, it works like an regular back button and goes back to the previous Activity (MainActivity).
      */
@@ -259,6 +275,9 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
             getSupportActionBar().setDisplayShowCustomEnabled(true);
             mPager.setVisibility(View.GONE);
             mProductListFragment.deselectList();
+        }
+        else if (mSearchOpened) {
+            cancelSearchBar(true);
         }
         else {
             super.onBackPressed();
@@ -378,6 +397,8 @@ public class ProductListActivity extends ActionBarActivity implements ProductLis
     public void onProductUpdateFinished(boolean updatedInventory) {
 
         if(updatedInventory) {
+            setPager(mPagerPosition + 1);
+
             Toast toast = Toast.makeText(getApplicationContext(), R.string.toast_inventory_finished, Toast.LENGTH_LONG);
             toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 20);
             toast.show();

@@ -35,33 +35,45 @@ public class SettingsActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+
+        // Set Home in ActionBar.
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.aware_logo_tiny);
+
+
         // Get which Activity to handle (Products / InventoryFull).
         Intent i = getIntent();
         if (i.hasExtra(SERVER_ERROR)) {
             mServerError = i.getStringExtra(SERVER_ERROR);
         }
 
+
         // Set custom view on action bar.
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowCustomEnabled(true);
         actionBar.setCustomView(R.layout.settings_bar);
+
 
         // If user is NOT using a tablet set the orientation to only allow Portrait-mode.
         if (!getResources().getBoolean(R.bool.isTablet)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
+
         // Instantiate a ViewPager and a PagerAdapter.
         ViewPager mPager = (ViewPager) findViewById(R.id.menu_pager);
         PagerAdapter mPagerAdapter = new SettingsPagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
 
+
         // Set SlideIndicator.
         SlidingTabLayout mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
+
 
         // Fill whole width of screen.
         mSlidingTabLayout.setDistributeEvenly(true);
         mSlidingTabLayout.setViewPager(mPager, SETTINGS_TAG);
+
 
         // Set color of tab.
         mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
@@ -71,6 +83,29 @@ public class SettingsActivity extends ActionBarActivity {
                 return getResources().getColor(R.color.gray);
             }
         });
+    }
+
+
+    @Override
+    /**
+     * Called when a item in the ActionBar is clicked.
+     *
+     * Checks which item the users clicked and either returns to Home
+     *
+     * @param item MenuItem
+     *
+     * @return boolean true
+     */
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 

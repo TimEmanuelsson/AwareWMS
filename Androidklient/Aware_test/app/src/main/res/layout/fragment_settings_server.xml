@@ -22,11 +22,10 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/label_server_status"
         android:layout_marginTop="10dp"
-        android:text="NOT CONNECTED"
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/label_general_ip"
+        android:id="@+id/label_server_ip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -37,19 +36,21 @@
 
     <EditText
         android:id="@+id/output_server_ip"
+        android:inputType="number|numberDecimal"
         android:digits="0123456789."
-        android:inputType="text"
         android:maxLength="35"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/label_general_ip"
-        android:textStyle="bold"
+        android:layout_below="@+id/label_server_ip"
+        android:singleLine="true"
+        android:gravity="center"
+        android:hint="@string/hint_server_ip"
         android:focusable="false"/>
 
 
     <TextView
-        android:id="@+id/label_general_port"
+        android:id="@+id/label_server_port"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -65,12 +66,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/label_general_port"
-        android:textStyle="bold"
+        android:layout_below="@+id/label_server_port"
+        android:singleLine="true"
+        android:gravity="center"
+        android:hint="@string/hint_server_port"
         android:focusable="false"/>
 
     <TextView
-        android:id="@+id/label_general_password"
+        android:id="@+id/label_server_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -86,8 +89,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/label_general_password"
-        android:textStyle="bold"
+        android:layout_below="@+id/label_server_password"
+        android:singleLine="true"
+        android:gravity="center"
+        android:hint="@string/hint_server_password"
         android:focusable="false"/>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"

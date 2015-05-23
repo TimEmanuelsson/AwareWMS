@@ -23,10 +23,11 @@
 
     <!-- ActionBar styles -->
     <style name="ActionBar" parent="Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:homeAsUpIndicator">@drawable/aware_logo_tiny</item>
         <item name="android:background">@color/menu_white</item>
         <item name="background">@color/menu_white</item>
-        <item name="logo">@drawable/aware_logo_tiny</item>
-        <item name="displayOptions">useLogo|showHome</item>
+        <item name="android:displayOptions">showHome|useLogo</item>
+        <item name="displayOptions">showHome|useLogo</item>
     </style>
 
     <style name="ButtonStyleLookalike" parent="android:style/Widget.Material.Button">

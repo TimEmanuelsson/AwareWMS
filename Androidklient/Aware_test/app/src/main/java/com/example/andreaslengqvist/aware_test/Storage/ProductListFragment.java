@@ -57,6 +57,7 @@ public class ProductListFragment extends Fragment {
     public static final String SERVER_PW = "SERVER_PW";
     public static final String DAYS_UNDER = "DAYS_UNDER";
     public static final String DAYS_OVER = "DAYS_OVER";
+    public static final String UPDATE_FREQ = "UPDATE_FREQ";
 
     // Layout variables.
     private ListView list_products;
@@ -71,6 +72,7 @@ public class ProductListFragment extends Fragment {
     private ImageView icon_sort_sku;
     private ImageView icon_sort_quantity;
     private RelativeLayout layout_dimmer;
+    private RelativeLayout progress_loading_list;
 
     // Member variables.
     private View mView;
@@ -97,6 +99,7 @@ public class ProductListFragment extends Fragment {
     private String mServerIp;
     private String mServerPort;
     private String mServerPw;
+    private Integer mUpdateFreq;
 
 
     /**
@@ -110,10 +113,11 @@ public class ProductListFragment extends Fragment {
         mServerIp = sharedpreferences.getString(SERVER_IP, "");
         mServerPort = sharedpreferences.getString(SERVER_PORT, "");
         mServerPw = sharedpreferences.getString(SERVER_PW, "");
+        mUpdateFreq = sharedpreferences.getInt(UPDATE_FREQ, 10000);
 
         // Set GUI-components.
         list_products = (ListView) mView.findViewById(R.id.list_products);
-        list_products.setEmptyView(mView.findViewById(R.id.progress_loading_list));
+        list_products.setEmptyView(mView.findViewById(R.id.empty_list));
 
         sort_name = (RelativeLayout) mView.findViewById(R.id.sort_name);
         sort_storage_space = (RelativeLayout) mView.findViewById(R.id.sort_storage_space);
@@ -128,6 +132,7 @@ public class ProductListFragment extends Fragment {
         icon_sort_quantity = (ImageView) mView.findViewById(R.id.icon_sort_quantity);
 
         layout_dimmer = (RelativeLayout) mView.findViewById(R.id.layout_dimmer);
+        progress_loading_list = (RelativeLayout) mView.findViewById(R.id.progress_loading_list);
     }
 
 
@@ -201,6 +206,8 @@ public class ProductListFragment extends Fragment {
         // Start Handler to get Products periodically on background thread (AsyncTask).
         if (savedInstanceState == null) {
 
+            progress_loading_list.setVisibility(View.VISIBLE);
+
             Bundle bundle = getArguments();
             String mTypeOfActivity = bundle.getString(INTENT_KEY);
 
@@ -210,8 +217,8 @@ public class ProductListFragment extends Fragment {
                 mAdapter = new ProductListAdapter(
                         getActivity(),
                         mTypeOfActivity,
-                        sharedpreferences.getInt(DAYS_UNDER, 0),
-                        sharedpreferences.getInt(DAYS_OVER, 0));
+                        sharedpreferences.getInt(DAYS_UNDER, 5),
+                        sharedpreferences.getInt(DAYS_OVER, 365));
             } else {
                 mAdapter = new ProductListAdapter(
                         getActivity(),
@@ -647,7 +654,7 @@ public class ProductListFragment extends Fragment {
 
                 // Establish a Socket-Connection.
                 Socket socket = new Socket();
-                socket.connect( new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), 1000);
+                socket.connect( new InetSocketAddress(InetAddress.getByName(mServerIp), Integer.parseInt(mServerPort)), mUpdateFreq);
 
                 // If socket has established a connection to the server.
                 if (socket.isConnected()) {
@@ -714,6 +721,8 @@ public class ProductListFragment extends Fragment {
                         unlockList();
                         setList(result);
                     }
+
+                    progress_loading_list.setVisibility(View.GONE);
                 }
 
                 // If an ProductUpdate has been made.

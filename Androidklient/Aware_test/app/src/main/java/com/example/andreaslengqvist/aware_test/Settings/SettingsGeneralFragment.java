@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,6 +29,7 @@ public class SettingsGeneralFragment extends Fragment {
 
     // Shared Preference Static variables.
     public static final String APP_PREFERENCES = "APP_PREFERENCES" ;
+    public static final String UPDATE_FREQ = "UPDATE_FREQ";
     public static final String TABLET_HANDEDNESS = "TABLET_HANDEDNESS";
     public static final String DAYS_UNDER = "DAYS_UNDER";
     public static final String DAYS_OVER = "DAYS_OVER";
@@ -38,6 +40,7 @@ public class SettingsGeneralFragment extends Fragment {
     private TextView label_tablet_handedness_left;
     private RelativeLayout btn_tablet_handedness_right;
     private TextView label_tablet_handedness_right;
+    private EditText output_general_update_freq;
     private EditText output_general_last_inventory_indicators_under;
     private EditText output_general_last_inventory_indicators_over;
     private EditText output_general_max_inventory_quantity;
@@ -61,6 +64,7 @@ public class SettingsGeneralFragment extends Fragment {
         label_tablet_handedness_left = (TextView) mView.findViewById(R.id.label_tablet_handedness_left);
         btn_tablet_handedness_right = (RelativeLayout) mView.findViewById(R.id.btn_tablet_handedness_right);
         label_tablet_handedness_right = (TextView) mView.findViewById(R.id.label_tablet_handedness_right);
+        output_general_update_freq = (EditText) mView.findViewById(R.id.output_general_update_freq);
         output_general_last_inventory_indicators_under = (EditText) mView.findViewById(R.id.output_general_last_inventory_indicators_under);
         output_general_last_inventory_indicators_over = (EditText) mView.findViewById(R.id.output_general_last_inventory_indicators_over);
         output_general_max_inventory_quantity = (EditText) mView.findViewById(R.id.output_general_max_inventory_quantity);
@@ -112,14 +116,16 @@ public class SettingsGeneralFragment extends Fragment {
 
 
         // Set TextWatchers.
+        output_general_update_freq.addTextChangedListener(new UpdateFreqWatcher());
         output_general_last_inventory_indicators_under.addTextChangedListener(new DaysUnderWatcher());
         output_general_last_inventory_indicators_over.addTextChangedListener(new DaysOverWatcher());
         output_general_max_inventory_quantity.addTextChangedListener(new MaxQtyWatcher());
 
 
         // Set EditText fields.
+        output_general_update_freq.setText(Integer.toString(sharedpreferences.getInt(UPDATE_FREQ, 10000)));
         output_general_last_inventory_indicators_under.setText(Integer.toString(sharedpreferences.getInt(DAYS_UNDER, 5)));
-        output_general_last_inventory_indicators_over.setText(Integer.toString(sharedpreferences.getInt(DAYS_OVER, 100)));
+        output_general_last_inventory_indicators_over.setText(Integer.toString(sharedpreferences.getInt(DAYS_OVER, 365)));
         output_general_max_inventory_quantity.setText(Integer.toString(sharedpreferences.getInt(MAX_QTY, 1000)));
 
 
@@ -128,9 +134,11 @@ public class SettingsGeneralFragment extends Fragment {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(output_general_update_freq.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 imm.hideSoftInputFromWindow(output_general_last_inventory_indicators_under.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 imm.hideSoftInputFromWindow(output_general_last_inventory_indicators_over.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 imm.hideSoftInputFromWindow(output_general_max_inventory_quantity.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                output_general_update_freq.clearFocus();
                 output_general_last_inventory_indicators_under.clearFocus();
                 output_general_last_inventory_indicators_over.clearFocus();
                 output_general_max_inventory_quantity.clearFocus();
@@ -165,11 +173,21 @@ public class SettingsGeneralFragment extends Fragment {
         });
 
 
+        // Focus to EditText - UPDATE FREQ.
+        output_general_update_freq.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                view.setFocusableInTouchMode(true);
+                return false;
+            }
+        });
+
+
         // Focus to EditText - DAYS UNDER.
         output_general_last_inventory_indicators_under.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                view.setFocusable(true);
+                Log.d("asds", "INNE");
                 view.setFocusableInTouchMode(true);
                 return false;
             }
@@ -180,7 +198,6 @@ public class SettingsGeneralFragment extends Fragment {
         output_general_last_inventory_indicators_over.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                view.setFocusable(true);
                 view.setFocusableInTouchMode(true);
                 return false;
             }
@@ -191,11 +208,38 @@ public class SettingsGeneralFragment extends Fragment {
         output_general_max_inventory_quantity.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                view.setFocusable(true);
                 view.setFocusableInTouchMode(true);
                 return false;
             }
         });
+    }
+
+
+    /**
+     * Inner Class TextWatcher which is responsible for handling changes in the EditText for Update Freq.
+     * Saves the typed in Update Freq to Shared Preferences.
+     */
+    private class UpdateFreqWatcher implements TextWatcher {
+
+        @Override
+        public void beforeTextChanged(CharSequence c, int i, int i2, int i3) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence c, int i, int i2, int i3) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            String freq = editable.toString();
+
+            if(freq.length() >= 1) {
+                SharedPreferences.Editor mEditor = sharedpreferences.edit();
+                mEditor.putInt(UPDATE_FREQ, Integer.parseInt(freq));
+                mEditor.apply();
+            }
+        }
     }
 
 
@@ -216,11 +260,11 @@ public class SettingsGeneralFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            String max = output_general_last_inventory_indicators_under.getText().toString();
+            String daysU = editable.toString();
 
-            if(max.length() >= 1) {
+            if(daysU.length() >= 1) {
                 SharedPreferences.Editor mEditor = sharedpreferences.edit();
-                mEditor.putInt(DAYS_UNDER, Integer.parseInt(max));
+                mEditor.putInt(DAYS_UNDER, Integer.parseInt(daysU));
                 mEditor.apply();
             }
         }
@@ -244,11 +288,11 @@ public class SettingsGeneralFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            String max = output_general_last_inventory_indicators_over.getText().toString();
+            String daysO = editable.toString();
 
-            if(max.length() >= 1) {
+            if(daysO.length() >= 1) {
                 SharedPreferences.Editor mEditor = sharedpreferences.edit();
-                mEditor.putInt(DAYS_OVER, Integer.parseInt(max));
+                mEditor.putInt(DAYS_OVER, Integer.parseInt(daysO));
                 mEditor.apply();
             }
         }
@@ -272,7 +316,7 @@ public class SettingsGeneralFragment extends Fragment {
 
         @Override
         public void afterTextChanged(Editable editable) {
-            String max = output_general_max_inventory_quantity.getText().toString();
+            String max = editable.toString();
 
             if(max.length() > 1) {
                 SharedPreferences.Editor mEditor = sharedpreferences.edit();

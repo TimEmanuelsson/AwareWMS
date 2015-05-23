@@ -7,11 +7,35 @@
     android:background="@color/white">
 
     <TextView
+        android:id="@+id/label_general_update_freq"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="@string/label_general_update_freq"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/output_general_update_freq"
+        android:inputType="number"
+        android:maxLength="5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/label_general_update_freq"
+        android:gravity="center"
+        android:hint="@string/hint_general_update_freq"
+        android:textSize="24sp"
+        android:focusable="false"/>
+
+    <TextView
         android:id="@+id/label_tablet_handedness"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
+        android:layout_marginTop="70dp"
+        android:layout_below="@+id/output_general_update_freq"
         android:text="@string/label_general_handedness"
         android:textSize="20sp"
         android:textStyle="bold"/>
@@ -70,7 +94,7 @@
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/layout_handedness_selection"
         android:text="@string/label_general_max_inventory_quantity"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="70dp"
         android:textSize="20sp"
         android:textStyle="bold"/>
 
@@ -82,8 +106,9 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/label_general_max_inventory_quantity"
+        android:gravity="center"
+        android:hint="@string/hint_general_max_inventory_quantity"
         android:textSize="24sp"
-        android:textStyle="bold"
         android:focusable="false"/>
 
     <TextView
@@ -92,7 +117,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/output_general_max_inventory_quantity"
-        android:layout_marginTop="130dp"
+        android:layout_marginTop="70dp"
         android:text="@string/label_general_last_inventory_indicators"
         android:textSize="20sp"
         android:textStyle="bold"/>
@@ -130,8 +155,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/label_general_last_inventory_indicators_under"
+                android:gravity="center"
+                android:hint="@string/hint_general_last_inventory_indicators_under"
                 android:textSize="24sp"
-                android:textStyle="bold"
                 android:focusable="false"/>
 
         </RelativeLayout>
@@ -160,8 +186,9 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/label_general_last_inventory_indicators_over"
+                android:gravity="center"
+                android:hint="@string/hint_general_last_inventory_indicators_over"
                 android:textSize="24sp"
-                android:textStyle="bold"
                 android:focusable="false"/>
 
         </RelativeLayout>

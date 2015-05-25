@@ -15,10 +15,11 @@ namespace AwareServer.Graphic_View
         private Settings set;
         public SettingsMenu()
         {
-           
+
             InitializeComponent();
             //Get default settings for awareserver
             set  = Settings.Default;
+            
             //Assigning old settings to appropriate textboxes
             Username.Text = set.Username;
             Password.Text = set.Password;
@@ -53,7 +54,7 @@ namespace AwareServer.Graphic_View
             if (set.Username != "" && set.Password != "" && set.IpAddress != "" && set.Port.ToString() != "")
             {
                 set.Save();
-                Close();
+                Application.Restart();    
             }
         }
     }

@@ -26,59 +26,47 @@ namespace AwareServer {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("Aware")]
-        public string Username
-        {
-            get
-            {
+        public string Username {
+            get {
                 return ((string)(this["Username"]));
             }
-            set
-            {
+            set {
                 this["Username"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("adminSteve123")]
-        public string Password
-        {
-            get
-            {
+        public string Password {
+            get {
                 return ((string)(this["Password"]));
             }
-            set
-            {
+            set {
                 this["Password"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("192.168.1.3")]
-        public string IpAddress
-        {
-            get
-            {
+        [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
+        public string IpAddress {
+            get {
                 return ((string)(this["IpAddress"]));
             }
-            set
-            {
+            set {
                 this["IpAddress"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("11000")]
-        public int Port
-        {
-            get
-            {
+        public int Port {
+            get {
                 return ((int)(this["Port"]));
             }
-            set
-            {
+            set {
                 this["Port"] = value;
             }
         }

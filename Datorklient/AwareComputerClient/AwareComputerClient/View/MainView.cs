@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Drawing.Printing;
 using System.Reflection;
+using System.Security.Cryptography;
 
 
 namespace AwareComputerClient.View
@@ -34,14 +35,19 @@ namespace AwareComputerClient.View
         private string savedJsonString = null;
         private string response = null;
         private int cellRowIndex = 0;
-
+        private string hash = "";
         private PrintDialog printDialog = new PrintDialog();
 
         
         
         private void ShowProducts_Click()
         {
-            
+            string sauce = "Steve123";
+
+            using (MD5 md5Hash = MD5.Create())
+            {
+                hash = HandleInput.GetMd5Hash(md5Hash, sauce);
+            }
                 TableViewPanel.Visible = true;
                 ShowProductsMainContainer.Visible = true;
                 TableView.Visible = true;
@@ -57,7 +63,7 @@ namespace AwareComputerClient.View
                         checkForChanged.Tick += new EventHandler(updateList);
                         checkForChanged.Start();
                     }
-                        async.StartClient("GET/products");
+                        async.StartClient("GET/products/pw="+hash);
                         response = async.Response;
                         savedJsonString = response;
                         products = JsonConvert.DeserializeObject<List<Product>>(response);
@@ -75,7 +81,7 @@ namespace AwareComputerClient.View
 
         private void updateList(object sender, EventArgs e)
         {
-            async.StartClient("GET/products");
+            async.StartClient("GET/products/pw=" + hash);
             response = async.Response;
 
             if (savedJsonString != null)
@@ -195,7 +201,7 @@ namespace AwareComputerClient.View
                 currentobject.StorageSpace = StorageSpaceLabel.Text;
                 refreshDataSource();
                 string serializedObject = JsonConvert.SerializeObject(currentobject);
-                async.StartClient("PUT/products/json=" + serializedObject);
+                async.StartClient("PUT/products/json=" + serializedObject + "/pw=" + hash);
             }
         }
         #endregion
@@ -211,8 +217,9 @@ namespace AwareComputerClient.View
         }
         private void printProductsList_PrintPage(object sender, PrintPageEventArgs e)
         {
-            //Allow headers to be shown when printing
+            //Allow headers to be shown when printing.
             TableView.ColumnHeadersVisible = true;
+            //Adding a new column just for printing
             var stocktakingCol = new DataGridViewTextBoxColumn();
             stocktakingCol.HeaderText = "Stocktaking";
             TableView.Columns.Add(stocktakingCol);

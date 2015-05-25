@@ -60,3 +60,15 @@ H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\bin\Debug\Newtonso
 H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\obj\Debug\Repository.csprojResolveAssemblyReference.cache
 H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\obj\Debug\Repository.exe
 H:\Fabian\Studier\Aware\AwareWMS\Server\Repository\Repository\obj\Debug\Repository.pdb
+C:\Users\Jocke\Desktop\Nya\Repository\Repository\bin\Debug\Aware.mdf
+C:\Users\Jocke\Desktop\Nya\Repository\Repository\bin\Debug\Aware_log.ldf
+C:\Users\Jocke\Desktop\Nya\Repository\Repository\bin\Debug\Repository.exe.config
+C:\Users\Jocke\Desktop\Nya\Repository\Repository\bin\Debug\Repository.exe
+C:\Users\Jocke\Desktop\Nya\Repository\Repository\bin\Debug\Repository.pdb
+C:\Users\Jocke\Desktop\Nya\Repository\Repository\bin\Debug\AwareClassLibrary.dll
+C:\Users\Jocke\Desktop\Nya\Repository\Repository\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Jocke\Desktop\Nya\Repository\Repository\bin\Debug\AwareClassLibrary.pdb
+C:\Users\Jocke\Desktop\Nya\Repository\Repository\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Jocke\Desktop\Nya\Repository\Repository\obj\Debug\Repository.csprojResolveAssemblyReference.cache
+C:\Users\Jocke\Desktop\Nya\Repository\Repository\obj\Debug\Repository.exe
+C:\Users\Jocke\Desktop\Nya\Repository\Repository\obj\Debug\Repository.pdb

@@ -22,3 +22,10 @@ H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\bin\Debug\
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\bin\Debug\Newtonsoft.Json.xml
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\obj\Debug\AwareClassLibrary.dll
 H:\Fabian\Studier\Aware\AwareWMS\Server\AwareServer\AwareClassLibrary\obj\Debug\AwareClassLibrary.pdb
+C:\Users\Jocke\Desktop\Nya\AwareServer\AwareClassLibrary\bin\Debug\AwareClassLibrary.dll
+C:\Users\Jocke\Desktop\Nya\AwareServer\AwareClassLibrary\bin\Debug\AwareClassLibrary.pdb
+C:\Users\Jocke\Desktop\Nya\AwareServer\AwareClassLibrary\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Jocke\Desktop\Nya\AwareServer\AwareClassLibrary\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Jocke\Desktop\Nya\AwareServer\AwareClassLibrary\obj\Debug\AwareClassLibrary.csprojResolveAssemblyReference.cache
+C:\Users\Jocke\Desktop\Nya\AwareServer\AwareClassLibrary\obj\Debug\AwareClassLibrary.dll
+C:\Users\Jocke\Desktop\Nya\AwareServer\AwareClassLibrary\obj\Debug\AwareClassLibrary.pdb

@@ -2,16 +2,16 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="AwareServer" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="Username" Type="System.String" Scope="Application">
+    <Setting Name="Username" Type="System.String" Scope="User">
       <Value Profile="(Default)">Aware</Value>
     </Setting>
-    <Setting Name="Password" Type="System.String" Scope="Application">
+    <Setting Name="Password" Type="System.String" Scope="User">
       <Value Profile="(Default)">adminSteve123</Value>
     </Setting>
-    <Setting Name="IpAddress" Type="System.String" Scope="Application">
+    <Setting Name="IpAddress" Type="System.String" Scope="User">
       <Value Profile="(Default)">127.0.0.1</Value>
     </Setting>
-    <Setting Name="Port" Type="System.Int32" Scope="Application">
+    <Setting Name="Port" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">11000</Value>
     </Setting>
   </Settings>

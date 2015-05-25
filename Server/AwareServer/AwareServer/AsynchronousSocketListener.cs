@@ -151,5 +151,11 @@ namespace AwareServer
             StartListening();
             return 0;
         }
+        internal static void Stop()
+        {
+           
+            //Socket listener = getSocket();
+            //listener.Shutdown(SocketShutdown.Receive);
+        }
     }
 }

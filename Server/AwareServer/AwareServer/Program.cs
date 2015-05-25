@@ -10,24 +10,34 @@ using System.Web.Script.Serialization;
 using System.Threading;
 using AwareClassLibrary;
 using Repository.Model;
+using System.Windows.Forms;
 
 namespace AwareServer
 {
     
-    static class Program
+     class Program
     {
         /// <summary>
-        /// The main entry point for the application.
+        /// Launching graphical elements of the application.
         /// </summary>
 
-        static Service service = new Service();
+        [STAThread]
+        static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Menu());
 
-        public static int Main(String[] args)
+        }
+
+        static Service service = new Service();
+        private  Thread eCommerceConnectionThread;
+        public void StartServer()
         {
             try
             {
                 DataFetch dataFetch = new DataFetch();
-                Thread eCommerceConnectionThread = new Thread(new ThreadStart(dataFetch.Initialize));
+                eCommerceConnectionThread = new Thread(new ThreadStart(dataFetch.Initialize));
                 eCommerceConnectionThread.Name = "MagentoThread";
                 eCommerceConnectionThread.Start();
 
@@ -38,7 +48,6 @@ namespace AwareServer
                 ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
                 service.InsertException(log);
             }
-            return 0;
 
             // Service related code below, uncomment when we can install this shit.
             /*
@@ -49,6 +58,12 @@ namespace AwareServer
             };
             ServiceBase.Run(ServicesToRun);
             */
+        }
+        //Not in use
+        public void StopServer()
+        {
+            AsynchronousSocketListener.Stop();
+            eCommerceConnectionThread.Abort();
         }
         
     }

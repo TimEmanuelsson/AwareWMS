@@ -42,3 +42,13 @@ H:\Fabian\Studier\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\bin\
 H:\Fabian\Studier\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.csprojResolveAssemblyReference.cache
 H:\Fabian\Studier\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.exe
 H:\Fabian\Studier\Aware\AwareWMS\Server\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.pdb
+C:\Users\Jocke\Desktop\Nya\MagentoConnection\MagentoConnection\bin\Debug\MagentoConnection.exe.config
+C:\Users\Jocke\Desktop\Nya\MagentoConnection\MagentoConnection\bin\Debug\MagentoConnection.exe
+C:\Users\Jocke\Desktop\Nya\MagentoConnection\MagentoConnection\bin\Debug\MagentoConnection.pdb
+C:\Users\Jocke\Desktop\Nya\MagentoConnection\MagentoConnection\bin\Debug\AwareClassLibrary.dll
+C:\Users\Jocke\Desktop\Nya\MagentoConnection\MagentoConnection\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Jocke\Desktop\Nya\MagentoConnection\MagentoConnection\bin\Debug\AwareClassLibrary.pdb
+C:\Users\Jocke\Desktop\Nya\MagentoConnection\MagentoConnection\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Jocke\Desktop\Nya\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.csprojResolveAssemblyReference.cache
+C:\Users\Jocke\Desktop\Nya\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.exe
+C:\Users\Jocke\Desktop\Nya\MagentoConnection\MagentoConnection\obj\Debug\MagentoConnection.pdb

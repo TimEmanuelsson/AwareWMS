@@ -77,13 +77,13 @@ namespace MagentoConnection
                 catalogProductReturnEntity detailedProduct = await detailedProductTask;
                 return detailedProduct;
             }
-            catch (TimeoutException)
+            catch (Exception e)
             {
-                return GetProductById(productId).Result; // Really crappy error handling here, but if we time out we just call the function again. Very shitty. Sorry.
-            }
-            catch (AggregateException)
-            {
-                return GetProductById(productId).Result; // Really crappy error handling here, but if we time out we just call the function again. Very shitty. Sorry.
+                if (e is AggregateException || e is TimeoutException)
+                {
+                    return GetProductById(productId).Result; // Really crappy error handling here, but if we time out we just call the function again. Very shitty. Sorry.
+                }
+                throw;
             }
         }
 

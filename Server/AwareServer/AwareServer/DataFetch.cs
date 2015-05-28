@@ -9,6 +9,7 @@ using Repository.Model;
 using AwareClassLibrary;
 
 using System.Diagnostics;
+using System.Threading;
 
 namespace AwareServer
 {
@@ -17,7 +18,7 @@ namespace AwareServer
         private MagentoHelper magentoHelper;
         private Service service;
         private State state;
-        private Timer timer;
+        private System.Timers.Timer timer;
 
         public DataFetch()
         {
@@ -30,8 +31,9 @@ namespace AwareServer
         {
             try
             {
-                timer = new Timer(5000);
-                timer.Elapsed += new ElapsedEventHandler(CompleteFetch);
+                CompleteFetchTimer(new TimeSpan(23,59,59));
+                timer = new System.Timers.Timer(5000);
+                timer.Elapsed += new ElapsedEventHandler(UpdateFetch);
                 timer.Enabled = true;
             }
             catch (Exception e)
@@ -96,13 +98,12 @@ namespace AwareServer
          * Run it once to get everything, and then run it either manually every time changes are made or at greater intervals (once per day/week).
          * For updating existing products, please refer to UpdateFetch.
          * */
-        public void CompleteFetch(Object source, ElapsedEventArgs eventArgs)
+        public void CompleteFetch()
         {
             if (state == State.Free)
             {
                 try
                 {
-                    Debug.WriteLine("Hämtar produkter. Tid: {0}", eventArgs.SignalTime);
                     state = State.Busy;
                     List<Product> magentoProducts = magentoHelper.GetAllDetailedProductsWithInventory();
                     List<Product> productsWithImages = magentoHelper.DownloadAllProductImages();
@@ -166,6 +167,20 @@ namespace AwareServer
                 ExceptionLog log = new ExceptionLog(0, e.GetType().ToString(), e.Message, e.Source, e.StackTrace);
                 service.InsertException(log);
             }
+        }
+
+        private void CompleteFetchTimer(TimeSpan alertTime)
+        {
+            DateTime current = DateTime.Now;
+            TimeSpan timeToGo = alertTime - current.TimeOfDay;
+            if (timeToGo < TimeSpan.Zero)
+            {
+                return;//time already passed
+            }
+            System.Threading.Timer timer = new System.Threading.Timer(x =>
+            {
+                this.CompleteFetch();
+            }, null, timeToGo, Timeout.InfiniteTimeSpan);
         }
     }
 

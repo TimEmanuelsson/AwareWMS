@@ -44,11 +44,10 @@ namespace Repository.Model
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_InsertException", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    //cmd.Parameters.Add("@Id", SqlDbType.Int, 4).Value = exception.Id;
                     cmd.Parameters.Add("@Exception_Type", SqlDbType.VarChar, 30).Value = exception.Exception_Type;
                     cmd.Parameters.Add("@Message", SqlDbType.VarChar, 1024).Value = exception.Message;
                     cmd.Parameters.Add("@Source", SqlDbType.VarChar, 128).Value = exception.Source;

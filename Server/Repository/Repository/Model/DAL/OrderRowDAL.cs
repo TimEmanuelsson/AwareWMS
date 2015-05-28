@@ -45,7 +45,7 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_GetOrderRow", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -93,7 +93,7 @@ namespace Repository.Model.DAL
                 {
                     var OrderRows = new List<OrderRow>(1000);
 
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_GetOrderRows", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -141,10 +141,10 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create List-objekt.
+                    // Create List-object.
                     var OrderRows = new List<OrderRow>(1000);
 
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     var cmd = new SqlCommand("dbo.usp_GetOrderRows", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 

@@ -45,7 +45,7 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_GetProduct", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -108,7 +108,7 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_GetProductByEAN", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -160,7 +160,7 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_GetProductBySKU", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -213,7 +213,7 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_GetProductsQuantitySum", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
                     
@@ -245,7 +245,7 @@ namespace Repository.Model.DAL
                 try
                 {
                     IEnumerable<Product> products = new List<Product>(1000);
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_CheckIfProductBusy", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -279,10 +279,10 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create List-objekt.
+                    // Create List-object.
                     var Products = new List<Product>(1000);
 
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     var cmd = new SqlCommand("dbo.usp_GetProduct", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -356,7 +356,7 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_ProductInventory", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -383,7 +383,7 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_UpdateProduct", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -395,7 +395,6 @@ namespace Repository.Model.DAL
                     cmd.Parameters.Add("@Space", SqlDbType.VarChar, 10).Value = product.StorageSpace;
                     cmd.Parameters.Add("@EAN", SqlDbType.VarChar, 30).Value = product.EAN;
                     cmd.Parameters.Add("@Image", SqlDbType.VarChar, 128).Value = product.ImageLocation;
-          //          cmd.Parameters.Add("@LastInventory", SqlDbType.DateTime).Value = product.LastInventory;
 
                     //Open database connection.
                     conn.Open();
@@ -416,11 +415,10 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_InsertAndUpdateProduct", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    //cmd.Parameters.Add("@Id", SqlDbType.Int, 4).Value = product.ProductId;
                     cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = product.Name;
                     cmd.Parameters.Add("@SKU", SqlDbType.VarChar, 50).Value = product.SKU;
                     cmd.Parameters.Add("@Quantity", SqlDbType.Int, 6).Value = product.Quantity;

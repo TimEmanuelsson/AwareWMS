@@ -21,7 +21,7 @@ namespace Repository.Model.DAL
 
         static OrderStatusDAL() 
         {
-            //Get connectionstring
+            // Get connectionstring
             _connectionString = Repository.Properties.Settings.Default.AwareConnectionString;
         }
 
@@ -29,7 +29,7 @@ namespace Repository.Model.DAL
 
         #region Hjälpmetoder
 
-        //Create connectionstring
+        // Create connectionstring
         private static SqlConnection CreateConnection()
         {
             return new SqlConnection(_connectionString);
@@ -45,13 +45,13 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_GetOrderStatus", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@Id", OrderStatusId);
 
-                    //Open database connection.
+                    // Open database connection.
                     conn.Open();
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -72,7 +72,6 @@ namespace Repository.Model.DAL
                 }
                 catch
                 {
-                    //Throw Exception.
                     throw new ApplicationException("An error occurred while trying to retrieve the orderstatus.");
                 }
             }
@@ -84,7 +83,7 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_GetOrderStatusByOrderId", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 

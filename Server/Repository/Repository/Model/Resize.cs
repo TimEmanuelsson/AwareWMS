@@ -14,7 +14,7 @@ namespace Repository.Model
 
         public static Image ScaleImage(Image image)
         {
-            //Lägg in dessas värden i en settings fil!!
+            // Put these values into a settings file!
             int maxWidth = 200;
             int maxHeight = 200;
 
@@ -30,7 +30,7 @@ namespace Repository.Model
             var newImage = new Bitmap(newWidth, newHeight);
             Graphics.FromImage(newImage).DrawImage(image, 0, 0, newWidth, newHeight);
 
-            //Fixa så att namnet blir product id:t.
+            // Sets the name to the product ID
             newImage.Save(@"c:\test.png", imageFormat);
             return newImage;
         }

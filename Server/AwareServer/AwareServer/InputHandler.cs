@@ -27,6 +27,7 @@ namespace AwareServer
         {   
             try
             {
+                // Makes sure password parameter has been sent in the call string
                 if (content.IndexOf("pw") > -1)
                 {
                     string[] splitString = content.Split(split);
@@ -39,6 +40,7 @@ namespace AwareServer
 
                     splitString[i] = splitString[i].Replace("\n", "");
 
+                    // If password was correct, we continue to check what data the client wants and fetches it
                     if (service.Authenticate(splitString[i]))
                     {
                         string passwordString = String.Format("/pw={0}\n", splitString[i]);

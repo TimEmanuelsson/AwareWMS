@@ -204,6 +204,8 @@ public class SettingsServerFragment extends Fragment {
                 btn_reconnect.setEnabled(false);
                 output_server_status.setTextColor(getResources().getColor(R.color.menu_red));
                 output_server_status.setText("NO IP ENTERED");
+            } else {
+                btn_reconnect.setEnabled(true);
             }
 
             SharedPreferences.Editor mEditor = sharedpreferences.edit();
@@ -238,6 +240,8 @@ public class SettingsServerFragment extends Fragment {
                 btn_reconnect.setEnabled(false);
                 output_server_status.setTextColor(getResources().getColor(R.color.menu_red));
                 output_server_status.setText("NO PORT ENTERED");
+            } else {
+                btn_reconnect.setEnabled(true);
             }
 
             SharedPreferences.Editor mEditor = sharedpreferences.edit();

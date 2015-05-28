@@ -36,11 +36,13 @@ namespace AwareServer
         {
             try
             {
+                // Fetching data from Magento
                 DataFetch dataFetch = new DataFetch();
                 eCommerceConnectionThread = new Thread(new ThreadStart(dataFetch.Initialize));
                 eCommerceConnectionThread.Name = "MagentoThread";
                 eCommerceConnectionThread.Start();
 
+                // Starts listening for connections
                 AsynchronousSocketListener.Start();
             }
             catch (Exception e)

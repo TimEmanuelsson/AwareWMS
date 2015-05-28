@@ -45,7 +45,7 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_GetOrder", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -103,10 +103,10 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    //Create list-objekt.
+                    //Create list-object.
                     var Orders = new List<Order>(1000);
 
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     var cmd = new SqlCommand("dbo.usp_GetOrder", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -157,12 +157,11 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_UpdateOrder", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.Add("@Id", SqlDbType.Int, 4).Value = order.Id;
-                  //  cmd.Parameters.Add("@OrderId", SqlDbType.Int, 4).Value = order.OrderId;
                     cmd.Parameters.Add("@CustomerId", SqlDbType.Int, 4).Value = order.CustomerId;
                     cmd.Parameters.Add("@OrderStatus", SqlDbType.Int, 4).Value = order.OrderStatus;
                     cmd.Parameters.Add("@Date", SqlDbType.DateTime).Value = order.Date;
@@ -188,7 +187,7 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_UpdateOrderStatus", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -214,7 +213,7 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_InsertAndUpdateOrder", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 

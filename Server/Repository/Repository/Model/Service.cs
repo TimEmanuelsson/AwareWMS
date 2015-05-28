@@ -56,7 +56,6 @@ namespace Repository.Model
 
         public void UpdateProduct(Product product) 
         {
-            //Kanske någon validering här!
             ProductDAL.UpdateProduct(product);
         }
 
@@ -67,7 +66,6 @@ namespace Repository.Model
 
         public void InsertAndUpdateProduct(Product product)
         {
-            //Kanske någon validering här!
             ProductDAL.InsertAndUpdateProduct(product);
         }
 
@@ -102,7 +100,6 @@ namespace Repository.Model
 
         public void UpdateOrder(Order order)
         {
-            //Kanske någon validering här!
             OrderDAL.UpdateOrder(order);
         }
 
@@ -113,7 +110,6 @@ namespace Repository.Model
 
         public void InsertAndUpdateOrder(Order order)
         {
-            //Kanske någon validering här!
             OrderDAL.InsertAndUpdateOrder(order);
         }
 
@@ -128,7 +124,6 @@ namespace Repository.Model
             get { return _customerDAL ?? (_customerDAL = new CustomerDAL()); }
         }
 
-        //Testa så att det går att hämta ut en kund när de finns några i databasen.
         public Customer GetCustomerById(int Id)
         {
             return CustomerDAL.GetCustomerById(Id);
@@ -200,7 +195,6 @@ namespace Repository.Model
 
         public void InsertException(ExceptionLog exception)
         {
-            //Kanske någon validering här!
             ExceptionLogDAL.InsertException(exception);
         }
 

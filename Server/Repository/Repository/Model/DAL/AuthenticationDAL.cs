@@ -65,7 +65,7 @@ namespace Repository.Model.DAL
             {
                 try
                 {
-                    // Create SqlCommand-objekt that execute stored procedure.
+                    // Create SqlCommand-object that execute stored procedure.
                     SqlCommand cmd = new SqlCommand("dbo.usp_Authenticate", conn);
                     cmd.CommandType = CommandType.StoredProcedure;
 

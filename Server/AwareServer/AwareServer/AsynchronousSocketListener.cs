@@ -80,6 +80,8 @@ namespace AwareServer
         {
             try
             {
+                // Recieves bytes sent by client
+
                 StateObject state = (StateObject)ar.AsyncState;
                 Socket handler = state.workSocket;
                 String content = String.Empty;
@@ -93,6 +95,7 @@ namespace AwareServer
                     content = state.sb.ToString();
                 }
 
+                // Using the InputHandler, we check what data the client requested and fetches it as bytes
                 InputHandler inputHandler = new InputHandler();
                 byte[] returnStr = inputHandler.GetReturnBytes(content);
                 Send(handler, returnStr);
@@ -108,10 +111,7 @@ namespace AwareServer
         // Returns to client.
         private static void Send(Socket handler, byte[] data)
         {
-            // Convert the string data to byte data using ASCII encoding.
-            //byte[] byteData = Encoding.UTF8.GetBytes(data);
-
-            // Begin sending the data to the remote device.
+            // Begin sending the data to the client
             try
             {
                 handler.BeginSend(data, 0, data.Length, 0,
@@ -131,7 +131,7 @@ namespace AwareServer
                 // Retrieve the socket from the state object.
                 Socket handler = (Socket)ar.AsyncState;
 
-                // Complete sending the data to the remote device.
+                // Complete sending the data to the client
                 int bytesSent = handler.EndSend(ar);
 
                 handler.Shutdown(SocketShutdown.Both);
@@ -151,6 +151,7 @@ namespace AwareServer
             StartListening();
             return 0;
         }
+
         internal static void Stop()
         {
            

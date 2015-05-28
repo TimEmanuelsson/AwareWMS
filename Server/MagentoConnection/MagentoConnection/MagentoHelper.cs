@@ -112,7 +112,6 @@ namespace MagentoConnection
             string rootPath = Environment.CurrentDirectory;
             string imageFolderPath = String.Format("{0}{1}", rootPath, "\\Product Images\\"); // Make a complete filepath.
 
-            int i = 0;
             foreach (catalogProductEntity product in magentoProducts)
             {
                 catalogProductImageEntity[] productImages = connection.GetProductImages(product.product_id);

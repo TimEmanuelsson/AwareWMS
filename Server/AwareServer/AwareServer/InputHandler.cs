@@ -45,6 +45,7 @@ namespace AwareServer
                     {
                         string passwordString = String.Format("/pw={0}\n", splitString[i]);
                         content = content.Replace(passwordString, "");
+                        content = content.Replace("\n", "");
 
                         #region Get
                         if (content.IndexOf("GET") > -1)

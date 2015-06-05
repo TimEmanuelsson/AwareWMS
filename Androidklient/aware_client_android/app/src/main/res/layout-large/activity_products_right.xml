@@ -6,7 +6,7 @@
     android:layout_below="@+id/layout_header"
     android:background="@color/white">
 
-    <com.example.andreaslengqvist.aware_client_android.Helpers.ProductPager
+    <com.aware_client.Helpers.ProductPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"

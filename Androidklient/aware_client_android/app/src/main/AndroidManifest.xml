@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.andreaslengqvist.aware_test" >
+    package="com.aware_client" >
 
     <supports-screens
         android:anyDensity="true"
@@ -16,7 +16,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity android:name="com.example.andreaslengqvist.aware_client_android.Menu.MainActivity" >
+        <activity android:name="com.aware_client.Menu.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,11 +24,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.andreaslengqvist.aware_client_android.Storage.Inventory.InventoryFastActivity"
+            android:name="com.aware_client.Storage.Inventory.InventoryFastActivity"
             android:label="@string/title_activity_inventory_fast" >
         </activity>
         <activity
-            android:name="com.example.andreaslengqvist.aware_client_android.Storage.ProductListActivity"
+            android:name="com.aware_client.Storage.ProductListActivity"
             android:label="@string/title_activity_products" >
             <meta-data
                 android:name="android.app.searchable"
@@ -36,7 +36,7 @@
             </meta-data>
         </activity>
         <activity
-            android:name="com.example.andreaslengqvist.aware_client_android.Settings.SettingsActivity"
+            android:name="com.aware_client.Settings.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
     </application>

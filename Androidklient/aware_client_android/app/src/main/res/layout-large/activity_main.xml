@@ -41,7 +41,7 @@
         android:layout_below="@+id/logo_head"
         android:layout_alignParentBottom="true"/>
 
-    <com.example.andreaslengqvist.aware_client_android.Helpers.SlidingTabLayout
+    <com.aware_client.Helpers.SlidingTabLayout
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

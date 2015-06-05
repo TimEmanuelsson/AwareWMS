@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         android:layout_weight="6"/>
 
-    <com.example.andreaslengqvist.aware_client_android.Helpers.ProductPager
+    <com.aware_client.Helpers.ProductPager
         android:id="@+id/pager"
         android:layout_width="0dp"
         android:layout_height="match_parent"

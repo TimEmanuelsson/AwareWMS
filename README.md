@@ -11,13 +11,13 @@ Alexandra Seppänen - as223jx - Husmor<br />
 
 ##Introduktion
 Den allt mer växande digitala handeln ser ut att slå sig starkare för var år som går. 
-Tidsspannet från det att en liten nätbutik startas hemma i vardagsrummet till att den flyttar in i stora lagerlokaler krymper sig allt mindre.
-Behoven på en ökad lager- och orderhantering är ofta något som den lilla nätbutiken upptäcker allt för sent och som då allt för ofta straffar sig med dåligt skräddarsydda och omoderna lösningar som övergår de kostnader som man inte alls hade tänkt sig.
+Tidsspannet från det att en liten nätbutik startas hemma i vardagsrummet till att den flyttar in i stora lagerlokaler krymper sig allt mindre.<br />
+Behoven på en ökad lager- och orderhantering är ofta något som den lilla nätbutiken upptäcker allt för sent och som då allt för ofta straffar sig med dåligt skräddarsydda och omoderna lösningar som övergår de kostnader som man hade tänkt sig.
 
-Vi på Aware ser lager- och orderhantering på ett lite annat sätt. 
+Vi på Aware ser lager- och orderhantering på ett lite annat sätt. <br />
 Vi vill nämligen vara med på den lilla nätbutikens resa från vardagsrummet där varje omsatt krona ses som en bragd till de gigantiska lagerlokalerna där omsättningarna på flera miljoner blivit vardagsmat.
 
-Under det här projektet har Aware själv tagit sina första stapplande kliv, och det är i den här rapporten ni kan ta del av det som är början på vår resa. 
+Under det här projektet har Aware själv tagit sina första stapplande kliv, och det är i den här rapporten ni kan ta del av det som är början på vår resa. <br />
 Här har den stabila grunden lagts, här har ett supereffektivt inventeringsverktyg byggts och här är vi nu, i startgroparna, redo för att fylla det tomrum och ta den hand som vi vet att alla dessa små nätbutiker behöver och kommer vilja hålla under hela dess långa resa.
 
 

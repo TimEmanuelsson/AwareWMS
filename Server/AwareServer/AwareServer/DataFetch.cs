@@ -124,7 +124,12 @@ namespace AwareServer
                     {
                         if (localProducts.Exists(p => p.ProductId == product.ProductId))
                         {
+                            Debug.WriteLine("Image matched to product.");
                             magentoProducts.First(p => p.ProductId == product.ProductId).ImageLocation = product.ImageLocation;
+                        }
+                        else
+                        {
+                            Debug.WriteLine("Image with id {0} did not match any products.", product.ProductId.ToString());
                         }
                     }
 

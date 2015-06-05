@@ -23,7 +23,7 @@ namespace Repository.Model.DAL
         static AuthenticationDAL()
         {
             //Get connectionstring
-            _connectionString = Repository.Properties.Settings.Default.AwareConnectionString;
+            _connectionString = Repository.Properties.Settings.Default.temp;
         }
 
         #endregion

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MagentoConnection.Magento;
 using AwareClassLibrary;
 using System.Globalization;
+using System.Diagnostics;
 
 namespace MagentoConnection
 {
@@ -18,12 +19,17 @@ namespace MagentoConnection
 
             foreach(catalogProductReturnEntity magentoProduct in magentoProducts)
             {
-                int quantity = new int();
-                int.TryParse(inventory.First(
-                    catalogInventoryStockItemEntity => catalogInventoryStockItemEntity.product_id == magentoProduct.product_id).qty,
-                    NumberStyles.Float, CultureInfo.InvariantCulture, out quantity);
-                Product product = AdaptToProduct(magentoProduct, quantity);
-                products.Add(product);
+                try {
+                    int quantity = new int();
+                    int.TryParse(inventory.First(
+                        catalogInventoryStockItemEntity => catalogInventoryStockItemEntity.product_id == magentoProduct.product_id).qty,
+                        NumberStyles.Float, CultureInfo.InvariantCulture, out quantity);
+                    Product product = AdaptToProduct(magentoProduct, quantity);
+                    products.Add(product);
+                } catch(Exception e) {
+                    Debug.WriteLine(e.Message);
+                }
+                
             }
 
             return products;

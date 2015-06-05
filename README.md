@@ -10,8 +10,16 @@ Alexandra Seppänen - as223jx - Husmor<br />
 <p><a href="https://drive.google.com/folderview?id=0B7IlriSNRO_zfkFsSDVSU0FLQ0JwSmlBaTlXLVBtZHJnbzl1dWNldE1TazlGRUJldUNDNzA&usp=sharing" target="_blank">Dokumentation</a></p>
 
 ##Introduktion
-Aware är ett Warehouse Management System som är riktat mot små till medelstora e-handelsföretag där idén är att effektivisera processen från lagd order till levererad vara genom att förenkla arbetsmomenten som sker däremellan.
-Målet är att skapa ett program som kan integrera mot ett redan existerande e-handelssystem och som kommer att erbjuda all funktionalitet som behövs för att göra jobbet från lagd order till levererad vara så effektivt som möjligt.
+Den allt mer växande digitala handeln ser ut att slå sig starkare för var år som går. 
+Tidsspannet från det att en liten nätbutik startas hemma i vardagsrummet till att den flyttar in i stora lagerlokaler krymper sig allt mindre.
+Behoven på en ökad lager- och orderhantering är ofta något som den lilla nätbutiken upptäcker allt för sent och som då allt för ofta straffar sig med dåligt skräddarsydda och omoderna lösningar som övergår de kostnader som man inte alls hade tänkt sig.
+
+Vi på Aware ser lager- och orderhantering på ett lite annat sätt. 
+Vi vill nämligen vara med på den lilla nätbutikens resa från vardagsrummet där varje omsatt krona ses som en bragd till de gigantiska lagerlokalerna där omsättningarna på flera miljoner blivit vardagsmat.
+
+Under det här projektet har Aware själv tagit sina första stapplande kliv, och det är i den här rapporten ni kan ta del av det som är början på vår resa. 
+Här har den stabila grunden lagts, här har ett supereffektivt inventeringsverktyg byggts och här är vi nu, i startgroparna, redo för att fylla det tomrum och ta den hand som vi vet att alla dessa små nätbutiker behöver och kommer vilja hålla under hela dess långa resa.
+
 
 ##Bakgrund
 E-handeln är en av de snabbast växande handelsnätverken i vår tid och med allt fler nätbutiker som ploppar upp varje dag så ser det ut som om vårt konsumtionsamhälle går mot en allt mer digitaliserad vardag. Att starta en nätbutik är idag i stort sett lika enkelt som att starta en blogg.<br />
